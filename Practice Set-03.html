@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-03 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-03</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    const questions = [
+
+{
+  question: "The function of steel wire in an ACSR conductor is (PSC JE 2018):",
+  options: [
+    { answer: "To take care of surges", correct: false },
+    { answer: "To prevent corona", correct: false },
+    { answer: "To reduce inductance and hence improve power factor", correct: false },
+    { answer: "To provide additional mechanical strength", correct: true }
+  ]
+},
+{
+  question: "Time constant of a capacitive circuit:",
+  options: [
+    { answer: "Increases with the decrease of capacitance and decrease of resistance", correct: false },
+    { answer: "Increases with the decrease of capacitance and increase of resistance", correct: false },
+    { answer: "Increases with the increase of capacitance and decrease of resistance", correct: false },
+    { answer: "Increases with increase of capacitance and increase of resistance", correct: true }
+  ]
+},
+{
+  question: "The time constant of a series R-C circuit is given by:",
+  options: [
+    { answer: "R/C", correct: false },
+    { answer: "RC2", correct: false },
+    { answer: "RC", correct: true },
+    { answer: "R2C", correct: false }
+  ]
+},
+{
+  question: "A heater is rated as 230 V, 10 kW, A.C. The value 230 V refers to:",
+  options: [
+    { answer: "Average voltage", correct: false },
+    { answer: "r.m.s. voltage", correct: true },
+    { answer: "Peak voltage", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Ohm is unit of all of the following except:",
+  options: [
+    { answer: "Inductive reactance", correct: false },
+    { answer: "Capacitive reactance", correct: false },
+    { answer: "Resistance", correct: false },
+    { answer: "Capacitance", correct: true }
+  ]
+},
+{
+  question: "The r.m.s. value of a half wave rectified sine wave is 200 V. The r.m.s. value of a full wave rectified AC will be:",
+  options: [
+    { answer: "282.8 V", correct: true },
+    { answer: "141.4 V", correct: false },
+    { answer: "111 V", correct: false },
+    { answer: "100 V", correct: false }
+  ]
+},
+{
+  question: "In a series resonant circuit, the impedance of the circuit is:",
+  options: [
+    { answer: "Minimum", correct: true },
+    { answer: "Maximum", correct: false },
+    { answer: "Zero", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In a pure inductive circuit, if the supply frequency is reduced to 1/2, the current will:",
+  options: [
+    { answer: "Be reduced by half", correct: false },
+    { answer: "Be doubled", correct: true },
+    { answer: "Be four times as high", correct: false },
+    { answer: "Be reduced to one fourth", correct: false }
+  ]
+},
+{
+  question: "In each of the three coils of a three phase generator, an alternating voltage having an r.m.s. value of 220 V is induced. Which of the following values is indicated by the voltmeters?",
+  options: [
+    { answer: "220 V", correct: true },
+    { answer: "220 √3 V", correct: false },
+    { answer: "220/√3 V", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The apparent power drawn by an A.C. circuit is 10 kVA and active power is 8 kW. The reactive power in the circuit is:",
+  options: [
+    { answer: "4 kVAR", correct: false },
+    { answer: "6 kVAR", correct: true },
+    { answer: "8 kVAR", correct: false },
+    { answer: "16 kVAR", correct: false }
+  ]
+},
+{
+  question: "The r.m.s. value of a pure cosine function is:",
+  options: [
+    { answer: "0.5 of peak value", correct: false },
+    { answer: "0.707 of peak value", correct: true },
+    { answer: "Same as peak value", correct: false },
+    { answer: "Zero", correct: false }
+  ]
+},
+{
+  question: "For the same peak value, which of the following waves will have the highest r.m.s. value?",
+  options: [
+    { answer: "Square wave", correct: true },
+    { answer: "Half wave rectified sine wave", correct: false },
+    { answer: "Triangular wave", correct: false },
+    { answer: "Sine wave", correct: false }
+  ]
+},
+{
+  question: "In a series L-C circuit at the resonant frequency, the:",
+  options: [
+    { answer: "Current is maximum", correct: true },
+    { answer: "Current is minimum", correct: false },
+    { answer: "Impedance is maximum", correct: false },
+    { answer: "Voltage across C is minimum", correct: false }
+  ]
+},
+{
+  question: "In a parallel R-C circuit, the current always _________ the applied voltage:",
+  options: [
+    { answer: "Lags", correct: false },
+    { answer: "Leads", correct: true },
+    { answer: "Remains in phase with", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In an A.C. circuit, power is dissipated in:",
+  options: [
+    { answer: "Resistance only", correct: true },
+    { answer: "Inductance only", correct: false },
+    { answer: "Capacitance only", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "If the resistance in parallel with a parallel resonant circuit is reduced, the bandwidth:",
+  options: [
+    { answer: "Disappears", correct: false },
+    { answer: "Becomes sharper", correct: false },
+    { answer: "Increases", correct: false },
+    { answer: "Decreases", correct: true }
+  ]
+},
+{
+  question: "If the cross-sectional area of a magnetic field increases, but the flux remains the same, the flux density:",
+  options: [
+    { answer: "Increases", correct: false },
+    { answer: "Decreases", correct: true },
+    { answer: "Remains the same", correct: false },
+    { answer: "Doubles", correct: false }
+  ]
+},
+{
+  question: "The unit for reluctance is:",
+  options: [
+    { answer: "Tesla", correct: false },
+    { answer: "At/Wb", correct: true },
+    { answer: "At/m", correct: false },
+    { answer: "Wb", correct: false }
+  ]
+},
+{
+  question: "Which two values are plotted on a B-H curve graph?",
+  options: [
+    { answer: "Reluctance and flux density", correct: false },
+    { answer: "Permeability and reluctance", correct: false },
+    { answer: "Magnetizing force and permeability", correct: false },
+    { answer: "Flux density and magnetizing force", correct: true }
+  ]
+},
+{
+  question: "A common method of cooling a power transformer is (WB PSC AE 2020):",
+  options: [
+    { answer: "Natural air cooling", correct: false },
+    { answer: "Air blast cooling", correct: false },
+    { answer: "Oil cooling", correct: true },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "The purpose of providing an iron core in a transformer is to (WB PSC 2018):",
+  options: [
+    { answer: "Provide support to windings", correct: false },
+    { answer: "Reduce hysteresis loss", correct: true },
+    { answer: "Decrease the reluctance of the magnetic path", correct: false },
+    { answer: "Reduce eddy current losses", correct: false }
+  ]
+},
+{
+  question: "The maximum efficiency of a half-wave rectifier is ___________ (WB PSC AE 2020):",
+  options: [
+    { answer: "40.6%", correct: false },
+    { answer: "81.2%", correct: true },
+    { answer: "50%", correct: false },
+    { answer: "25%", correct: false }
+  ]
+},
+{
+  question: "The maximum rectification efficiency in case of a full wave rectifier is:",
+  options: [
+    { answer: "100%", correct: false },
+    { answer: "81.2%", correct: true },
+    { answer: "66.6%", correct: false },
+    { answer: "40.6%", correct: false }
+  ]
+},
+{
+  question: "The value of the time constant in the R-L circuit is (WB PSC AE 2020):",
+  options: [
+    { answer: "L/R", correct: true },
+    { answer: "R/L", correct: false },
+    { answer: "R", correct: false },
+    { answer: "L", correct: false }
+  ]
+},
+{
+  question: "Resistance of a wire is yΩ. The wire is stretched to triple its length, then the resistance becomes ___________",
+  options: [
+    { answer: "y/3", correct: false },
+    { answer: "3y", correct: true },
+    { answer: "6y", correct: false },
+    { answer: "y/6", correct: false }
+  ]
+},
+{
+  question: "Conductance is expressed in terms of ___________",
+  options: [
+    { answer: "Mho", correct: true },
+    { answer: "Mho/m", correct: false },
+    { answer: "Ohm/m", correct: false },
+    { answer: "M/ohm", correct: false }
+  ]
+},
+{
+  question: "Reactive power is expressed in? (KMC 2018)",
+  options: [
+    { answer: "Watts (W)", correct: false },
+    { answer: "Volt Amperes Reactive (VAR)", correct: true },
+    { answer: "Volt Ampere (VA)", correct: false },
+    { answer: "No units", correct: false }
+  ]
+},
+{
+  question: "The electrostatic stress in underground cables is (KMC 2018):",
+  options: [
+    { answer: "Same at the conductor and the sheath", correct: false },
+    { answer: "Minimum at the conductor and maximum at the sheath", correct: false },
+    { answer: "Maximum at the conductor and minimum at the sheath", correct: true },
+    { answer: "Zero at the conductor as well as on the sheath", correct: false }
+  ]
+},
+{
+  question: "The insulating material for cables should:",
+  options: [
+    { answer: "Be acid proof", correct: false },
+    { answer: "Be non-inflammable", correct: false },
+    { answer: "Be non-hygroscopic", correct: false },
+    { answer: "All of the above", correct: true }
+  ]
+},
+{
+  question: "In cables the charging current (SSC JE):",
+  options: [
+    { answer: "Lags the voltage by 90°", correct: false },
+    { answer: "Leads the voltage by 90°", correct: true },
+    { answer: "Lags the voltage by 180°", correct: false },
+    { answer: "Leads the voltage by 180°", correct: false }
+  ]
+},
+{
+  question: "In a cable immediately above metallic sheath ________ is provided (WBSETCL 2016):",
+  options: [
+    { answer: "Earthing connection", correct: false },
+    { answer: "Bedding", correct: true },
+    { answer: "Armouring", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Pressure cables are generally not used beyond:",
+  options: [
+    { answer: "11 kV", correct: false },
+    { answer: "33 kV", correct: false },
+    { answer: "66 kV", correct: true },
+    { answer: "132 kV", correct: false }
+  ]
+},
+{
+  question: "Empire tape is (WBSETCL 2016):",
+  options: [
+    { answer: "Varnished cambric", correct: true },
+    { answer: "Vulcanized rubber", correct: false },
+    { answer: "Impregnated paper", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "For starting a D.C. motor a starter is required because (PSC AE 2020):",
+  options: [
+    { answer: "It limits the speed of the motor", correct: false },
+    { answer: "It limits the starting current to a safe value", correct: true },
+    { answer: "It starts the motor", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The condition for maximum efficiency for a D.C. generator is:",
+  options: [
+    { answer: "Eddy current losses = stray losses", correct: false },
+    { answer: "Hysteresis losses = eddy current losses", correct: false },
+    { answer: "Copper losses = 0", correct: false },
+    { answer: "Variable losses = constant losses", correct: true }
+  ]
+},
+{
+  question: "The speed of a D.C. shunt motor can be increased by (WB PSC JE 2018):",
+  options: [
+    { answer: "Increasing the resistance in armature circuit", correct: false },
+    { answer: "Increasing the resistance in field circuit", correct: true },
+    { answer: "Reducing the resistance in the field circuit", correct: false },
+    { answer: "Reducing the resistance in the armature circuit", correct: false }
+  ]
+},
+{
+  question: "If a D.C. motor is connected across the A.C. supply it will:",
+  options: [
+    { answer: "Run at normal speed", correct: false },
+    { answer: "Not run", correct: false },
+    { answer: "Run at lower speed", correct: false },
+    { answer: "Burn due to heat produced in the field winding by eddy currents", correct: true }
+  ]
+},
+{
+  question: "The making to breaking current ratio for an EHV circuit breaker is:",
+  options: [
+    { answer: "More than 1", correct: true },
+    { answer: "Equal to 1", correct: false },
+    { answer: "Less than 1", correct: false },
+    { answer: "A negative number", correct: false }
+  ]
+},
+{
+  question: "The probable cause(s) for failure of a circuit breaker on electrical compound could be:",
+  options: [
+    { answer: "Trip circuit open", correct: false },
+    { answer: "Trip latch defective", correct: false },
+    { answer: "Spring defective", correct: false },
+    { answer: "Any of the above", correct: true }
+  ]
+},
+{
+  question: "In circuit breakers the contact space is ionized by (WB PSC JE):",
+  options: [
+    { answer: "Field emission from the contact surface", correct: false },
+    { answer: "Thermal emission from the contact surface", correct: true },
+    { answer: "Thermal ionization of gas", correct: false },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "Circuit breakers usually operate under (WB PSC JE 2018):",
+  options: [
+    { answer: "Transient state of short circuit current", correct: true },
+    { answer: "Sub-transient state of short circuit current", correct: false },
+    { answer: "Steady state of short circuit current", correct: false },
+    { answer: "After DC component has ceased", correct: false }
+  ]
+},
+{
+  question: "The Burden of protective Current Transformer (CT) is specified in (ISRO 2015):",
+  options: [
+    { answer: "Percentage of load current", correct: false },
+    { answer: "Percentage Ratio error", correct: false },
+    { answer: "Volt-Ampere", correct: true },
+    { answer: "Percentage Phase error", correct: false }
+  ]
+},
+{
+  question: "The voltage appearing across the contacts after opening of the circuit breaker is called..............voltage (WB PSC 2016 AE):",
+  options: [
+    { answer: "Recovery", correct: true },
+    { answer: "Surge", correct: false },
+    { answer: "Operating", correct: false },
+    { answer: "Arc", correct: false }
+  ]
+},
+{
+  question: "Higher the frequency, _____________.",
+  options: [
+    { answer: "Lower the corona loss.", correct: false },
+    { answer: "Higher is the corona loss.", correct: true },
+    { answer: "Does not effect.", correct: false },
+    { answer: "Depends on the physical conditions.", correct: false }
+  ]
+},
+{
+  question: "What is the use of bundled conductors?",
+  options: [
+    { answer: "Reduces surface electric stress of conductor.", correct: true },
+    { answer: "Increases the line reactance.", correct: false },
+    { answer: "Decreases the line capacitance.", correct: false },
+    { answer: "None of these.", correct: false }
+  ]
+},
+{
+  question: "In which climate does the chances of occurrence of corona is maximum? (PGCIL 2014)",
+  options: [
+    { answer: "Dry", correct: false },
+    { answer: "Hot summer.", correct: false },
+    { answer: "Winter.", correct: false },
+    { answer: "Humid.", correct: true }
+  ]
+},
+{
+  question: "When the voltage applied is equal to the critical disruptive voltage, what happens?",
+  options: [
+    { answer: "Corona does not start.", correct: false },
+    { answer: "Corona starts but is not visible.", correct: true },
+    { answer: "Corona starts and is visible.", correct: false },
+    { answer: "Only ionization starts.", correct: false }
+  ]
+},
+{
+  question: "What is the cause of skin effect?",
+  options: [
+    { answer: "Supply frequency.", correct: false },
+    { answer: "Self inductance of conductor.", correct: false },
+    { answer: "High sensitive material in the centre.", correct: false },
+    { answer: "Both (a) and (b)", correct: true }
+  ]
+},
+{
+  question: "By using which conductor is the skin effect reduced?",
+  options: [
+    { answer: "Bundled conductors.", correct: false },
+    { answer: "Stranded conductors.", correct: true },
+    { answer: "Hollow conductors.", correct: false },
+    { answer: "Solid conductors.", correct: false }
+  ]
+},
+{
+  question: "Skin effect in a conductor is proportional to:",
+  options: [
+    { answer: "(Diameter of conductor)1/2", correct: false },
+    { answer: "Diameter of conductor.", correct: false },
+    { answer: "(Diameter of conductor)2", correct: true },
+    { answer: "(Diameter of conductor)4", correct: false }
+  ]
+}
+
+
+
+];
+
+   let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

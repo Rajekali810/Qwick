@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-14 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-14</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    const questions = [
+
+
+
+    {
+      "question": "Bus coupler is very essential in arrangement:",
+      "options": [
+        { "answer": "Single bus", "correct": false },
+        { "answer": "Double bus, double breaker", "correct": false },
+        { "answer": "Main and transfer bus", "correct": true },
+        { "answer": "All of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "With which of the following, a circuit breaker must be equipped for remote operation?",
+      "options": [
+        { "answer": "Inverse time trip", "correct": false },
+        { "answer": "Time-delay trip", "correct": false },
+        { "answer": "Shunt trip", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Thermal circuit breaker has:",
+      "options": [
+        { "answer": "Delayed trip action", "correct": true },
+        { "answer": "Instantaneous trip action", "correct": false },
+        { "answer": "Both of the above", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Magnetic circuit breaker has _________ trip action.",
+      "options": [
+        { "answer": "Delayed", "correct": false },
+        { "answer": "Instantaneous", "correct": true },
+        { "answer": "Both of the above", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "The relay operating speed depends upon:",
+      "options": [
+        { "answer": "The spring tension", "correct": false },
+        { "answer": "The rate of flux built up", "correct": false },
+        { "answer": "Armature core air gap", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "Air blast circuit breaker is used for:",
+      "options": [
+        { "answer": "Over currents", "correct": false },
+        { "answer": "Short duty", "correct": false },
+        { "answer": "Intermittent duty", "correct": false },
+        { "answer": "Repeated duty", "correct": true }
+      ]
+    },
+    {
+      "question": "The voltage appearing across the contacts after opening of the circuit breaker is called _________ voltage.",
+      "options": [
+        { "answer": "Recovery", "correct": true },
+        { "answer": "Surge", "correct": false },
+        { "answer": "Operating", "correct": false },
+        { "answer": "Arc", "correct": false }
+      ]
+    },
+    {
+      "question": "The reflection coefficient at the open-circuited end of a transmission line:",
+      "options": [
+        { "answer": "Zero", "correct": false },
+        { "answer": "Infinity", "correct": false },
+        { "answer": "Unity", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Which type of relay is less affected by power surges?",
+      "options": [
+        { "answer": "Mho relay", "correct": true },
+        { "answer": "Reactance relay", "correct": false },
+        { "answer": "Impedance relay", "correct": false },
+        { "answer": "All are same", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following is the preferred protection for ground fault?",
+      "options": [
+        { "answer": "Plain impedance relay", "correct": false },
+        { "answer": "Directional relay", "correct": false },
+        { "answer": "Reactance relay", "correct": true },
+        { "answer": "Overcurrent relay", "correct": false }
+      ]
+    },
+    {
+      "question": "In which of the following equipment direct current is needed?",
+      "options": [
+        { "answer": "Telephones", "correct": false },
+        { "answer": "Relays", "correct": false },
+        { "answer": "Time switches", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "Which of the following devices will receive voltage surge first travelling on the transmission line?",
+      "options": [
+        { "answer": "Lightning arresters", "correct": true },
+        { "answer": "Relays", "correct": false },
+        { "answer": "Step-down transformer", "correct": false },
+        { "answer": "Switchgear", "correct": false }
+      ]
+    },
+    {
+      "question": "Which type of resistor is used for over voltage protection:",
+      "options": [
+        { "answer": "Sensistors", "correct": false },
+        { "answer": "Thermistors", "correct": false },
+        { "answer": "Varistors", "correct": true },
+        { "answer": "Inductor", "correct": false }
+      ]
+    },
+    {
+      "question": "Lightning arresters and Buchholz relay together are used for protection of:",
+      "options": [
+        { "answer": "Short transmission line", "correct": false },
+        { "answer": "Transformers", "correct": true },
+        { "answer": "Medium transmission lines", "correct": false },
+        { "answer": "Alternators", "correct": false }
+      ]
+    },
+    {
+      "question": "What is the name of the metal rod mounted on a structure and intended to protect the structure from a lightning strike?",
+      "options": [
+        { "answer": "Earth electrode", "correct": false },
+        { "answer": "Spark gap", "correct": false },
+        { "answer": "Lightning rod", "correct": true },
+        { "answer": "Metal-oxide varistor", "correct": false }
+      ]
+    },
+    {
+      "question": "Surge absorbers are used for protection against:",
+      "options": [
+        { "answer": "High-voltage low-frequency oscillations", "correct": false },
+        { "answer": "Low-voltage low-frequency oscillations", "correct": false },
+        { "answer": "Low-voltage high-frequency oscillations", "correct": true },
+        { "answer": "High-voltage high-frequency oscillations", "correct": false }
+      ]
+    },
+    {
+      "question": "A thyrite lightning arrester has:",
+      "options": [
+        { "answer": "Inverse resistance characteristics", "correct": false },
+        { "answer": "A gap", "correct": false },
+        { "answer": "Efficient earthing", "correct": false },
+        { "answer": "A combination of inverse resistance characteristics and gap", "correct": true }
+      ]
+    },
+    {
+      "question": "Lightning arresters connected in power system protect electrical equipment from:",
+      "options": [
+        { "answer": "Frequency fluctuation", "correct": false },
+        { "answer": "Over-current due to indirect lightning stroke", "correct": false },
+        { "answer": "Over-voltages due to indirect lightning stroke", "correct": true },
+        { "answer": "Direct stroke of lightning", "correct": false }
+      ]
+    },
+
+    {
+      "question": "A protective device, which reduces the steepness of wave in front of a surge by absorbing surge energy, is called:",
+      "options": [
+        { "answer": "Surge diverters", "correct": false },
+        { "answer": "Surge absorbers", "correct": true },
+        { "answer": "Switching surges", "correct": false },
+        { "answer": "Earthing screen", "correct": false }
+      ]
+    },
+    {
+      "question": "The type of lightning arrester commonly used on systems operating at voltages up to 33 kV is a:",
+      "options": [
+        { "answer": "Horn gap arrester", "correct": false },
+        { "answer": "Rod gap arrester", "correct": false },
+        { "answer": "Valve type arrester", "correct": false },
+        { "answer": "Protector tube", "correct": true }
+      ]
+    },
+    {
+      "question": "Lightning arrester is normally connected between _________ at the substation:",
+      "options": [
+        { "answer": "Phase and phase", "correct": false },
+        { "answer": "Phase and ground", "correct": true },
+        { "answer": "Both (A) and (B)", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Arc in a circuit breaker is interrupted at:",
+      "options": [
+        { "answer": "Zero current", "correct": true },
+        { "answer": "Maximum current", "correct": false },
+        { "answer": "Minimum voltage", "correct": false },
+        { "answer": "Maximum voltage", "correct": false }
+      ]
+    },
+    {
+      "question": "The power loss is an important factor for the design of:",
+      "options": [
+        { "answer": "Transmission line", "correct": true },
+        { "answer": "Motor", "correct": false },
+        { "answer": "Generator", "correct": false },
+        { "answer": "Feeder", "correct": false }
+      ]
+    },
+    {
+      "question": "In order that current should flow without causing excessive heating or voltage drop, the relay contacts should:",
+      "options": [
+        { "answer": "Have low contact resistance", "correct": true },
+        { "answer": "Be clean and smooth", "correct": false },
+        { "answer": "Be of sufficient size and proper shape", "correct": false },
+        { "answer": "Have all above properties", "correct": false }
+      ]
+    },
+    {
+      "question": "A transmission line is protected by:",
+      "options": [
+        { "answer": "Inrush protection", "correct": false },
+        { "answer": "Distance protection", "correct": false },
+        { "answer": "Time graded and current graded over current protection", "correct": false },
+        { "answer": "Both (B) and (C)", "correct": true }
+      ]
+    },
+    {
+      "question": "The arc voltage produced in A.C. circuit breaker is always:",
+      "options": [
+        { "answer": "In phase with the arc current", "correct": true },
+        { "answer": "Lagging the arc current by 90°", "correct": false },
+        { "answer": "Leading the arc current by 90°", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "To protect most of the electrical equipment handling low power, the types of relays used are:",
+      "options": [
+        { "answer": "Thermocouple", "correct": false },
+        { "answer": "Electronic and bimetallic", "correct": false },
+        { "answer": "Both (A) and (B)", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Air blast circuit breakers for 400 kV power system are designed to operate in:",
+      "options": [
+        { "answer": "100 microsecond", "correct": false },
+        { "answer": "50 millisecond", "correct": true },
+        { "answer": "0.5 sec", "correct": false },
+        { "answer": "0.1 sec", "correct": false }
+      ]
+    },
+    {
+      "question": "On which of the following effects of electric current a fuse operates?",
+      "options": [
+        { "answer": "Photoelectric effect", "correct": false },
+        { "answer": "Electrostatic effect", "correct": false },
+        { "answer": "Heating effect", "correct": true },
+        { "answer": "Magnetic effect", "correct": false }
+      ]
+    },
+    {
+      "question": "A fuse in a motor circuit provides protection against:",
+      "options": [
+        { "answer": "Overload", "correct": false },
+        { "answer": "Short-circuit and overload", "correct": true },
+        { "answer": "Open circuit, short-circuit and overload", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "For fuse, the total operating period is given by ________.",
+      "options": [
+        { "answer": "Pre arcing time + arcing time", "correct": true },
+        { "answer": "Total operating period − arcing time", "correct": false },
+        { "answer": "Pre arcing time − arcing time", "correct": false },
+        { "answer": "Total operating period − breaking time", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following is not an essential property of fuse elements?",
+      "options": [
+        { "answer": "Small co-efficient of expansion", "correct": false },
+        { "answer": "High co-efficient of expansion", "correct": true },
+        { "answer": "Should not spoil when used in air", "correct": false },
+        { "answer": "Relatively free from oxidation", "correct": false }
+      ]
+    },
+    {
+      "question": "The protective device that employs a bimetallic strip or element is:",
+      "options": [
+        { "answer": "Relay", "correct": true },
+        { "answer": "Fuse", "correct": false },
+        { "answer": "MCB", "correct": false },
+        { "answer": "Lightning arrestor", "correct": false }
+      ]
+    },
+    {
+      "question": "The material used for fuse must have:",
+      "options": [
+        { "answer": "Low melting point and high specific resistance", "correct": false },
+        { "answer": "High melting point and low specific resistance", "correct": false },
+        { "answer": "Low melting point and any specific resistance", "correct": false },
+        { "answer": "Low melting point and low specific resistance", "correct": true }
+      ]
+    },
+    {
+      "question": "H.R.C. fuses provide best protection for:",
+      "options": [
+        { "answer": "Overload", "correct": false },
+        { "answer": "Reverse current", "correct": false },
+        { "answer": "Open circuiting", "correct": false },
+        { "answer": "Short circuiting", "correct": true }
+      ]
+    },
+    {
+      "question": "A short-circuit is identified by:",
+      "options": [
+        { "answer": "No current flow", "correct": false },
+        { "answer": "Heavy current flow", "correct": true },
+        { "answer": "Voltage drop", "correct": false },
+        { "answer": "Voltage rise", "correct": false }
+      ]
+    },
+    {
+      "question": "In a single bus-bar system there will be complete shut down when:",
+      "options": [
+        { "answer": "Fault occurs on the bus itself", "correct": true },
+        { "answer": "Fault occurs on neutral line", "correct": false },
+        { "answer": "Two or more faults occur simultaneously", "correct": false },
+        { "answer": "Fault occurs with respect to earthing", "correct": false }
+      ]
+    },
+    {
+      "question": "Series reactors should have:",
+      "options": [
+        { "answer": "Low resistance", "correct": true },
+        { "answer": "High resistance", "correct": false },
+        { "answer": "Low impedance", "correct": false },
+        { "answer": "High impedance", "correct": false }
+      ]
+    },
+    {
+      "question": "The time of closing the cycle, in modern circuit breakers is:",
+      "options": [
+        { "answer": "0.003 sec", "correct": true },
+        { "answer": "0.001 sec", "correct": false },
+        { "answer": "0.01 sec", "correct": false },
+        { "answer": "0.10 sec", "correct": false }
+      ]
+    },
+    {
+      "question": "D.C. shunt relays are made of:",
+      "options": [
+        { "answer": "Few turns of thin wire", "correct": false },
+        { "answer": "Few turns of thick wire", "correct": false },
+        { "answer": "Many turns of thin wire", "correct": true },
+        { "answer": "Many turns of thick wire", "correct": false }
+      ]
+    },
+    {
+      "question": "Arc in a circuit behaves as:",
+      "options": [
+        { "answer": "A capacitive reactance", "correct": false },
+        { "answer": "An inductive reactance", "correct": false },
+        { "answer": "A resistance increasing with voltage rise across the arc", "correct": true },
+        { "answer": "A resistance decreasing with voltage rise across the arc", "correct": false }
+      ]
+    },
+    {
+      "question": "The current zero interruption, in oil and air blast circuit breakers, is achieved by:",
+      "options": [
+        { "answer": "Lengthening of the gap", "correct": false },
+        { "answer": "Cooling and blast effect", "correct": true },
+        { "answer": "Both (A) and (B)", "correct": false },
+        { "answer": "Deionising the oil with forced air", "correct": false }
+      ]
+    },
+    {
+      "question": "Ionization in circuit breaker is facilitated by:",
+      "options": [
+        { "answer": "High temperature", "correct": false },
+        { "answer": "Increase of mean free path", "correct": false },
+        { "answer": "Increasing field strength", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+
+    {
+      "question": "The delay fuses are used for the protection of ________.",
+      "options": [
+        { "answer": "Motors", "correct": true },
+        { "answer": "Power outlet circuits", "correct": false },
+        { "answer": "Fluorescent lamps", "correct": false },
+        { "answer": "Light circuits", "correct": false }
+      ]
+    },
+    {
+      "question": "Protection by fuses is generally not used beyond",
+      "options": [
+        { "answer": "20 A", "correct": false },
+        { "answer": "50 A", "correct": false },
+        { "answer": "100 A", "correct": true },
+        { "answer": "200 A", "correct": false }
+      ]
+    },
+    {
+      "question": "A balanced 3-phase system consists of",
+      "options": [
+        { "answer": "Zero sequence currents only", "correct": false },
+        { "answer": "Positive sequence currents only", "correct": true },
+        { "answer": "Negative and zero sequence currents", "correct": false },
+        { "answer": "Zero, negative and positive sequence currents", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following is the least expensive protection for over-current in a low voltage system?",
+      "options": [
+        { "answer": "Rewirable fuse", "correct": true },
+        { "answer": "Isolator", "correct": false },
+        { "answer": "Oil circuit breaker", "correct": false },
+        { "answer": "Air break circuit breaker", "correct": false }
+      ]
+    },
+    {
+      "question": "The under voltage relay can be used for",
+      "options": [
+        { "answer": "Generators", "correct": false },
+        { "answer": "Bus-bars", "correct": false },
+        { "answer": "Transformers", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "Over-fluxing protection is recommended for",
+      "options": [
+        { "answer": "Distribution transformer", "correct": false },
+        { "answer": "Generator transformer of the power plant", "correct": true },
+        { "answer": "Autotransformer of the power plant", "correct": false },
+        { "answer": "Station transformer of the power plant", "correct": false }
+      ]
+    },
+    {
+      "question": "The fuse rating is expressed in terms of",
+      "options": [
+        { "answer": "Current", "correct": true },
+        { "answer": "Voltage", "correct": false },
+        { "answer": "VAR", "correct": false },
+        { "answer": "Kva", "correct": false }
+      ]
+    }
+  
+];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

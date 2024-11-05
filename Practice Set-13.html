@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-13 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-13</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    const questions = [
+
+
+
+    {
+      "question": "The surge impedance value of overhead lines is:",
+      "options": [
+        { "answer": "50 to 100 ohms", "correct": false },
+        { "answer": "400 to 600 ohms", "correct": true },
+        { "answer": "800 to 1000 ohms", "correct": false },
+        { "answer": "10 to 50 ohms", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following relays is used on long transmission lines?",
+      "options": [
+        { "answer": "Impedance relay", "correct": false },
+        { "answer": "Mho relay", "correct": true },
+        { "answer": "Reactance relay", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "___________ type of relay is preferred for phase fault on short transmission line.",
+      "options": [
+        { "answer": "Induction type", "correct": false },
+        { "answer": "Impedance type", "correct": false },
+        { "answer": "Reluctance type", "correct": false },
+        { "answer": "Reactance type", "correct": true }
+      ]
+    },
+    {
+      "question": "Which of the following relay is used for phase fault protection of medium transmission lines?",
+      "options": [
+        { "answer": "Reactance relay", "correct": false },
+        { "answer": "Impedance relay", "correct": true },
+        { "answer": "Mho relay", "correct": false },
+        { "answer": "IDMT relay", "correct": false }
+      ]
+    },
+    {
+      "question": "Aluminium has a specific gravity of:",
+      "options": [
+        { "answer": "1.5", "correct": false },
+        { "answer": "2.7", "correct": true },
+        { "answer": "4.2", "correct": false },
+        { "answer": "7.8", "correct": false }
+      ]
+    },
+    {
+      "question": "66 kV is suitable for transmission of power over _________.",
+      "options": [
+        { "answer": "30 km", "correct": false },
+        { "answer": "60 km", "correct": true },
+        { "answer": "120 km", "correct": false },
+        { "answer": "200 km", "correct": false }
+      ]
+    },
+    {
+      "question": "The frequency of voltage generated, in case of generators, can be increased by:",
+      "options": [
+        { "answer": "Using reactors", "correct": false },
+        { "answer": "Increasing the load", "correct": false },
+        { "answer": "Adjusting the governor", "correct": true },
+        { "answer": "Reducing the terminal voltage", "correct": false }
+      ]
+    },
+    {
+      "question": "In order to protect transformers from_______ inverse definite time relay is used for over current and earth fault protection.",
+      "options": [
+        { "answer": "Heavy loads", "correct": false },
+        { "answer": "Internal short circuits", "correct": false },
+        { "answer": "Low loads", "correct": false },
+        { "answer": "External short circuits", "correct": true }
+      ]
+    },
+
+    {
+      "question": "Which is indicated the power consumption of the relay circuit element?",
+      "options": [
+        { "answer": "Load", "correct": false },
+        { "answer": "Burden", "correct": true },
+        { "answer": "Magnetic coil", "correct": false },
+        { "answer": "Losses", "correct": false }
+      ]
+    },
+    {
+      "question": "Torque produced in shaded pole structure induction type relay is:",
+      "options": [
+        { "answer": "Proportional to square of the current", "correct": true },
+        { "answer": "Inversely proportional to square of the current", "correct": false },
+        { "answer": "Inversely proportional to current", "correct": false },
+        { "answer": "Proportional to current", "correct": false }
+      ]
+    },
+    {
+      "question": "Which one of the following is an essential component of electromechanical relays?",
+      "options": [
+        { "answer": "Graphite rod", "correct": false },
+        { "answer": "LED", "correct": false },
+        { "answer": "Electromagnet", "correct": true },
+        { "answer": "MOSFET", "correct": false }
+      ]
+    },
+    {
+      "question": "IDMT full form is:",
+      "options": [
+        { "answer": "Inverse Distance maximum Time Relay", "correct": false },
+        { "answer": "Inverse Definite Minimum Time Relay", "correct": true },
+        { "answer": "Inverse Distance Minimum Time Relay", "correct": false },
+        { "answer": "Inverse Definite Maximum Time Relay", "correct": false }
+      ]
+    },
+    {
+      "question": "What is a reactance relay?",
+      "options": [
+        { "answer": "It is a static relay.", "correct": false },
+        { "answer": "It is a directional restrained over-current relay.", "correct": true },
+        { "answer": "It is a voltage restrained over-current relay.", "correct": false },
+        { "answer": "It is a voltage restrained directional relay.", "correct": false }
+      ]
+    },
+    {
+      "question": "Which is not considered as a type of overload relay?",
+      "options": [
+        { "answer": "Directional", "correct": true },
+        { "answer": "Thermal", "correct": false },
+        { "answer": "Magnetic", "correct": false },
+        { "answer": "Solid state", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following is also called as ‘series transformer’?",
+      "options": [
+        { "answer": "Power transformer", "correct": false },
+        { "answer": "Current transformer", "correct": true },
+        { "answer": "Distribution transformer", "correct": false },
+        { "answer": "Potential transformer", "correct": false }
+      ]
+    },
+    {
+      "question": "For percentage differential protection or normal differential protection, the ______ in the primary and secondary winding should be same.",
+      "options": [
+        { "answer": "Magnetising inrush current", "correct": false },
+        { "answer": "Transformer phase shift", "correct": false },
+        { "answer": "Length of the pilot wire", "correct": false },
+        { "answer": "Current transformer ratio", "correct": true }
+      ]
+    },
+    {
+      "question": "The energy to supply power to the relay is provided by _______.",
+      "options": [
+        { "answer": "Current Transformer and Potential Transformer", "correct": true },
+        { "answer": "Transmission lines", "correct": false },
+        { "answer": "Transformer", "correct": false },
+        { "answer": "Alternator", "correct": false }
+      ]
+    },
+    {
+      "question": "The primary winding of a current transformer is connected in _________ with the line carrying the main current and the secondary winding is directly connected across ___________.",
+      "options": [
+        { "answer": "Series, ammeter", "correct": true },
+        { "answer": "Parallel, voltmeter", "correct": false },
+        { "answer": "Parallel, ammeter", "correct": false },
+        { "answer": "Series, voltmeter", "correct": false }
+      ]
+    },
+    {
+      "question": "The ratio error in current transformer is attributed to:",
+      "options": [
+        { "answer": "Leakage flux", "correct": false },
+        { "answer": "Magnetising component of no-load current", "correct": true },
+        { "answer": "Power factor of the primary", "correct": false },
+        { "answer": "Energy component of excitation current", "correct": false }
+      ]
+    },
+    {
+      "question": "The primary of a _______ should never be energised when its secondary is open circuited.",
+      "options": [
+        { "answer": "Potential transformer", "correct": false },
+        { "answer": "Current transformer", "correct": true },
+        { "answer": "Autotransformer", "correct": false },
+        { "answer": "Power transformer", "correct": false }
+      ]
+    },
+    {
+      "question": "Burden of current transformer is usually expressed in:",
+      "options": [
+        { "answer": "Amperes", "correct": false },
+        { "answer": "Volts", "correct": false },
+        { "answer": "Volt amperes", "correct": true },
+        { "answer": "Kilowatt", "correct": false }
+      ]
+    },
+    {
+      "question": "The instrument transformer is used to extend the range of:",
+      "options": [
+        { "answer": "Induction instrument", "correct": true },
+        { "answer": "Electrostatic instrument", "correct": false },
+        { "answer": "Moving coil instrument", "correct": false },
+        { "answer": "No type of instruments", "correct": false }
+      ]
+    },
+    {
+      "question": "The burden value in Potential Transformer (PT) should be ______ to achieve low errors in PT.",
+      "options": [
+        { "answer": "Low", "correct": false },
+        { "answer": "High", "correct": true },
+        { "answer": "Medium", "correct": false },
+        { "answer": "Infinite", "correct": false }
+      ]
+    },
+    {
+      "question": "An ammeter of 0.1 Ω resistance is connected across the secondary of a 400 / 5A current transformer (CT). The CT burden is:",
+      "options": [
+        { "answer": "0.5 VA", "correct": false },
+        { "answer": "2.5 VA", "correct": true },
+        { "answer": "5.0 VA", "correct": false },
+        { "answer": "25 VA", "correct": false }
+      ]
+    },
+    {
+      "question": "A common method of cooling a power transformer is:",
+      "options": [
+        { "answer": "Natural air cooling", "correct": true },
+        { "answer": "Air blast cooling", "correct": false },
+        { "answer": "Oil cooling", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "A three phase circuit breaker is rated 2000 MVA 33 kV. What will be the making current?",
+      "options": [
+        { "answer": "35 Ka", "correct": false },
+        { "answer": "49 kA", "correct": false },
+        { "answer": "70 kA", "correct": false },
+        { "answer": "89 Ka", "correct": true }
+      ]
+    },
+    {
+      "question": "Circuit breakers usually operate under:",
+      "options": [
+        { "answer": "Steady short circuit current", "correct": false },
+        { "answer": "Sub-transient state of short circuit current", "correct": false },
+        { "answer": "Transient state of short circuit current", "correct": true },
+        { "answer": "Both (A) and (B)", "correct": false }
+      ]
+    },
+    {
+      "question": "Where the voltages are high and current to be interrupted is low, the breaker preferred is:",
+      "options": [
+        { "answer": "Air blast circuit breaker", "correct": false },
+        { "answer": "Oil circuit breaker", "correct": false },
+        { "answer": "Vacuum circuit breaker", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "The most suitable circuit breaker for high voltage line without switching resistor is:",
+      "options": [
+        { "answer": "Air blast circular breaker", "correct": false },
+        { "answer": "Minimum oil circuit breaker", "correct": false },
+        { "answer": "SF6 circuit breaker", "correct": true },
+        { "answer": "None of these", "correct": false }
+      ]
+    },
+    {
+      "question": "The period till the fault initiation and disconnection occurs is called ________.",
+      "options": [
+        { "answer": "Total operating period", "correct": false },
+        { "answer": "Arcing time", "correct": false },
+        { "answer": "Breaking time", "correct": false },
+        { "answer": "Pre arcing time", "correct": true }
+      ]
+    },
+    {
+      "question": "In a circuit breaker, the resistance of the arc can be increased by all but except which one of the following methods?",
+      "options": [
+        { "answer": "Increase the length of the arc", "correct": true },
+        { "answer": "Arc powder coating", "correct": true },
+        { "answer": "Arc cooling", "correct": false },
+        { "answer": "Reducing the X-section of the arc", "correct": false }
+      ]
+    },
+    {
+      "question": "With respect to circuit breakers, except for which one of the following facts, all the rest are true?",
+      "options": [
+        { "answer": "Making or breaking circuits manually or by remote control in case of faults", "correct": false },
+        { "answer": "Automatically break the circuit in the event of a fault", "correct": false },
+        { "answer": "Automatically breaking the circuit in any case", "correct": true },
+        { "answer": "Making or breaking circuits manually or by remote control under normal conditions", "correct": false }
+      ]
+    },
+    {
+      "question": "In a circuit breaker, at current zero, the arc voltage rises rapidly to peak value and this peak voltage tends to maintain ________ in the form of arc.",
+      "options": [
+        { "answer": "Resistance", "correct": false },
+        { "answer": "Current flow", "correct": true },
+        { "answer": "Induction", "correct": false },
+        { "answer": "Capacitance", "correct": false }
+      ]
+    },
+
+    {
+      "question": "MCB of the family of protective devices in electrical installation stands for:",
+      "options": [
+        { "answer": "main circuit breaker", "correct": false },
+        { "answer": "mini circuit breaker", "correct": false },
+        { "answer": "maximum current breaker", "correct": false },
+        { "answer": "miniature circuit breaker", "correct": true }
+      ]
+    },
+    {
+      "question": "To minimize the current chopping tendency, the SF6 gas is used at:",
+      "options": [
+        { "answer": "Low Velocity and low Pressure", "correct": true },
+        { "answer": "High Velocity and low Pressure", "correct": false },
+        { "answer": "Low Velocity and high Pressure", "correct": false },
+        { "answer": "High Velocity and high Pressure", "correct": false }
+      ]
+    },
+    {
+      "question": "Oil switches are used for circuits of _______ voltage and _______ current carrying capacities.",
+      "options": [
+        { "answer": "low; small", "correct": false },
+        { "answer": "low; large", "correct": false },
+        { "answer": "high; small", "correct": false },
+        { "answer": "high; large", "correct": true }
+      ]
+    },
+    {
+      "question": "The dielectric strength of SF6 is _______ that of air.",
+      "options": [
+        { "answer": "same as", "correct": false },
+        { "answer": "2 to 3 times", "correct": true },
+        { "answer": "10 times", "correct": false },
+        { "answer": "5 to 6 times", "correct": false }
+      ]
+    },
+    {
+      "question": "For extra high voltage transmission lines, the circuit breaker preferred is:",
+      "options": [
+        { "answer": "Bulk oil circuit breaker", "correct": false },
+        { "answer": "Vacuum circuit breaker", "correct": false },
+        { "answer": "SF6 circuit breaker", "correct": true },
+        { "answer": "Minimum oil circuit breaker", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following medium is employed for extinction of arc in Air Circuit Breaker?",
+      "options": [
+        { "answer": "SF6 Gas", "correct": false },
+        { "answer": "Water", "correct": false },
+        { "answer": "Air", "correct": true },
+        { "answer": "Oil", "correct": false }
+      ]
+    },
+    {
+      "question": "The capacitor current switching is easily done with:",
+      "options": [
+        { "answer": "Vacuum circuit breaker", "correct": true },
+        { "answer": "Bulk oil circuit breaker", "correct": false },
+        { "answer": "Air blast circuit breaker", "correct": false },
+        { "answer": "None of these", "correct": false }
+      ]
+    },
+    {
+      "question": "A three-phase, 33 kV oil circuit breaker is rated 1200 A, 2000 MVA, 3s. The symmetrical breaking current is:",
+      "options": [
+        { "answer": "1200 A", "correct": false },
+        { "answer": "35 kA", "correct": true },
+        { "answer": "104.8 Ka", "correct": false },
+        { "answer": "3600 A", "correct": false }
+      ]
+    },
+    {
+      "question": "The voltage rating of the circuit breaker is normally from _________ times more than the normal operating voltage.",
+      "options": [
+        { "answer": "1.05 – 1.10", "correct": true },
+        { "answer": "1.10 – 1.15", "correct": false },
+        { "answer": "1.15 – 1.20", "correct": false },
+        { "answer": "1.20 – 1.50", "correct": false }
+      ]
+    },
+    {
+      "question": "The breaking capacity of a 3-phase circuit breaker is given by:",
+      "options": [
+        { "answer": "√3 x service voltage x rated symmetrical current", "correct": true },
+        { "answer": "3 x service voltage x rated symmetrical current", "correct": false },
+        { "answer": "2 x service voltage x rated symmetrical current", "correct": false },
+        { "answer": "none of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Find the making current for a circuit breaker rated at 1000 A, 3000 MVA, 66 kV, 3 sec, 3 – phase, oil circuit breaker:",
+      "options": [
+        { "answer": "86.92 kA", "correct": false },
+        { "answer": "66.92 Ka", "correct": true },
+        { "answer": "58.62 Ka", "correct": false },
+        { "answer": "76.52 Ka", "correct": false }
+      ]
+    },
+    {
+      "question": "The Rate of Rise of Restriking Voltage (RRRV) depends upon:",
+      "options": [
+        { "answer": "System Voltage", "correct": false },
+        { "answer": "Circuit Power Factor only", "correct": false },
+        { "answer": "Switching condition only", "correct": false },
+        { "answer": "Both (B) and (C)", "correct": true }
+      ]
+    },
+    {
+      "question": "The contacts of high voltage switches used in power system are submerged in oil. The main purpose of the oil is to:",
+      "options": [
+        { "answer": "Lubricate the contacts", "correct": false },
+        { "answer": "Insulate the contacts from switch body", "correct": false },
+        { "answer": "Extinguish the arc", "correct": true },
+        { "answer": "All of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Fault diverters are basically:",
+      "options": [
+        { "answer": "Fuses", "correct": false },
+        { "answer": "Relays", "correct": false },
+        { "answer": "Fast switches", "correct": true },
+        { "answer": "Circuit breakers", "correct": false }
+      ]
+    },
+    {
+      "question": "Insulation resistance of high voltage circuit breakers is more than:",
+      "options": [
+        { "answer": "1 mega ohms", "correct": false },
+        { "answer": "10 mega ohms", "correct": false },
+        { "answer": "100 mega ohms", "correct": true },
+        { "answer": "500 mega ohms", "correct": false }
+      ]
+    },
+    {
+      "question": "What is the insulation resistance test voltage required for an equipment running on maximum voltage of 600 V?",
+      "options": [
+        { "answer": "300 V", "correct": false },
+        { "answer": "1000 V", "correct": true },
+        { "answer": "500 V", "correct": false },
+        { "answer": "100 V", "correct": false }
+      ]
+    },
+    {
+      "question": "H.R.C. fuse, as compared to a rewirable fuse, has:",
+      "options": [
+        { "answer": "No ageing effect", "correct": true },
+        { "answer": "High speed of operation", "correct": true },
+        { "answer": "High rupturing capacity", "correct": true },
+        { "answer": "All of the above", "correct": true }
+      ]
+    }
+
+  
+
+  
+];
+
+   let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

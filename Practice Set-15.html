@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-15 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-15</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    const questions = [
+
+
+
+    {
+      "question": "SF6 gas",
+      "options": [
+        { "answer": "Is yellow in color", "correct": false },
+        { "answer": "Is lighter than air", "correct": false },
+        { "answer": "Is nontoxic", "correct": true },
+        { "answer": "Has pungent smell", "correct": false }
+      ]
+    },
+    {
+      "question": "Wave trap is used to trap waves of",
+      "options": [
+        { "answer": "Power frequencies", "correct": false },
+        { "answer": "Higher frequencies entering generator or transformer units", "correct": true },
+        { "answer": "Either of the above", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Admittance relay is ________ relay.",
+      "options": [
+        { "answer": "Impedance", "correct": false },
+        { "answer": "Directional", "correct": true },
+        { "answer": "Non-directional", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "A differential relay measures the vector difference between",
+      "options": [
+        { "answer": "Two currents", "correct": false },
+        { "answer": "Two voltages", "correct": false },
+        { "answer": "Two or more similar electrical quantities", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "A thermal protection switch can protect against",
+      "options": [
+        { "answer": "Short-circuit", "correct": false },
+        { "answer": "Temperature", "correct": false },
+        { "answer": "Overload", "correct": true },
+        { "answer": "Over voltage", "correct": false }
+      ]
+    },
+    {
+      "question": "Oil switches are employed for",
+      "options": [
+        { "answer": "Low currents circuits", "correct": false },
+        { "answer": "Low voltages circuits", "correct": false },
+        { "answer": "High voltages and large currents circuits", "correct": true },
+        { "answer": "All circuits", "correct": false }
+      ]
+    },
+    {
+      "question": "For which of the following protection from negative sequence currents is provided?",
+      "options": [
+        { "answer": "Generators", "correct": true },
+        { "answer": "Motors", "correct": false },
+        { "answer": "Transmission line", "correct": false },
+        { "answer": "Transformers", "correct": false }
+      ]
+    },
+    {
+      "question": "Series capacitors are used to",
+      "options": [
+        { "answer": "Compensate for line inductive reactance", "correct": true },
+        { "answer": "Compensate for line capacitive reactance", "correct": false },
+        { "answer": "Improve line voltage", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+
+    {
+      "question": "If the height of transmission tower is increased, which of the following parameter is likely to change?",
+      "options": [
+        { "answer": "Resistance", "correct": false },
+        { "answer": "Inductance", "correct": false },
+        { "answer": "Capacitance", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "If the height of transmission tower is increased,",
+      "options": [
+        { "answer": "the line capacitance will decrease but line inductance will remain unchanged", "correct": false },
+        { "answer": "the line capacitance and inductance will not change", "correct": false },
+        { "answer": "the line capacitance will increase but line inductance will decrease", "correct": false },
+        { "answer": "the line capacitance will decrease and line inductance will increase", "correct": true }
+      ]
+    },
+    {
+      "question": "As the voltage of transmission increases, the volume of conductor",
+      "options": [
+        { "answer": "increases", "correct": false },
+        { "answer": "does not change", "correct": true },
+        { "answer": "decreases", "correct": false },
+        { "answer": "increases proportionately", "correct": false }
+      ]
+    },
+    {
+      "question": "Due to non-uniform distribution of current, the increase in resistance in a conductor is known as:",
+      "options": [
+        { "answer": "skin effect", "correct": true },
+        { "answer": "ferranti effect", "correct": false },
+        { "answer": "proximity effect", "correct": false },
+        { "answer": "kelvin effect", "correct": false }
+      ]
+    },
+    {
+      "question": "If we use bundled conductors in EHV transmission, it will:",
+      "options": [
+        { "answer": "increase capacitance", "correct": false },
+        { "answer": "decrease the inductance", "correct": false },
+        { "answer": "increase effective radius", "correct": true },
+        { "answer": "increase effective radius and decrease the inductance", "correct": true }
+      ]
+    },
+    {
+      "question": "Which of the following are the constants of the transmission lines?",
+      "options": [
+        { "answer": "Resistance", "correct": true },
+        { "answer": "Inductance", "correct": true },
+        { "answer": "Capacitance", "correct": true },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "If the number of poles in a 3-ϕ 11 kV transmission line is 80, then how many disc insulators are required?",
+      "options": [
+        { "answer": "240", "correct": true },
+        { "answer": "80", "correct": false },
+        { "answer": "6", "correct": false },
+        { "answer": "160", "correct": false }
+      ]
+    },
+    {
+      "question": "If the length of the cross arm is increased, the string efficiency ________.",
+      "options": [
+        { "answer": "becomes zero", "correct": false },
+        { "answer": "increases", "correct": true },
+        { "answer": "remains unaffected", "correct": false },
+        { "answer": "decreases", "correct": false }
+      ]
+    },
+    {
+      "question": "String efficiency cannot be improved by",
+      "options": [
+        { "answer": "grading the insulator", "correct": false },
+        { "answer": "using paint", "correct": true },
+        { "answer": "using longer cross arm", "correct": false },
+        { "answer": "using a guard ring", "correct": false }
+      ]
+    },
+    {
+      "question": "Current chopping phenomenon in a circuit breaker is associated with",
+      "options": [
+        { "answer": "Small inductive current", "correct": true },
+        { "answer": "Resistance switching", "correct": false },
+        { "answer": "Small capacitive current", "correct": false },
+        { "answer": "Heavy short circuit current", "correct": false }
+      ]
+    },
+    {
+      "question": "The current chopping tendency is minimized by using SF6 gas at relatively.",
+      "options": [
+        { "answer": "Low pressure high viscosity", "correct": false },
+        { "answer": "High pressure high viscosity", "correct": true },
+        { "answer": "Low pressure low viscosity", "correct": false },
+        { "answer": "High pressure low viscosity", "correct": false }
+      ]
+    },
+    {
+      "question": "The cost of producing one unit of energy depends on the method of production and the cost of ______.",
+      "options": [
+        { "answer": "escort line", "correct": false },
+        { "answer": "distribution line", "correct": false },
+        { "answer": "use", "correct": false },
+        { "answer": "transmission line loss", "correct": true }
+      ]
+    },
+    {
+      "question": "Plastic material is a ________ of electricity.",
+      "options": [
+        { "answer": "semi insulator", "correct": false },
+        { "answer": "good insulator", "correct": true },
+        { "answer": "semi conductor", "correct": false },
+        { "answer": "good conductor", "correct": false }
+      ]
+    },
+    {
+      "question": "Aluminium is preferred to be a bus-bar material because of _________.",
+      "options": [
+        { "answer": "its low cost", "correct": true },
+        { "answer": "its low density", "correct": false },
+        { "answer": "non-availability of copper", "correct": false },
+        { "answer": "the ease of fabrication", "correct": false }
+      ]
+    },
+    {
+      "question": "Which can’t act as moderator in nuclear power plant?",
+      "options": [
+        { "answer": "Heavy water", "correct": false },
+        { "answer": "Graphite", "correct": false },
+        { "answer": "Friona", "correct": true },
+        { "answer": "Paraffin", "correct": false }
+      ]
+    },
+    {
+      "question": "In nuclear power station, moderator is used to",
+      "options": [
+        { "answer": "absorb neutrons", "correct": false },
+        { "answer": "reduce the speed of neutrons", "correct": true },
+        { "answer": "accelerate the speed of neutrons", "correct": false },
+        { "answer": "stop chain reactions", "correct": false }
+      ]
+    },
+    {
+      "question": "Which process is used to produce heat in nuclear power stations?",
+      "options": [
+        { "answer": "Fission of uranium", "correct": true },
+        { "answer": "Fusion of uranium", "correct": false },
+        { "answer": "Neutron absorption by uranium", "correct": false },
+        { "answer": "Internal combustion of uranium", "correct": false }
+      ]
+    },
+    {
+      "question": "A vacuum circuit breaker can be used in which voltage range?",
+      "options": [
+        { "answer": "11-33 kV", "correct": false },
+        { "answer": "22-66 kV", "correct": true },
+        { "answer": "22-33 kV", "correct": false },
+        { "answer": "11-66 kV", "correct": false }
+      ]
+    },
+    {
+      "question": "In general AC distribution systems, arc interruption in vacuum circuit breakers are designed to function in a time period of",
+      "options": [
+        { "answer": "One cycle", "correct": true },
+        { "answer": "Two to three cycles", "correct": false },
+        { "answer": "Within ten cycles", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "To limit current chopping in Vacuum Circuit Breakers (VCB), the contact material used has",
+      "options": [
+        { "answer": "Low vapour pressure and high conductivity properties", "correct": true },
+        { "answer": "High vapour pressure and high conductivity properties", "correct": false },
+        { "answer": "High vapour pressure and low conductivity properties", "correct": false },
+        { "answer": "The inductance and capacitance of the system only", "correct": false }
+      ]
+    },
+    {
+      "question": "On what factor does the rate of rise of restriking voltage (RRRV) depend on?",
+      "options": [
+        { "answer": "System voltage.", "correct": false },
+        { "answer": "Circuit power factor only", "correct": false },
+        { "answer": "Switching conditions", "correct": false },
+        { "answer": "Both (b) and (c)", "correct": true }
+      ]
+    },
+    {
+      "question": "How is the restriking voltage measured?",
+      "options": [
+        { "answer": "RMS value", "correct": false },
+        { "answer": "Peak value", "correct": true },
+        { "answer": "Instantaneous value", "correct": false },
+        { "answer": "Average value", "correct": false }
+      ]
+    },
+    {
+      "question": "What is the main purpose of oil in oil circuit breakers?",
+      "options": [
+        { "answer": "Provide insulation", "correct": false },
+        { "answer": "Quenching arc", "correct": true },
+        { "answer": "Provide cooling of contacts", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following circuit breakers is used for the railway electrification?",
+      "options": [
+        { "answer": "Air blast circuit breaker", "correct": true },
+        { "answer": "SF6 circuit breaker", "correct": false },
+        { "answer": "Bulk oil circuit breaker", "correct": false },
+        { "answer": "Minimum oil circuit breaker", "correct": false }
+      ]
+    },
+    {
+      "question": "On what factor does the operating speed of the relay depend upon?",
+      "options": [
+        { "answer": "Rate of flux built up", "correct": false },
+        { "answer": "Armature core air gap", "correct": false },
+        { "answer": "Spring tension", "correct": false },
+        { "answer": "All of these", "correct": true }
+      ]
+    },
+
+    {
+      "question": "The cosine of the angle between useful power and total power is ______.",
+      "options": [
+        { "answer": "diversity factor", "correct": false },
+        { "answer": "load factor", "correct": false },
+        { "answer": "power factor", "correct": true },
+        { "answer": "demand factor", "correct": false }
+      ]
+    },
+    {
+      "question": "A supply system supplies the load 800 kW at power factor 0.8 leading. Calculate the reactive power.",
+      "options": [
+        { "answer": "600 VAR", "correct": true },
+        { "answer": "1000 VAR", "correct": false },
+        { "answer": "600 kVAR", "correct": false },
+        { "answer": "1000 kVAR", "correct": false }
+      ]
+    },
+    {
+      "question": "Cost of power generation will be low if-",
+      "options": [
+        { "answer": "Load factor is low and diversity factor is high", "correct": false },
+        { "answer": "Load factor is high and diversity factors is low", "correct": false },
+        { "answer": "Load factor and diversity factor are low", "correct": false },
+        { "answer": "Load factor and diversity factor are high", "correct": true }
+      ]
+    },
+    {
+      "question": "The reactive power component kVAR =",
+      "options": [
+        { "answer": "kW tan∅", "correct": false },
+        { "answer": "kVA sin∅", "correct": false },
+        { "answer": "kW cos∅", "correct": false },
+        { "answer": "kW tan∅ and kVA sin∅", "correct": true }
+      ]
+    },
+    {
+      "question": "The power factor of a D.C. circuit is always",
+      "options": [
+        { "answer": "less than unity", "correct": false },
+        { "answer": "unity", "correct": true },
+        { "answer": "greater than unity", "correct": false },
+        { "answer": "zero", "correct": false }
+      ]
+    },
+    {
+      "question": "Which among the following happens in a low power factor?",
+      "options": [
+        { "answer": "Large kVA rating of the equipment.", "correct": true },
+        { "answer": "Greater conductor size.", "correct": true },
+        { "answer": "Reduced handling capacity of the system.", "correct": true },
+        { "answer": "All of the above.", "correct": true }
+      ]
+    },
+    {
+      "question": "Lower power factor is usually not due to",
+      "options": [
+        { "answer": "Discharge lamp.", "correct": false },
+        { "answer": "Arc lamps.", "correct": false },
+        { "answer": "Incandescent lamps.", "correct": true },
+        { "answer": "Induction furnace.", "correct": false }
+      ]
+    },
+    {
+      "question": "For a consumer what is the most economical power factor?",
+      "options": [
+        { "answer": "0.25 – 0.5 lagging", "correct": false },
+        { "answer": "0.25 – 0.5 leading.", "correct": false },
+        { "answer": "0.85 – 0.95 lagging.", "correct": true },
+        { "answer": "0.85 – 0.95 leading.", "correct": false }
+      ]
+    },
+    {
+      "question": "The primary reason for the low power factor is due to the installation of",
+      "options": [
+        { "answer": "Induction motors", "correct": true },
+        { "answer": "DC motors", "correct": false },
+        { "answer": "Synchronous motors.", "correct": false },
+        { "answer": "Commutator motors.", "correct": false }
+      ]
+    },
+    {
+      "question": "A capacitor used for power factor correction in single phase circuit decreases:",
+      "options": [
+        { "answer": "the line current and increases power factor", "correct": true },
+        { "answer": "both line current and power factor", "correct": false },
+        { "answer": "line current", "correct": false },
+        { "answer": "power factor", "correct": false }
+      ]
+    },
+    {
+      "question": "What is the advantage of the static capacitors?",
+      "options": [
+        { "answer": "Low losses.", "correct": true },
+        { "answer": "Easy installation.", "correct": false },
+        { "answer": "Lower maintenance.", "correct": false },
+        { "answer": "All of the above.", "correct": true }
+      ]
+    },
+    {
+      "question": "The most suitable location for the power factor improvement device is",
+      "options": [
+        { "answer": "Near the electrical appliance which is responsible for the poor power factor.", "correct": true },
+        { "answer": "At the sending end.", "correct": false },
+        { "answer": "At the receiving end in case of transmission lines.", "correct": false },
+        { "answer": "Both (a) and (c).", "correct": true }
+      ]
+    },
+    {
+      "question": "A bank of condenser across the load of the factor is used for __________.",
+      "options": [
+        { "answer": "improving the power factor", "correct": true },
+        { "answer": "decreasing the power factor", "correct": false },
+        { "answer": "progress in the fluctuations", "correct": false },
+        { "answer": "quick start of the motors", "correct": false }
+      ]
+    },
+    {
+      "question": "Phase modifiers in AC transmission line are:",
+      "options": [
+        { "answer": "synchronous machines", "correct": true },
+        { "answer": "Induction machines", "correct": false },
+        { "answer": "DC machines", "correct": false },
+        { "answer": "Transformers", "correct": false }
+      ]
+    },
+    {
+      "question": "Power companies are interested in improving the power factor to ___________.",
+      "options": [
+        { "answer": "Reduce the line current", "correct": true },
+        { "answer": "Increase the motor efficiency", "correct": false },
+        { "answer": "Increase the volt-amperes", "correct": false },
+        { "answer": "Decrease the power", "correct": false }
+      ]
+    },
+    {
+      "question": "In the full distribution system, the voltage is converted into suitable voltage using ________ for industry and household applications.",
+      "options": [
+        { "answer": "Step-down transformer", "correct": true },
+        { "answer": "Planar transformer", "correct": false },
+        { "answer": "Constant voltage transformer", "correct": false },
+        { "answer": "Step-up transformer", "correct": false }
+      ]
+    },
+    {
+      "question": "Power factor can be numerically measured as:",
+      "options": [
+        { "answer": "number", "correct": false },
+        { "answer": "Percentage", "correct": false },
+        { "answer": "Both of these", "correct": true },
+        { "answer": "None of these", "correct": false }
+      ]
+    }
+
+ 
+
+  
+];
+
+    let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

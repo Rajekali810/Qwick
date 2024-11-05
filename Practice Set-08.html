@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-08 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-08</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+
+    const questions = [
+
+
+    {
+  question: "The intersheath grading in the cable is used to:",
+  options: [
+    { answer: "Minimize the stress", correct: false },
+    { answer: "Avoid the requirement of good insulation", correct: false },
+    { answer: "Provide proper stress distribution", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Cables for 220 kV lines are invariably:",
+  options: [
+    { answer: "Mica insulated", correct: false },
+    { answer: "Paper insulated", correct: false },
+    { answer: "Compressed oil or compressed gas insulated", correct: true },
+    { answer: "Rubber insulated", correct: false }
+  ]
+},
+{
+  question: "What should be the minimum clearance for laying power cables near communication lines?",
+  options: [
+    { answer: "0.2 m horizontally and vertically", correct: false },
+    { answer: "0.6 m horizontally and vertically", correct: true },
+    { answer: "1 m horizontally and vertically", correct: false },
+    { answer: "1.5 m horizontally and vertically", correct: false }
+  ]
+},
+{
+  question: "The advantage of oil-filled cables is:",
+  options: [
+    { answer: "More perfect impregnation", correct: false },
+    { answer: "Smaller overall size", correct: false },
+    { answer: "No ionization, oxidation, and formation of voids", correct: false },
+    { answer: "All of the above", correct: true }
+  ]
+},
+{
+  question: "Which of the following is NOT an advantage of oil-filled cables over solid cables?",
+  options: [
+    { answer: "The possibility of formation of voids is eliminated", correct: false },
+    { answer: "The maximum allowable stress increases", correct: false },
+    { answer: "Installation and maintenance is straightforward", correct: true },
+    { answer: "More perfect impregnation can take place", correct: false }
+  ]
+},
+{
+  question: "The material commonly used for insulation in high voltage cables is:",
+  options: [
+    { answer: "Teflon", correct: false },
+    { answer: "Impregnated paper", correct: true },
+    { answer: "Rubber", correct: false },
+    { answer: "PVC", correct: false }
+  ]
+},
+{
+  question: "The location of ground faults in underground cables can be found by:",
+  options: [
+    { answer: "Megger", correct: false },
+    { answer: "Murray loop test", correct: true },
+    { answer: "Electro-dynamometer", correct: false },
+    { answer: "Ohm-meter", correct: false }
+  ]
+},
+{
+  question: "Screened cables can be used for voltages:",
+  options: [
+    { answer: "Up to 11 kV", correct: false },
+    { answer: "11 kV to 33 kV", correct: false },
+    { answer: "33 kV to 66 kV", correct: true },
+    { answer: "66 kV to 132 kV", correct: false }
+  ]
+},
+{
+  question: "A cable carrying alternating-current has:",
+  options: [
+    { answer: "Hysteresis losses only", correct: false },
+    { answer: "Hysteresis and leakage losses only", correct: true },
+    { answer: "Hysteresis, leakage and copper losses only", correct: false },
+    { answer: "Hysteresis, leakage, copper and friction losses", correct: false }
+  ]
+},
+{
+  question: "Single core cable should have armour made off:",
+  options: [
+    { answer: "Magnetic material", correct: false },
+    { answer: "Non-magnetic and non-conducting material", correct: false },
+    { answer: "Non-magnetic but conducting material", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The dielectric constant of impregnated paper insulation is:",
+  options: [
+    { answer: "2.5", correct: false },
+    { answer: "3.8", correct: false },
+    { answer: "3.5", correct: true },
+    { answer: "4.3", correct: false }
+  ]
+},
+{
+  question: "Metallic shielding is provided on underground cables to:",
+  options: [
+    { answer: "Reduce thermal resistance", correct: false },
+    { answer: "Reduce corona effect", correct: false },
+    { answer: "Control the electrostatic voltage stress", correct: false },
+    { answer: "All of the above", correct: true }
+  ]
+},
+{
+  question: "What is the minimum resistance required in insulation test voltage of 500 V DC in accordance with BS 7671?",
+  options: [
+    { answer: "0.5 MΩ", correct: false },
+    { answer: "1 MΩ", correct: true },
+    { answer: "2 MΩ", correct: false },
+    { answer: "5 MΩ", correct: false }
+  ]
+},
+{
+  question: "A good insulating material should not possess:",
+  options: [
+    { answer: "Non-uniform viscosity", correct: true },
+    { answer: "High dielectric strength", correct: false },
+    { answer: "Least thermal expansion", correct: false },
+    { answer: "Large insulating resistance", correct: false }
+  ]
+},
+{
+  question: "Screened cables are used to make the electric field distribution within the cable:",
+  options: [
+    { answer: "Tangential", correct: false },
+    { answer: "Radial", correct: true },
+    { answer: "Rotating", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "________ is a type of electrical cable which consists of an inner conductor and is surrounded by a concentric conducting shield with the two separated by a dielectric:",
+  options: [
+    { answer: "Heliax Cables", correct: false },
+    { answer: "Metal sheathed Cables", correct: false },
+    { answer: "Coaxial Cables", correct: true },
+    { answer: "Flexible Cables", correct: false }
+  ]
+},
+{
+  question: "A.C.S.R conductor having 7 steel strands surrounded by 25 aluminium conductors will be specified as:",
+  options: [
+    { answer: "25/7", correct: true },
+    { answer: "7/25", correct: false },
+    { answer: "50/15", correct: false },
+    { answer: "15/50", correct: false }
+  ]
+},
+{
+  question: "What is the standard form of ACSR cable?",
+  options: [
+    { answer: "Aluminum Conductor Steel Reinforced", correct: true },
+    { answer: "Arsenic Conductor Steel Reinforced", correct: false },
+    { answer: "Arsenate Conductor Steel Reinforced", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Which among the following cables are generally suited for the voltage up to 11 kV?",
+  options: [
+    { answer: "Belted cables", correct: true },
+    { answer: "Screened cables", correct: false },
+    { answer: "Pressure cables", correct: false },
+    { answer: "None of these", correct: false }
+  ]
+},
+{
+  question: "The breakdown voltage of a cable depends on:",
+  options: [
+    { answer: "Presence of moisture", correct: false },
+    { answer: "Working temperature", correct: false },
+    { answer: "Time of application of the voltage", correct: false },
+    { answer: "All of the above", correct: true }
+  ]
+},
+{
+  question: "If a power cable and a communication cable are to run parallel, the minimum distance between the two, to avoid interference, should be:",
+  options: [
+    { answer: "2 cm", correct: false },
+    { answer: "10 cm", correct: false },
+    { answer: "50 cm", correct: true },
+    { answer: "400 cm", correct: false }
+  ]
+},
+{
+  question: "The advantage of oil-filled cables is:",
+  options: [
+    { answer: "More perfect impregnation", correct: false },
+    { answer: "Smaller overall size", correct: false },
+    { answer: "No ionisation, oxidation, and formation of voids", correct: false },
+    { answer: "All of the above", correct: true }
+  ]
+},
+{
+  question: "Sulphur hexafluoride cable is insulated by:",
+  options: [
+    { answer: "Impregnated paper", correct: false },
+    { answer: "High-pressure oil", correct: false },
+    { answer: "PVC", correct: false },
+    { answer: "Compressed gas", correct: true }
+  ]
+},
+{
+  question: "The thickness of metallic shielding on cables is usually:",
+  options: [
+    { answer: "0.04 mm", correct: false },
+    { answer: "0.2 to 0.4 mm", correct: true },
+    { answer: "3 to 5 mm", correct: false },
+    { answer: "40 to 60 mm", correct: false }
+  ]
+},
+{
+  question: "The bedding on a cable consists of:",
+  options: [
+    { answer: "Jute strands", correct: false },
+    { answer: "Hessian tape", correct: false },
+    { answer: "Paper tape compounded with a fibrous material", correct: false },
+    { answer: "Any of the above", correct: true }
+  ]
+},
+{
+  question: "Transmission of power by AC cables is impossible beyond:",
+  options: [
+    { answer: "35 to 45 km", correct: true },
+    { answer: "500 km", correct: false },
+    { answer: "300 km", correct: false },
+    { answer: "800 km", correct: false }
+  ]
+},
+{
+  question: "What is the function of steel wire in A.C.S.R conductors?",
+  options: [
+    { answer: "Compensate for skin effect", correct: false },
+    { answer: "Takes care of surges", correct: false },
+    { answer: "Reduced capacitance and inductance", correct: false },
+    { answer: "Provide additional mechanical strength", correct: true }
+  ]
+},
+{
+  question: "Transmission lines are transposed to:",
+  options: [
+    { answer: "Reduce copper loss", correct: false },
+    { answer: "Reduce skin effect", correct: false },
+    { answer: "Prevent interference with neighbouring telephone lines", correct: true },
+    { answer: "Prevent short-circuit between any two lines", correct: false }
+  ]
+},
+{
+  question: "The bundled conductor in EHV transmission line system provides:",
+  options: [
+    { answer: "Increased inductance", correct: false },
+    { answer: "Reduced capacitance", correct: false },
+    { answer: "Increased capacitance", correct: false },
+    { answer: "Increased voltage gradient", correct: true }
+  ]
+},
+{
+  question: "When bundle conductors are used in place of single conductors, the effective inductance and capacitance will respectively:",
+  options: [
+    { answer: "Increase and decrease", correct: false },
+    { answer: "Decrease and increase", correct: true },
+    { answer: "Decrease and remain unaffected", correct: false },
+    { answer: "Remain unaffected and increase", correct: false }
+  ]
+},
+{
+  question: "Aluminum is now most commonly used conductor in transmission line than copper because:",
+  options: [
+    { answer: "It is more conductive", correct: false },
+    { answer: "Its tensile strength is more", correct: false },
+    { answer: "It is costlier", correct: false },
+    { answer: "It is light in weight", correct: true }
+  ]
+},
+{
+  question: "The inductance of single phase two wire power transmission line per km gets doubled when the:",
+  options: [
+    { answer: "Distance between the wire is doubled", correct: false },
+    { answer: "Distance between the wires is tripled", correct: false },
+    { answer: "Distance between the wires is increased as square of the original distance", correct: false },
+    { answer: "Radius of the wire is doubled", correct: true }
+  ]
+},
+{
+  question: "Presence of earth in case of overhead line:",
+  options: [
+    { answer: "Increases the capacitance", correct: true },
+    { answer: "Decreases the capacitance", correct: false },
+    { answer: "Increases the inductance", correct: false },
+    { answer: "Decreases the inductance", correct: false }
+  ]
+},
+{
+  question: "A dynamometer type wattmeter responds to:",
+  options: [
+    { answer: "Average value of active power", correct: true },
+    { answer: "Average value of reactive power", correct: false },
+    { answer: "Peak value of active power", correct: false },
+    { answer: "Peak value of reactive power", correct: false }
+  ]
+},
+{
+  question: "More power is required to operate a moving-iron meter than a PMMC meter because of the magnetic circuit's high:",
+  options: [
+    { answer: "Resistance", correct: false },
+    { answer: "Reluctance", correct: true },
+    { answer: "Retentivity", correct: false },
+    { answer: "Resilience", correct: false }
+  ]
+},
+{
+  question: "Which of the following is not a source of power?",
+  options: [
+    { answer: "Solar cell", correct: false },
+    { answer: "Photoelectric cell", correct: true },
+    { answer: "Thermocouple", correct: false },
+    { answer: "Photovoltaic cell", correct: false }
+  ]
+},
+{
+  question: "Which of the following can be measured by LVDT?",
+  options: [
+    { answer: "Displacement", correct: true },
+    { answer: "Velocity", correct: false },
+    { answer: "Acceleration", correct: false },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "Which of the following can be measured by the use of a tachogenerator?",
+  options: [
+    { answer: "Acceleration", correct: false },
+    { answer: "Speed", correct: true },
+    { answer: "Speed and acceleration", correct: false },
+    { answer: "Displacement", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "A moving coil instrument has full-scale deflection at 50 mV and 10 mA. The value of shunt resistance required to convert it into a (0-5A) ammeter is:",
+  options: [
+    { answer: "0.005 Ω", correct: false },
+    { answer: "0.01 Ω", correct: true },
+    { answer: "0.001 Ω", correct: false },
+    { answer: "1 Ω", correct: false }
+  ]
+},
+{
+  question: "Which one of the following is a passive transducer?",
+  options: [
+    { answer: "Piezoelectric", correct: false },
+    { answer: "Thermocouple", correct: false },
+    { answer: "Photovoltaic cell", correct: false },
+    { answer: "LVDT", correct: true }
+  ]
+},
+{
+  question: "Voltmeter sensitivity is expressed in:",
+  options: [
+    { answer: "Ohm/V", correct: true },
+    { answer: "V/ohm", correct: false },
+    { answer: "Ohm-V", correct: false },
+    { answer: "Volts", correct: false }
+  ]
+},
+{
+  question: "What does a rectifier instrument indicate?",
+  options: [
+    { answer: "RMS value", correct: false },
+    { answer: "Peak value", correct: false },
+    { answer: "None of the above", correct: false },
+    { answer: "Average value", correct: true }
+  ]
+},
+{
+  question: "A moving coil instrument has resistance of 5 Ω and gives a full-scale reading of 100 mA. It is desired to use this meter as a voltmeter for a range of 0 to 500 V. The resistance required is:",
+  options: [
+    { answer: "4995 Ω in parallel", correct: false },
+    { answer: "5 Ω in parallel", correct: false },
+    { answer: "5 Ω in series", correct: false },
+    { answer: "4995 Ω in series", correct: true }
+  ]
+},
+{
+  question: "In electrodynamometer type wattmeters, pressure coil inductance produces error which is:",
+  options: [
+    { answer: "Constant irrespective of power factor", correct: false },
+    { answer: "Higher at low power factors of load", correct: true },
+    { answer: "Zero at leading power factors of load", correct: false },
+    { answer: "Lower at low power factors of load", correct: false }
+  ]
+},
+{
+  question: "The difference between the measured value and the true value is called:",
+  options: [
+    { answer: "Gross error", correct: false },
+    { answer: "Relative error", correct: false },
+    { answer: "Probable error", correct: false },
+    { answer: "Absolute error", correct: true }
+  ]
+},
+{
+  question: "If 3-phase power is measured with the help of two-wattmeter method in a balanced load with the application of 3-phase balanced voltage, variation in readings of wattmeters will depend on:",
+  options: [
+    { answer: "Load only", correct: false },
+    { answer: "Power factor only", correct: false },
+    { answer: "Load and power factor", correct: true },
+    { answer: "Neither load nor power factor", correct: false }
+  ]
+},
+{
+  question: "In 3 phase power measurement by two wattmeter method, the reading of one wattmeter is zero. The power factor of the load is:",
+  options: [
+    { answer: "1", correct: false },
+    { answer: "0.5", correct: true },
+    { answer: "0", correct: false },
+    { answer: "0.8", correct: false }
+  ]
+},
+{
+  question: "The power in an unbalanced 3-phase 4-wire circuit can be measured by using a _______ method:",
+  options: [
+    { answer: "4 wattmeter", correct: false },
+    { answer: "3 wattmeter", correct: true },
+    { answer: "2 wattmeter", correct: false },
+    { answer: "1 wattmeter", correct: false }
+  ]
+},
+{
+  question: "Two holes in the disc of an energy meter are drilled at the opposite sides of the spindle to:",
+  options: [
+    { answer: "Improve its ventilation", correct: false },
+    { answer: "Eliminate creeping at no load", correct: true },
+    { answer: "Increase its deflecting torque", correct: false },
+    { answer: "Increase its braking torque", correct: false }
+  ]
+},
+{
+  question: "In a 3-phase power measurement by two wattmeter method, both the wattmeters had identical readings. The power factor of the load was:",
+  options: [
+    { answer: "Unity", correct: true },
+    { answer: "0.8 lagging", correct: false },
+    { answer: "0.8 leading", correct: false },
+    { answer: "Zero", correct: false }
+  ]
+}
+
+];
+
+let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-12 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-12</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    const questions = [
+
+
+
+
+  {
+    "question": "Which one of the following does not have an effect on corona?",
+    "options": [
+      { "answer": "Spacing between conductors", "correct": false },
+      { "answer": "Conductor size", "correct": false },
+      { "answer": "Line voltage", "correct": false },
+      { "answer": "Length of conductor", "correct": true }
+    ]
+  },
+  {
+    "question": "Corona is accompanied by:",
+    "options": [
+      { "answer": "Violet visible discharge", "correct": false },
+      { "answer": "Hissing sound", "correct": false },
+      { "answer": "Radio interference", "correct": false },
+      { "answer": "All of these", "correct": true }
+    ]
+  },
+  {
+    "question": "Corona in DC supply is _______",
+    "options": [
+      { "answer": "Zero", "correct": false },
+      { "answer": "Less than AC", "correct": true },
+      { "answer": "Greater than AC", "correct": false },
+      { "answer": "Cannot be calculated", "correct": false }
+    ]
+  },
+  {
+    "question": "The corona loss on a particular system at 50 Hz is 1 kW/km per phase. The corona loss at 60 Hz in the same system would be:",
+    "options": [
+      { "answer": "1 kW/km per phase", "correct": false },
+      { "answer": "0.8 kW/km per phase", "correct": false },
+      { "answer": "1.5 kW/km per phase", "correct": false },
+      { "answer": "1.13 kW/km per phase", "correct": true }
+    ]
+  },
+  {
+    "question": "The corona effect can be minimized by increasing:",
+    "options": [
+      { "answer": "The length of conduct", "correct": false },
+      { "answer": "Spacing between conductors", "correct": false },
+      { "answer": "Diameter of conductors", "correct": false },
+      { "answer": "Both spacing between conductors and diameter of the conductors", "correct": true }
+    ]
+  },
+  {
+    "question": "The charging current in a transmission line increases due to Corona effect because corona increases:",
+    "options": [
+      { "answer": "Line current", "correct": false },
+      { "answer": "Effective line voltage", "correct": false },
+      { "answer": "Effective conductor diameter", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The presence of ozone due to corona affects the electrical systems is:",
+    "options": [
+      { "answer": "Reducing power factor", "correct": false },
+      { "answer": "Corroding the conductor", "correct": true },
+      { "answer": "Increasing the power factor", "correct": false },
+      { "answer": "Transferring energy to ground", "correct": false }
+    ]
+  },
+  {
+    "question": "The chances of occurrence of corona is maximum during:",
+    "options": [
+      { "answer": "Dry weather", "correct": false },
+      { "answer": "Humid weather", "correct": true },
+      { "answer": "Winter", "correct": false },
+      { "answer": "Hot summer", "correct": false }
+    ]
+  },
+
+  {
+    "question": "The current drawn by the line due to corona losses is",
+    "options": [
+      { "answer": "Non-sinusoidal", "correct": true },
+      { "answer": "Sinusoidal", "correct": false },
+      { "answer": "Triangular", "correct": false },
+      { "answer": "Square", "correct": false }
+    ]
+  },
+  {
+    "question": "A feeder, in a transmission system, feeds power to",
+    "options": [
+      { "answer": "Distributors", "correct": true },
+      { "answer": "Generating stations", "correct": false },
+      { "answer": "Service mains", "correct": false },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The minimum clearance between the ground and a 220 kV line is about",
+    "options": [
+      { "answer": "4.3 m", "correct": false },
+      { "answer": "5.5 m", "correct": false },
+      { "answer": "7.0 m", "correct": true },
+      { "answer": "10.5 m", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following bus-bar schemes has the lowest cost?",
+    "options": [
+      { "answer": "Ring bus-bar scheme", "correct": false },
+      { "answer": "Single bus-bar scheme", "correct": true },
+      { "answer": "Breaker and a half scheme", "correct": false },
+      { "answer": "Main and transfer scheme", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following substation schemes is more reliable and flexible?",
+    "options": [
+      { "answer": "Single bus", "correct": false },
+      { "answer": "Double bus with double breaker", "correct": false },
+      { "answer": "One and a half breaker", "correct": true },
+      { "answer": "Main and transfer bus", "correct": false }
+    ]
+  },
+  {
+    "question": "A conductor, due to sag between two supports, takes the form of",
+    "options": [
+      { "answer": "Semicircle", "correct": false },
+      { "answer": "Triangle", "correct": false },
+      { "answer": "Ellipse", "correct": false },
+      { "answer": "Catenary", "correct": true }
+    ]
+  },
+  {
+    "question": "A circuit is disconnected by isolators when",
+    "options": [
+      { "answer": "Line is energized", "correct": false },
+      { "answer": "There is no current in the line", "correct": true },
+      { "answer": "Line is on full load", "correct": false },
+      { "answer": "Circuit breaker is not open", "correct": false }
+    ]
+  },
+  {
+    "question": "The discs of the strain insulators are used in _________ plane.",
+    "options": [
+      { "answer": "Slant", "correct": false },
+      { "answer": "Vertical", "correct": true },
+      { "answer": "Smooth", "correct": false },
+      { "answer": "Horizontal", "correct": false }
+    ]
+  },
+  {
+    "question": "Constant voltage transmission entails the following disadvantage",
+    "options": [
+      { "answer": "Large conductor area is required for same power transmission", "correct": false },
+      { "answer": "Short-circuit current of the system is increased", "correct": true },
+      { "answer": "Either of the above", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The loads on distributor systems are generally",
+    "options": [
+      { "answer": "Balanced", "correct": false },
+      { "answer": "Unbalanced", "correct": true },
+      { "answer": "Either of the above", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "A uniformly loaded D.C. distributor is fed at both ends with equal voltages. As compared to a similar distributor fed at one end only, the drop at the middle point is",
+    "options": [
+      { "answer": "One-fourth", "correct": false },
+      { "answer": "One-third", "correct": false },
+      { "answer": "One-half", "correct": true },
+      { "answer": "Twice", "correct": false }
+    ]
+  },
+  {
+    "question": "For a lossy transmission line, the characteristic impedance does not depend on",
+    "options": [
+      { "answer": "The operating frequency of the line", "correct": false },
+      { "answer": "The conductivity of the conductor", "correct": false },
+      { "answer": "The conductivity of the dielectric separating the conductor", "correct": false },
+      { "answer": "The length of the line", "correct": true }
+    ]
+  },
+  {
+    "question": "Transmitted power remaining the same, if supply voltage of a D.C. 2-wire feeder is increased 100 percent, saving in copper is",
+    "options": [
+      { "answer": "25 percent", "correct": false },
+      { "answer": "50 percent", "correct": true },
+      { "answer": "75 percent", "correct": false },
+      { "answer": "100 percent", "correct": false }
+    ]
+  },
+  {
+    "question": "In the analysis of which of the following lines is shunt capacitance neglected?",
+    "options": [
+      { "answer": "Short transmission lines", "correct": true },
+      { "answer": "Medium transmission lines", "correct": false },
+      { "answer": "Long transmission lines", "correct": false },
+      { "answer": "Medium as well as long transmission lines", "correct": false }
+    ]
+  },
+  {
+    "question": "________ are the conductors, which connect the consumer's terminals to the distribution.",
+    "options": [
+      { "answer": "Distributors", "correct": false },
+      { "answer": "Service mains", "correct": true },
+      { "answer": "Feeders", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "As compared to a 2-wire D.C. distributor, a 3-wire distributor with the same maximum voltage to earth uses only",
+    "options": [
+      { "answer": "31.25 percent of copper", "correct": true },
+      { "answer": "33.3 percent of copper", "correct": false },
+      { "answer": "66.7 percent of copper", "correct": false },
+      { "answer": "125 percent of copper", "correct": false }
+    ]
+  },
+  {
+    "question": "Pin-type insulators are generally not used for voltages beyond",
+    "options": [
+      { "answer": "1 kV", "correct": false },
+      { "answer": "11 kV", "correct": false },
+      { "answer": "22 kV", "correct": false },
+      { "answer": "33 kV", "correct": true }
+    ]
+  },
+  {
+    "question": "The phenomenon of rise in voltage at the receiving end of the open-circuited or lightly loaded line is called the",
+    "options": [
+      { "answer": "See-back effect", "correct": false },
+      { "answer": "Ferranti effect", "correct": true },
+      { "answer": "Raman effect", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "High voltage transmission lines use",
+    "options": [
+      { "answer": "Suspension insulators", "correct": true },
+      { "answer": "Pin insulators", "correct": false },
+      { "answer": "Both (A) and (B)", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The power transmitted will be maximum when",
+    "options": [
+      { "answer": "Corona losses are minimum", "correct": false },
+      { "answer": "Reactance is high", "correct": false },
+      { "answer": "Sending end voltage is more", "correct": true },
+      { "answer": "Receiving end voltage is more", "correct": false }
+    ]
+  },
+
+    {
+      "question": "Which of the following D.C. distribution systems is the simplest and lowest in first cost?",
+      "options": [
+        { "answer": "Radial system", "correct": true },
+        { "answer": "Ring system", "correct": false },
+        { "answer": "Interconnected system", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "The radial distribution is simple and economical, but the reliability of the system is poor and leads to:",
+      "options": [
+        { "answer": "Evacuating of energy supply if there is fault in the line.", "correct": false },
+        { "answer": "Transmission of energy supply if there is fault in the line.", "correct": false },
+        { "answer": "Distribution of energy supply if there is fault in the line.", "correct": false },
+        { "answer": "Interruption of energy supply if there is fault in the line.", "correct": true }
+      ]
+    },
+    {
+      "question": "The power factor of industrial loads is generally:",
+      "options": [
+        { "answer": "Unity", "correct": false },
+        { "answer": "Lagging", "correct": true },
+        { "answer": "Leading", "correct": false },
+        { "answer": "Zero", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following distribution systems is more reliable?",
+      "options": [
+        { "answer": "Radial system", "correct": false },
+        { "answer": "Tree system", "correct": false },
+        { "answer": "Ring main system", "correct": true },
+        { "answer": "All are equally reliable", "correct": false }
+      ]
+    },
+    {
+      "question": "A ______ is a substation that has no transformers and operates only at a single voltage level.",
+      "options": [
+        { "answer": "Converter substation", "correct": false },
+        { "answer": "Transmission substation", "correct": false },
+        { "answer": "Switching station", "correct": true },
+        { "answer": "Mobile substation", "correct": false }
+      ]
+    },
+    {
+      "question": "Tappings of a transformer are provided:",
+      "options": [
+        { "answer": "At the phase end of LV side", "correct": false },
+        { "answer": "At the phase end of HV side", "correct": false },
+        { "answer": "At the neutral side end of HV side", "correct": false },
+        { "answer": "At the middle of HV side", "correct": true }
+      ]
+    },
+    {
+      "question": "Which of the following characteristics should the line supports for transmission lines possess?",
+      "options": [
+        { "answer": "Low cost", "correct": false },
+        { "answer": "High mechanical strength", "correct": false },
+        { "answer": "Longer life", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "Galvanized steel wire is generally used as:",
+      "options": [
+        { "answer": "Stay wire", "correct": false },
+        { "answer": "Earth wire", "correct": false },
+        { "answer": "Structural components", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "For aluminium, as compared to copper, all the following factors have higher values except:",
+      "options": [
+        { "answer": "Specific volume", "correct": false },
+        { "answer": "Electrical conductivity", "correct": true },
+        { "answer": "Coefficient of linear expansion", "correct": false },
+        { "answer": "Resistance per unit length for same cross-section", "correct": false }
+      ]
+    },
+    {
+      "question": "Electromechanical voltage regulators are generally used in:",
+      "options": [
+        { "answer": "Reactors", "correct": false },
+        { "answer": "Generators", "correct": true },
+        { "answer": "Transformers", "correct": false },
+        { "answer": "All of the above", "correct": false }
+      ]
+    },
+
+    {
+      "question": "Which of the following materials is not used for transmission and distribution of electrical power?",
+      "options": [
+        { "answer": "Copper", "correct": false },
+        { "answer": "Aluminium", "correct": false },
+        { "answer": "Steel", "correct": false },
+        { "answer": "Tungsten", "correct": true }
+      ]
+    },
+    {
+      "question": "All the other types of insulators are popularly used in overhead lines except ______ of the following.",
+      "options": [
+        { "answer": "Pin-type", "correct": false },
+        { "answer": "Stress-type", "correct": true },
+        { "answer": "Suspension", "correct": false },
+        { "answer": "Strain-type", "correct": false }
+      ]
+    },
+    {
+      "question": "String efficiency cannot be improved by:",
+      "options": [
+        { "answer": "Grading the insulator", "correct": false },
+        { "answer": "Using paint", "correct": true },
+        { "answer": "Using longer cross arm", "correct": false },
+        { "answer": "Using a guard ring", "correct": false }
+      ]
+    },
+    {
+      "question": "Porcelain insulator does not have:",
+      "options": [
+        { "answer": "Kaolin", "correct": false },
+        { "answer": "Silica", "correct": true },
+        { "answer": "Feldspar", "correct": false },
+        { "answer": "Quartz", "correct": false }
+      ]
+    },
+    {
+      "question": "The usual spans with R.C.C. poles are:",
+      "options": [
+        { "answer": "40-50 meters", "correct": false },
+        { "answer": "60-100 meters", "correct": false },
+        { "answer": "80-100 meters", "correct": true },
+        { "answer": "300-500 meters", "correct": false }
+      ]
+    },
+    {
+      "question": "The fuel used in nuclear power generation plant is:",
+      "options": [
+        { "answer": "Uranium", "correct": true },
+        { "answer": "Coal", "correct": false },
+        { "answer": "Diesel", "correct": false },
+        { "answer": "Water", "correct": false }
+      ]
+    },
+    {
+      "question": "A penstock is used as a conduit between:",
+      "options": [
+        { "answer": "The steam chest and turbine in a thermal station", "correct": false },
+        { "answer": "The dam and turbine in a hydro station", "correct": true },
+        { "answer": "The turbine and the discharge drain", "correct": false },
+        { "answer": "The heat exchanger and the turbine in a nuclear power plant", "correct": false }
+      ]
+    },
+    {
+      "question": "_______ is used in the first step in the nuclear generating station process.",
+      "options": [
+        { "answer": "Fission", "correct": true },
+        { "answer": "Fusion", "correct": false },
+        { "answer": "Reaction", "correct": false },
+        { "answer": "Isotopes", "correct": false }
+      ]
+    },
+    {
+      "question": "Primary transmission is done by a ______ system.",
+      "options": [
+        { "answer": "3-phase, 3-wire", "correct": true },
+        { "answer": "3-phase, 4-wire", "correct": false },
+        { "answer": "3-phase, 5-wire", "correct": false },
+        { "answer": "1-phase, 2-wire", "correct": false }
+      ]
+    },
+    {
+      "question": "The principle of solar power is based on:",
+      "options": [
+        { "answer": "Hydroelectric effect", "correct": false },
+        { "answer": "Thermoelectric effect", "correct": false },
+        { "answer": "Photovoltaic effect", "correct": true },
+        { "answer": "Fission", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following is used to transform chemical energy into electrical energy?",
+      "options": [
+        { "answer": "Battery", "correct": true },
+        { "answer": "Photo cell", "correct": false },
+        { "answer": "Electrolyte", "correct": false },
+        { "answer": "Secondary cell", "correct": false }
+      ]
+    },
+    {
+      "question": "A booster is a ______ whose function is to inject or add certain voltage into a circuit so as to compensate the IR drop in the feeder.",
+      "options": [
+        { "answer": "Transformer", "correct": false },
+        { "answer": "DC motor", "correct": false },
+        { "answer": "Alternator", "correct": false },
+        { "answer": "DC generator", "correct": true }
+      ]
+    }
+  
+
+  
+
+
+
+
+
+
+];
+
+   let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

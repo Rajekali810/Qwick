@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-09 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-09</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+
+    const questions = [
+
+
+{
+  question: "The scale of an electrodynamometer usually reads the:",
+  options: [
+    { answer: "Average value of the AC", correct: false },
+    { answer: "Mean value of the AC", correct: false },
+    { answer: "Effective value of the AC", correct: true },
+    { answer: "Squared value of the AC", correct: false }
+  ]
+},
+{
+  question: "When two wattmeters are used to measure the power of a 3-phase balanced circuit and one wattmeter reads negative, it means the angle of lag is:",
+  options: [
+    { answer: "0°", correct: false },
+    { answer: "30°", correct: false },
+    { answer: "60°", correct: false },
+    { answer: "Above 60°", correct: true }
+  ]
+},
+{
+  question: "Torque/weight ratio of an instrument indicates:",
+  options: [
+    { answer: "Selectivity", correct: false },
+    { answer: "Accuracy", correct: false },
+    { answer: "Fidelity", correct: false },
+    { answer: "Sensitivity", correct: true }
+  ]
+},
+{
+  question: "In a PMMC instrument, the swamping resistor is used to:",
+  options: [
+    { answer: "Increase the damping of the instrument", correct: false },
+    { answer: "Reduce the current within safe limits", correct: false },
+    { answer: "Compensate for temperature variations", correct: true },
+    { answer: "Increase the full-scale sensitivity", correct: false }
+  ]
+},
+{
+  question: "Two voltmeters with ranges of 0 to 100 V have sensitivities of 10 kΩ/V and 20 kΩ/V. What is the maximum voltage that can be measured when these voltmeters are connected in series?",
+  options: [
+    { answer: "200 V", correct: false },
+    { answer: "150 V", correct: true },
+    { answer: "100 V", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "PMMC type instruments normally use:",
+  options: [
+    { answer: "Air friction damping", correct: false },
+    { answer: "Fluid friction damping", correct: false },
+    { answer: "Eddy current damping", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In moving coil instruments, the scale used is:",
+  options: [
+    { answer: "Linear scale", correct: true },
+    { answer: "Bilinear scale", correct: false },
+    { answer: "Rectangular scale", correct: false },
+    { answer: "Non-linear scale", correct: false }
+  ]
+},
+{
+  question: "In PMMC instruments, the torque/deflection produced in the coil is _______ current flowing through it:",
+  options: [
+    { answer: "Directly proportional", correct: true },
+    { answer: "Inversely proportional", correct: false },
+    { answer: "Directly proportional to the square of", correct: false },
+    { answer: "Inversely proportional to the square of", correct: false }
+  ]
+},
+{
+  question: "The unit of solid angle is ________.",
+  options: [
+    { answer: "Radian", correct: false },
+    { answer: "Steradian", correct: true },
+    { answer: "Degree", correct: false },
+    { answer: "Lux", correct: false }
+  ]
+},
+{
+  question: "'Lumen' is the unit of:",
+  options: [
+    { answer: "Brightness", correct: false },
+    { answer: "Luminous intensity", correct: false },
+    { answer: "Illuminance", correct: false },
+    { answer: "Luminous flux", correct: true }
+  ]
+},
+{
+  question: "Candela is the unit of which?",
+  options: [
+    { answer: "Wavelength", correct: false },
+    { answer: "Luminous intensity", correct: true },
+    { answer: "Luminous flux", correct: false },
+    { answer: "Frequency", correct: false }
+  ]
+},
+{
+  question: "The illumination of a surface, its distance from the source, is _______.",
+  options: [
+    { answer: "Directly proportional to its square root", correct: false },
+    { answer: "Inversely proportional to its square", correct: true },
+    { answer: "Directly proportional to its square", correct: false },
+    { answer: "Inversely proportional to its square root", correct: false }
+  ]
+},
+{
+  question: "What will be the number of lamps, each having 300 lumens, required to obtain an average illuminance of 50 lux on a 4m × 3m rectangular room?",
+  options: [
+    { answer: "2", correct: true },
+    { answer: "4", correct: false },
+    { answer: "5", correct: false },
+    { answer: "6", correct: false }
+  ]
+},
+{
+  question: "1 candela = ______ lumen.",
+  options: [
+    { answer: "4π", correct: true },
+    { answer: "8π", correct: false },
+    { answer: "2π", correct: false },
+    { answer: "6π", correct: false }
+  ]
+},
+{
+  question: "In electric discharge lamps, the light is produced by:",
+  options: [
+    { answer: "The magnetic effect of current", correct: false },
+    { answer: "The heating effect of current", correct: false },
+    { answer: "Cathode ray emission", correct: false },
+    { answer: "The ionization in a gas or vapour", correct: true }
+  ]
+},
+{
+  question: "The color of sodium vapor discharge lamp is:",
+  options: [
+    { answer: "Yellow", correct: true },
+    { answer: "Red", correct: false },
+    { answer: "Green", correct: false },
+    { answer: "Pink", correct: false }
+  ]
+},
+{
+  question: "The lamp that cannot sustain much voltage fluctuations is:",
+  options: [
+    { answer: "Incandescent lamp", correct: true },
+    { answer: "Sodium vapour lamp", correct: false },
+    { answer: "Mercury iodide lamp", correct: false },
+    { answer: "Mercury vapour lamp", correct: false }
+  ]
+},
+{
+  question: "The flicker effect of fluorescent lamps is more pronounced at:",
+  options: [
+    { answer: "Lower voltages", correct: false },
+    { answer: "Higher voltages", correct: false },
+    { answer: "Lower frequencies", correct: true },
+    { answer: "Higher frequencies", correct: false }
+  ]
+},
+{
+  question: "In lighting insulation using filament lamps, voltage drop of 1% results in:",
+  options: [
+    { answer: "No loss of light", correct: false },
+    { answer: "3.5% loss in the light output", correct: true },
+    { answer: "1.5% loss in the light output", correct: false },
+    { answer: "15% loss in the light output", correct: false }
+  ]
+},
+{
+  question: "In carbon arc lamps, the diameter of the positive electrode is ________ that of the negative electrode.",
+  options: [
+    { answer: "The same as", correct: false },
+    { answer: "Twice", correct: true },
+    { answer: "Thrice", correct: false },
+    { answer: "Half of", correct: false }
+  ]
+},
+{
+  question: "Which type of lamp efficiency is 10 lumen/watt?",
+  options: [
+    { answer: "Mercury vapor lamp", correct: false },
+    { answer: "Sodium Vapor lamp", correct: false },
+    { answer: "Arc lamps", correct: false },
+    { answer: "Tungsten filament lamp", correct: true }
+  ]
+},
+{
+  question: "Which of the following will need the highest level of illumination?",
+  options: [
+    { answer: "Proof reading", correct: true },
+    { answer: "Bedrooms", correct: false },
+    { answer: "Hospital wards", correct: false },
+    { answer: "Railway platforms", correct: false }
+  ]
+},
+{
+  question: "Which of the below emits nearly monochromatic light?",
+  options: [
+    { answer: "Mercury vapor lamp", correct: false },
+    { answer: "Bulb", correct: false },
+    { answer: "Tubelight", correct: false },
+    { answer: "Sodium vapor lamp", correct: true }
+  ]
+},
+{
+  question: "For which of the following purposes are low voltage lamps used?",
+  options: [
+    { answer: "Flood lighting", correct: false },
+    { answer: "Industrial lighting", correct: false },
+    { answer: "Stadium lighting", correct: false },
+    { answer: "Automotive lighting", correct: true }
+  ]
+},
+{
+  question: "Which of the following is the most efficient lamp?",
+  options: [
+    { answer: "Graphene", correct: false },
+    { answer: "LED", correct: true },
+    { answer: "CFL", correct: false },
+    { answer: "Sodium vapour lamp", correct: false }
+  ]
+},
+{
+  question: "The temperature setting for a bi-metallic strip can be changed by:",
+  options: [
+    { answer: "Changing the current", correct: false },
+    { answer: "Moving it close and away from a heating element", correct: true },
+    { answer: "Changing I/P voltage", correct: false },
+    { answer: "Changing the frequency", correct: false }
+  ]
+},
+{
+  question: "High-pressure mercury-vapour lamp emits:",
+  options: [
+    { answer: "Red colour light", correct: false },
+    { answer: "Yellow colour light", correct: false },
+    { answer: "White colour light", correct: false },
+    { answer: "Bluish White colour light", correct: true }
+  ]
+},
+{
+  question: "Which lamp has the best Colour Rendering Index (CRI)?",
+  options: [
+    { answer: "Fluorescent", correct: false },
+    { answer: "Incandescent", correct: true },
+    { answer: "LED", correct: false },
+    { answer: "High-pressure sodium vapor", correct: false }
+  ]
+},
+{
+  question: "Wavelength for red colour is:",
+  options: [
+    { answer: "4000 Å", correct: false },
+    { answer: "5000 Å", correct: false },
+    { answer: "6000 Å", correct: false },
+    { answer: "7000 Å", correct: true }
+  ]
+},
+{
+  question: "Luminous efficiency of a fluorescent tube is:",
+  options: [
+    { answer: "10 lumens/W", correct: false },
+    { answer: "20 lumens/W", correct: false },
+    { answer: "60 lumens/W", correct: true },
+    { answer: "150 lumens/W", correct: false }
+  ]
+},
+{
+  question: "For precision work, the illumination level required is of the order of:",
+  options: [
+    { answer: "500 to 1000 lumens/m2", correct: true },
+    { answer: "50 to 100 lumens/m2", correct: false },
+    { answer: "200 to 400 lumens/m2", correct: false },
+    { answer: "10 to 25 lumens/m2", correct: false }
+  ]
+},
+{
+  question: "For indoor lighting the ratio of space: height is _____.",
+  options: [
+    { answer: "3 : 4", correct: false },
+    { answer: "5 : 6", correct: false },
+    { answer: "1 : 2", correct: true },
+    { answer: "2 : 3", correct: false }
+  ]
+},
+{
+  question: "The candle power of a lamp placed normal to a working plane is 60 CP. Find the distance if the illumination is 15 lux.",
+  options: [
+    { answer: "1.5 meters", correct: false },
+    { answer: "2.5 meters", correct: false },
+    { answer: "4 meters", correct: false },
+    { answer: "2 meters", correct: true }
+  ]
+},
+{
+  question: "In which of the following lighting systems, more than 90% of the total light flux is made to fall directly on the working plane with the help of deep reflectors?",
+  options: [
+    { answer: "Direct lighting", correct: true },
+    { answer: "Indirect lighting", correct: false },
+    { answer: "General diffusing lighting", correct: false },
+    { answer: "Semi-indirect lighting", correct: false }
+  ]
+},
+{
+  question: "Light energy radiated per second from a luminous body is known as:",
+  options: [
+    { answer: "Luminous flux", correct: true },
+    { answer: "Watt", correct: false },
+    { answer: "Candela", correct: false },
+    { answer: "Lumen", correct: false }
+  ]
+},
+{
+  question: "As per ISI, in a building, the illumination level required for kitchen is:",
+  options: [
+    { answer: "200 lux", correct: true },
+    { answer: "100 lux", correct: false },
+    { answer: "50 lux", correct: false },
+    { answer: "150 lux", correct: false }
+  ]
+},
+{
+  question: "One lumen per square metre is termed as:",
+  options: [
+    { answer: "Candle power", correct: false },
+    { answer: "MHCP", correct: false },
+    { answer: "One lux", correct: true },
+    { answer: "MSCP", correct: false }
+  ]
+},
+{
+  question: "1 lux = _______",
+  options: [
+    { answer: "0.1 lumens / m2", correct: false },
+    { answer: "1 lumens / cm2", correct: false },
+    { answer: "1 lumens / m2", correct: true },
+    { answer: "0.1 lumens / cm2", correct: false }
+  ]
+},
+{
+  question: "The gas used in gas-filled filament lamp is:",
+  options: [
+    { answer: "Helium", correct: true },
+    { answer: "Oxygen", correct: false },
+    { answer: "CO2", correct: false },
+    { answer: "Ozone", correct: false }
+  ]
+},
+{
+  question: "Carbon arc lamps are commonly used in:",
+  options: [
+    { answer: "Domestic lighting", correct: false },
+    { answer: "Street lighting", correct: false },
+    { answer: "Cinema projectors", correct: true },
+    { answer: "Photography", correct: false }
+  ]
+},
+{
+  question: "Mercury vapour light is always ___________ in colour.",
+  options: [
+    { answer: "Bluish", correct: true },
+    { answer: "Reddish", correct: false },
+    { answer: "Pinkish", correct: false },
+    { answer: "Yellowish", correct: false }
+  ]
+},
+{
+  question: "A fluorescent lamp can operate on:",
+  options: [
+    { answer: "AC", correct: false },
+    { answer: "DC", correct: false },
+    { answer: "Both AC and DC", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Candela is the unit of:",
+  options: [
+    { answer: "Luminous flux", correct: false },
+    { answer: "Luminous intensity", correct: true },
+    { answer: "Wavelength", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "A zero watt lamp consumes:",
+  options: [
+    { answer: "No power", correct: false },
+    { answer: "About 5 to 7 watts power", correct: true },
+    { answer: "About 15 to 20 W", correct: false },
+    { answer: "About 25 to 30 W", correct: false }
+  ]
+},
+{
+  question: "Output of tungsten filament lamp depends on:",
+  options: [
+    { answer: "Size of lamp", correct: false },
+    { answer: "Size of shell", correct: false },
+    { answer: "Temperature of filament", correct: true },
+    { answer: "All of the above", correct: false }
+  ]
+},
+{
+  question: "The phosphor material containing cadmium borate used in fluorescent lamps gives which of the following colour?",
+  options: [
+    { answer: "Pink", correct: true },
+    { answer: "Bluish white", correct: false },
+    { answer: "Green", correct: false },
+    { answer: "Yellowish white", correct: false }
+  ]
+},
+{
+  question: "Fluorescent material Zinc silicate used in fluorescent tubes gives ______ color.",
+  options: [
+    { answer: "Green", correct: true },
+    { answer: "Yellow", correct: false },
+    { answer: "Pinkish white", correct: false },
+    { answer: "Blackish grey", correct: false }
+  ]
+},
+{
+  question: "Which of the following property is NOT desirable for lamp filament?",
+  options: [
+    { answer: "High tensile strength", correct: false },
+    { answer: "Low temperature coefficient of resistance", correct: false },
+    { answer: "High resistivity", correct: false },
+    { answer: "Low melting point", correct: true }
+  ]
+},
+{
+  question: "In carbon arc lamps, the diameter of positive electrode is ________ that of the negative electrode.",
+  options: [
+    { answer: "The same as", correct: false },
+    { answer: "Twice", correct: true },
+    { answer: "Thrice", correct: false },
+    { answer: "Half of", correct: false }
+  ]
+},
+{
+  question: "Which of the following lamps has the shortest/less life span in working hours?",
+  options: [
+    { answer: "Sodium vapor lamp", correct: false },
+    { answer: "Fluorescent lamp", correct: false },
+    { answer: "Mercury vapor lamp", correct: false },
+    { answer: "Incandescent lamp", correct: true }
+  ]
+}
+
+
+
+
+
+];
+
+    let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

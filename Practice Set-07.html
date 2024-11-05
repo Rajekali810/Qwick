@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-07 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-07</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    const questions = [
+
+
+    {
+  question: "Sensitivity of a voltmeter is given by:",
+  options: [
+    { answer: "Reciprocal of full scale deflection current", correct: false },
+    { answer: "Ohms/volts", correct: false },
+    { answer: "Both A and B", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "“Creeping” phenomenon is observed in:",
+  options: [
+    { answer: "Power factor meter", correct: false },
+    { answer: "Watt hour meter", correct: true },
+    { answer: "Wattmeter", correct: false },
+    { answer: "Ammeter", correct: false }
+  ]
+},
+{
+  question: "What is the insulation resistance test voltage required for an equipment running on a maximum voltage of 600 V?",
+  options: [
+    { answer: "300V", correct: false },
+    { answer: "1000V", correct: true },
+    { answer: "500V", correct: false },
+    { answer: "100V", correct: false }
+  ]
+},
+{
+  question: "Potential Transformer uses:",
+  options: [
+    { answer: "Step up transformer", correct: false },
+    { answer: "Centre tap transformer", correct: false },
+    { answer: "Step down transformer", correct: true },
+    { answer: "Toroidal transformer", correct: false }
+  ]
+},
+{
+  question: "Current transformer uses:",
+  options: [
+    { answer: "Step up transformer", correct: true },
+    { answer: "Centre tap transformer", correct: false },
+    { answer: "Step down transformer", correct: false },
+    { answer: "Toroidal transformer", correct: false }
+  ]
+},
+{
+  question: "Which of the following is the most popular method for measuring low resistance? (ESE Electronics 2020):",
+  options: [
+    { answer: "Ducter ohmmeter method", correct: false },
+    { answer: "Kelvin double bridge method", correct: true },
+    { answer: "Ammeter-voltmeter method", correct: false },
+    { answer: "Potentiometer method", correct: false }
+  ]
+},
+{
+  question: "Under which of the following conditions is a bridge balanced? (UPPCL AE 2019):",
+  options: [
+    { answer: "When no current flows", correct: true },
+    { answer: "When the temperature of the circuit is high", correct: false },
+    { answer: "When power dissipation is high", correct: false },
+    { answer: "When no voltage drop across the circuit", correct: false }
+  ]
+},
+{
+  question: "Q meter is used to measure the properties of:",
+  options: [
+    { answer: "Inductive coils", correct: false },
+    { answer: "Non inductive coils", correct: false },
+    { answer: "Capacitive coils", correct: false },
+    { answer: "Both (a) and (c)", correct: true }
+  ]
+},
+{
+  question: "The material commonly used for sheaths of underground cables is:",
+  options: [
+    { answer: "Lead", correct: true },
+    { answer: "Rubber", correct: false },
+    { answer: "Copper", correct: false },
+    { answer: "Iron", correct: false }
+  ]
+},
+{
+  question: "In the cables, sheaths are used to:",
+  options: [
+    { answer: "Prevent the moisture from entering the cable", correct: true },
+    { answer: "Provide enough strength", correct: false },
+    { answer: "Provide proper insulation", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "A 400 m cable has insulation of 3 MΩ, what is the resistance of 800 m cable?",
+  options: [
+    { answer: "1.2 MΩ", correct: false },
+    { answer: "1.5 MΩ", correct: true },
+    { answer: "3 MΩ", correct: false },
+    { answer: "6 MΩ", correct: false }
+  ]
+},
+{
+  question: "The leakage resistance of a 50 km long cable is 1 MΩ. For a 100 km long cable it will be:",
+  options: [
+    { answer: "1 MΩ", correct: false },
+    { answer: "2 MΩ", correct: false },
+    { answer: "0.5 MΩ", correct: true },
+    { answer: "4 MΩ", correct: false }
+  ]
+},
+{
+  question: "Find the most economical working size of an underground cable working on a 33-kV single-phase system. Given the maximum allowable dielectric stress is 11 kV/cm.",
+  options: [
+    { answer: "1.5 cm", correct: false },
+    { answer: "6 cm", correct: false },
+    { answer: "3 cm", correct: false },
+    { answer: "9 cm", correct: true }
+  ]
+},
+{
+  question: "What are the main requirements of insulating materials used for cables?",
+  options: [
+    { answer: "Low insulating reactance", correct: false },
+    { answer: "High insulating reactance", correct: false },
+    { answer: "High insulating resistance", correct: true },
+    { answer: "Low insulating resistance", correct: false }
+  ]
+},
+{
+  question: "With increase in temperature, what is the effect on insulation of the cable?",
+  options: [
+    { answer: "No change", correct: false },
+    { answer: "Increase", correct: false },
+    { answer: "Decrease", correct: false },
+    { answer: "Exponentially increases", correct: true }
+  ]
+},
+{
+  question: "Power distribution by cable is generally adopted for line length:",
+  options: [
+    { answer: "Less than 10 km", correct: true },
+    { answer: "Above 10 km", correct: false },
+    { answer: "Less than 50 km", correct: false },
+    { answer: "Above 50 km", correct: false }
+  ]
+},
+{
+  question: "The Copper as a conductor for electrical power cables is used in:",
+  options: [
+    { answer: "Alloy with chromium", correct: false },
+    { answer: "Hard drawn", correct: false },
+    { answer: "Hardened and tempered", correct: false },
+    { answer: "Annealed", correct: true }
+  ]
+},
+{
+  question: "The bedding on a cable consists of:",
+  options: [
+    { answer: "Hessian cloth", correct: false },
+    { answer: "Jute", correct: false },
+    { answer: "Any of the above", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In a cable, ______ is provided immediately above metallic sheath.",
+  options: [
+    { answer: "Earthing connection", correct: false },
+    { answer: "Bedding", correct: true },
+    { answer: "Armouring", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Electric strength in a cable is more on:",
+  options: [
+    { answer: "Layer on the conductor", correct: true },
+    { answer: "Outside of the conductor", correct: false },
+    { answer: "The outer side of the armoring", correct: false },
+    { answer: "None of these", correct: false }
+  ]
+},
+{
+  question: "The minimum dielectric stress in a cable is at:",
+  options: [
+    { answer: "Armour", correct: false },
+    { answer: "Bedding", correct: false },
+    { answer: "Conductor surface", correct: false },
+    { answer: "Lead sheath", correct: true }
+  ]
+},
+{
+  question: "The insulating material for a cable should have:",
+  options: [
+    { answer: "Low cost", correct: false },
+    { answer: "High dielectric strength", correct: false },
+    { answer: "High mechanical strength", correct: false },
+    { answer: "All of the above", correct: true }
+  ]
+},
+{
+  question: "In cables, the charging current:",
+  options: [
+    { answer: "Lags the voltage by 90°", correct: false },
+    { answer: "Leads the voltage by 90°", correct: true },
+    { answer: "Lags the voltage by 180°", correct: false },
+    { answer: "Leads the voltage by 180°", correct: false }
+  ]
+},
+{
+  question: "The electrostatic stress in underground cables is:",
+  options: [
+    { answer: "Same at the conductor and the sheath", correct: false },
+    { answer: "Minimum at the conductor and maximum at the sheath", correct: false },
+    { answer: "Maximum at the conductor and minimum at the sheath", correct: true },
+    { answer: "Zero at the conductor as well as on the sheath", correct: false }
+  ]
+},
+{
+  question: "A certain cable has insulation of relative permittivity 4. If the insulation is replaced by one of relative permittivity 2, the capacitance of the cable will become:",
+  options: [
+    { answer: "One half", correct: true },
+    { answer: "Double", correct: false },
+    { answer: "Four times", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Capacitance grading of cable implies:",
+  options: [
+    { answer: "Use of dielectrics of different permeabilities", correct: true },
+    { answer: "Grading according to capacitance of cables per km length", correct: false },
+    { answer: "Cables using single dielectric in different concentrations", correct: false },
+    { answer: "Capacitance required to be introduced at different lengths to counter the effect of inductance", correct: false }
+  ]
+},
+{
+  question: "High tension cables are generally used up to:",
+  options: [
+    { answer: "11 kV", correct: true },
+    { answer: "33 kV", correct: false },
+    { answer: "66 kV", correct: false },
+    { answer: "132 kV", correct: false }
+  ]
+},
+{
+  question: "_________ cables are used for 132 kV lines.",
+  options: [
+    { answer: "High tension", correct: false },
+    { answer: "Super tension", correct: false },
+    { answer: "Extra high tension", correct: false },
+    { answer: "Extra super voltage", correct: true }
+  ]
+},
+{
+  question: "High voltage cables which are used for 132 KV for these core’s are:",
+  options: [
+    { answer: "Oil filled cable", correct: true },
+    { answer: "S L cable", correct: false },
+    { answer: "H-type cables", correct: false },
+    { answer: "Belted cable", correct: false }
+  ]
+},
+{
+  question: "The insulating material for cables should:",
+  options: [
+    { answer: "Be acid proof", correct: false },
+    { answer: "Be non-inflammable", correct: false },
+    { answer: "Be non-hygroscopic", correct: false },
+    { answer: "Have all above properties", correct: true }
+  ]
+},
+{
+  question: "The relative permittivity of rubber is:",
+  options: [
+    { answer: "Between 2 and 3", correct: true },
+    { answer: "Between 5 and 6", correct: false },
+    { answer: "Between 8 and 10", correct: false },
+    { answer: "Between 12 and 14", correct: false }
+  ]
+},
+{
+  question: "Pressure cables are generally not used beyond:",
+  options: [
+    { answer: "11 kV", correct: false },
+    { answer: "33 kV", correct: false },
+    { answer: "66 kV", correct: true },
+    { answer: "132 kV", correct: false }
+  ]
+},
+{
+  question: "Which among the following cables are generally suited for the voltage up to 11 kV?",
+  options: [
+    { answer: "Belted cables", correct: true },
+    { answer: "Screened cables", correct: false },
+    { answer: "Pressure cables", correct: false },
+    { answer: "None of these", correct: false }
+  ]
+},
+{
+  question: "The current carrying capacity of cables in D.C. is more than that in A.C. mainly due to:",
+  options: [
+    { answer: "Absence of harmonics", correct: false },
+    { answer: "Nonexistence of any stability limit", correct: false },
+    { answer: "Smaller dielectric loss", correct: true },
+    { answer: "Absence of ripples", correct: false }
+  ]
+},
+{
+  question: "Which type of conduit pipe is used in industrial wiring?",
+  options: [
+    { answer: "SS conduit pipe", correct: false },
+    { answer: "Galvanized rigid conduit pipe", correct: true },
+    { answer: "MS pipe", correct: false },
+    { answer: "PVC conduit pipe", correct: false }
+  ]
+},
+{
+  question: "Empire tape is:",
+  options: [
+    { answer: "Varnished cambric", correct: true },
+    { answer: "Vulcanized rubber", correct: false },
+    { answer: "Impregnated paper", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Normally, __________ material is used as armouring:",
+  options: [
+    { answer: "Magnetic", correct: true },
+    { answer: "Non-magnetic", correct: false },
+    { answer: "Laminated", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Underground cables are laid at sufficient depth:",
+  options: [
+    { answer: "To minimize temperature stresses", correct: false },
+    { answer: "To avoid being unearthed easily due to removal of soil", correct: false },
+    { answer: "To minimize the effect of shocks and vibrations due to gassing vehicles, etc.", correct: true },
+    { answer: "For all of the above reasons", correct: false }
+  ]
+},
+{
+  question: "The disadvantage with paper as an insulating material is:",
+  options: [
+    { answer: "It is hygroscopic", correct: true },
+    { answer: "It has high capacitance", correct: false },
+    { answer: "It is an organic material", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Which of the following protects a cable against mechanical injury?",
+  options: [
+    { answer: "Bedding", correct: false },
+    { answer: "Sheath", correct: false },
+    { answer: "Armouring", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The thickness of the layer of insulation on the conductor in cables depends upon:",
+  options: [
+    { answer: "Reactive power", correct: false },
+    { answer: "Power factor", correct: false },
+    { answer: "Voltage", correct: true },
+    { answer: "Current carrying capacity", correct: false }
+  ]
+},
+{
+  question: "In capacitance grading of cables we use a _________ dielectric:",
+  options: [
+    { answer: "Composite", correct: true },
+    { answer: "Porous", correct: false },
+    { answer: "Homogeneous", correct: false },
+    { answer: "Hygroscopic", correct: false }
+  ]
+},
+{
+  question: "Low tension cables are generally used up to:",
+  options: [
+    { answer: "11 kV", correct: false },
+    { answer: "33 kV", correct: false },
+    { answer: "66 kV", correct: false },
+    { answer: "1 kV", correct: true }
+  ]
+},
+{
+  question: "In case of three core flexible cable the color of the neutral is:",
+  options: [
+    { answer: "Blue", correct: true },
+    { answer: "Black", correct: false },
+    { answer: "Brown", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "If a cable of homogeneous insulation has a maximum stress of 10 kV/mm, then the dielectric strength of insulation should be:",
+  options: [
+    { answer: "5 kV/mm", correct: false },
+    { answer: "10 kV/mm", correct: true },
+    { answer: "15 kV/mm", correct: false },
+    { answer: "30 kV/mm", correct: false }
+  ]
+},
+{
+  question: "Which one of the following materials is used for cable insulation?",
+  options: [
+    { answer: "Phenol formaldehyde", correct: false },
+    { answer: "Polytetrafluoroethylene", correct: false },
+    { answer: "Polyvinyl chloride", correct: true },
+    { answer: "Acrylonitrile butadiene styrene", correct: false }
+  ]
+},
+{
+  question: "The surge resistance of cable is:",
+  options: [
+    { answer: "5 ohms", correct: false },
+    { answer: "20 ohms", correct: false },
+    { answer: "50 ohms", correct: true },
+    { answer: "100 ohms", correct: false }
+  ]
+},
+{
+  question: "As the cable length increases, there is:",
+  options: [
+    { answer: "Less insulation resistance and more leakage current", correct: true },
+    { answer: "More insulation resistance and less leakage current", correct: false },
+    { answer: "Less insulation resistance and less leakage current", correct: false },
+    { answer: "More insulation resistance and more leakage current", correct: false }
+  ]
+},
+{
+  question: "The inter sheaths in the cables are used to:",
+  options: [
+    { answer: "Minimize the stress", correct: false },
+    { answer: "Avoid the requirement of good insulation", correct: false },
+    { answer: "Provide proper stress distribution", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The advantage of cables over overhead transmission lines is:",
+  options: [
+    { answer: "Easy maintenance", correct: false },
+    { answer: "Low cost", correct: false },
+    { answer: "Can be used in congested areas", correct: true },
+    { answer: "Can be used in high voltage circuits", correct: false }
+  ]
+}
+
+
+
+
+
+];
+
+    let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

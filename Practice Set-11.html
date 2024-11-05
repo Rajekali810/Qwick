@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-11 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-11</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    const questions = [
+
+
+{
+  question: "Induction type single phase energy meters measure electric energy in:",
+  options: [
+    { answer: "kW", correct: false },
+    { answer: "Wh", correct: false },
+    { answer: "kWh", correct: true },
+    { answer: "VAR", correct: false }
+  ]
+},
+{
+  question: "It is required to measure the true open circuit e.m.f. of a battery. The best device is:",
+  options: [
+    { answer: "D.C. voltmeter", correct: false },
+    { answer: "Ammeter and a known resistance", correct: false },
+    { answer: "D.C. potentiometer", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "For measurement of mutual inductance, we can use:",
+  options: [
+    { answer: "Anderson bridge", correct: false },
+    { answer: "Maxwell's bridge", correct: false },
+    { answer: "Heaviside bridge", correct: true },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "In Weston synchronoscope, the moving coil is connected across:",
+  options: [
+    { answer: "Bus-bars", correct: true },
+    { answer: "Incoming alternator", correct: false },
+    { answer: "Fixed coils", correct: false },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "In an energy meter, braking torque is produced to:",
+  options: [
+    { answer: "Safeguard it against creep", correct: false },
+    { answer: "Brake the instrument", correct: false },
+    { answer: "Bring energy meter to standstill", correct: false },
+    { answer: "Maintain steady speed equal to driving torque", correct: true }
+  ]
+},
+{
+  question: "The operating voltage of a Meggar is about:",
+  options: [
+    { answer: "6 V", correct: false },
+    { answer: "12 V", correct: false },
+    { answer: "40 V", correct: false },
+    { answer: "100 V", correct: true }
+  ]
+},
+{
+  question: "An ohmmeter is a:",
+  options: [
+    { answer: "Moving iron instrument", correct: false },
+    { answer: "Moving coil instrument", correct: true },
+    { answer: "Dynamometer instrument", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "A moving-coil permanent-magnet instrument can be used as ________ by using a low resistance shunt.",
+  options: [
+    { answer: "Ammeter", correct: true },
+    { answer: "Voltmeter", correct: false },
+    { answer: "Flux-meter", correct: false },
+    { answer: "Ballistic galvanometer", correct: false }
+  ]
+},
+
+  {
+    "question": "Which of the following faults occurs most frequently?",
+    "options": [
+      { "answer": "3 phase fault", "correct": false },
+      { "answer": "LLG fault", "correct": false },
+      { "answer": "LL fault", "correct": false },
+      { "answer": "LG fault", "correct": true }
+    ]
+  },
+  {
+    "question": "The excessive neutral current is caused by:",
+    "options": [
+      { "answer": "Fans", "correct": false },
+      { "answer": "Refrigerators", "correct": false },
+      { "answer": "Electronic ballasts", "correct": true },
+      { "answer": "Coolers", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following options represents symmetrical fault?",
+    "options": [
+      { "answer": "3-phase short circuit fault", "correct": true },
+      { "answer": "Line to line fault", "correct": false },
+      { "answer": "Phase to phase fault", "correct": false },
+      { "answer": "Single line to ground fault", "correct": false }
+    ]
+  },
+  {
+    "question": "A transformer is rated at 11 kV/0.4 kV, 500 KVA, 5% reactance. What is the short circuit MVA of the transformer when connected to an infinite bus?",
+    "options": [
+      { "answer": "20 MVA", "correct": false },
+      { "answer": "10 MVA", "correct": true },
+      { "answer": "15 MVA", "correct": false },
+      { "answer": "5 MVA", "correct": false }
+    ]
+  },
+  {
+    "question": "______ is a series type unbalanced fault that occurs in a power system.",
+    "options": [
+      { "answer": "Line – to – line fault", "correct": false },
+      { "answer": "Double line – to – ground fault", "correct": false },
+      { "answer": "Single line – to – ground fault", "correct": false },
+      { "answer": "Open conductor fault", "correct": true }
+    ]
+  },
+  {
+    "question": "The % reactance of a 100 kVA, 5 kV, 5 Ω reactance is given by:",
+    "options": [
+      { "answer": "2%", "correct": true },
+      { "answer": "20%", "correct": false },
+      { "answer": "40%", "correct": false },
+      { "answer": "4%", "correct": false }
+    ]
+  },
+  {
+    "question": "The power system is subjected to a fault which makes the zero-sequence component of current equal to zero. The nature of fault is",
+    "options": [
+      { "answer": "Double line to ground fault", "correct": false },
+      { "answer": "Double line fault", "correct": true },
+      { "answer": "Line to ground fault", "correct": false },
+      { "answer": "Three phase to ground fault", "correct": false }
+    ]
+  },
+  {
+    "question": "On which among the following factors does the magnitude of the fault current depend?",
+    "options": [
+      { "answer": "Total impedance up to the fault", "correct": false },
+      { "answer": "Voltage at the fault point", "correct": false },
+      { "answer": "Both (A) and (B)", "correct": true },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "In case of single line to ground fault",
+    "options": [
+      { "answer": "All sequence networks are connected in parallel", "correct": false },
+      { "answer": "All sequence networks are connected in series", "correct": true },
+      { "answer": "Positive and negative sequence networks are connected in parallel", "correct": false },
+      { "answer": "Zero and negative sequence networks are connected in series", "correct": false }
+    ]
+  },
+  {
+    "question": "What will the zero-sequence current when line to ground fault occurs and the current in faulted phase is 300 A?",
+    "options": [
+      { "answer": "100 A", "correct": true },
+      { "answer": "300 A", "correct": false },
+      { "answer": "50 A", "correct": false },
+      { "answer": "150 A", "correct": false }
+    ]
+  },
+
+  {
+    "question": "For a fault at the terminals of the synchronous generator, the fault current is maximum for a:",
+    "options": [
+      { "answer": "Three phase fault", "correct": false },
+      { "answer": "Three phase to ground fault", "correct": false },
+      { "answer": "Line to ground fault", "correct": true },
+      { "answer": "Line to line fault", "correct": false }
+    ]
+  },
+  {
+    "question": "The function of steel wire in an ACSR conductor is to:",
+    "options": [
+      { "answer": "Compensate skin effect", "correct": false },
+      { "answer": "Take care of surges", "correct": false },
+      { "answer": "Provide additional mechanical strength", "correct": true },
+      { "answer": "Reduce inductance", "correct": false }
+    ]
+  },
+  {
+    "question": "For which reason does the electric supply company want to improve the power factor?",
+    "options": [
+      { "answer": "To reduce the effective current", "correct": false },
+      { "answer": "To reduce the reactive current", "correct": false },
+      { "answer": "To reduce the apparent current", "correct": false },
+      { "answer": "To reduce the voltage drop at the generating station", "correct": true }
+    ]
+  },
+  {
+    "question": "If the capacitance between two conductors of a 3-phase line is 6 μF, the capacitance of each conductor to neutral will be:",
+    "options": [
+      { "answer": "3 μF", "correct": false },
+      { "answer": "12 μF", "correct": true },
+      { "answer": "6 μF", "correct": false },
+      { "answer": "1.5 μF", "correct": false }
+    ]
+  },
+  {
+    "question": "As the transmission voltage increases, the percentage resistance drop:",
+    "options": [
+      { "answer": "Increases", "correct": false },
+      { "answer": "Decreases", "correct": true },
+      { "answer": "Remains same", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Transposition of transmission lines is done to:",
+    "options": [
+      { "answer": "Reduce line loss", "correct": false },
+      { "answer": "Balance line voltage drop", "correct": true },
+      { "answer": "Reduce skin effect", "correct": false },
+      { "answer": "Reduce corona", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following voltage ranges is used in medium transmission lines?",
+    "options": [
+      { "answer": "Less than 20 kV", "correct": false },
+      { "answer": "More than 200 kV", "correct": false },
+      { "answer": "20 kV to 100 kV", "correct": true },
+      { "answer": "50 kV to 200 kV", "correct": false }
+    ]
+  },
+  {
+    "question": "_____ earthing is the best form of earthing and is very cheap in cost.",
+    "options": [
+      { "answer": "Rod", "correct": false },
+      { "answer": "Plate", "correct": false },
+      { "answer": "Pipe", "correct": true },
+      { "answer": "Strip", "correct": false }
+    ]
+  },
+  {
+    "question": "Dielectric strength of rubber is around:",
+    "options": [
+      { "answer": "3 kV/mm", "correct": false },
+      { "answer": "10 kV/mm", "correct": false },
+      { "answer": "30 kV/mm", "correct": true },
+      { "answer": "300 kV/mm", "correct": false }
+    ]
+  },
+  {
+    "question": "The minimum clearance distance that equipment should be kept away from 50 kV power lines is:",
+    "options": [
+      { "answer": "20 feet", "correct": false },
+      { "answer": "10 feet", "correct": true },
+      { "answer": "15 feet", "correct": false },
+      { "answer": "5 feet", "correct": false }
+    ]
+  },
+  {
+    "question": "By bundling the conductors, the geometric mean distance (GMD) has ______, which gives ______ in the reactance of the bundled conductors.",
+    "options": [
+      { "answer": "Decrease, decrease", "correct": false },
+      { "answer": "Increase, decrease", "correct": true },
+      { "answer": "Increase, increase", "correct": false },
+      { "answer": "Decrease, increase", "correct": false }
+    ]
+  },
+  {
+    "question": "The skin effect does not depend upon:",
+    "options": [
+      { "answer": "The shape of the conductor", "correct": false },
+      { "answer": "Operating voltage", "correct": true },
+      { "answer": "The diameter of the conductor", "correct": false },
+      { "answer": "Frequency", "correct": false }
+    ]
+  },
+  {
+    "question": "The current in a transmission line under no-load conditions is due to:",
+    "options": [
+      { "answer": "Spinning reserve", "correct": false },
+      { "answer": "Corona effects", "correct": false },
+      { "answer": "Capacitance of the line", "correct": true },
+      { "answer": "Back flow from earth", "correct": false }
+    ]
+  },
+  {
+    "question": "The commonly used material for insulators of overhead lines is:",
+    "options": [
+      { "answer": "Fibre", "correct": false },
+      { "answer": "Lead", "correct": false },
+      { "answer": "Porcelain", "correct": true },
+      { "answer": "Tungsten", "correct": false }
+    ]
+  },
+  {
+    "question": "As per Indian Electricity rules, in overhead systems, the recommended span in case of wooden poles is:",
+    "options": [
+      { "answer": "100-300 meters", "correct": false },
+      { "answer": "40-50 meters", "correct": true },
+      { "answer": "50-80 meters", "correct": false },
+      { "answer": "80-100 meters", "correct": false }
+    ]
+  },
+
+  {
+    "question": "A line which joins the energy meter of a consumer with the distributor is known as:",
+    "options": [
+      { "answer": "Feeder", "correct": false },
+      { "answer": "Grid", "correct": false },
+      { "answer": "Service mains", "correct": true },
+      { "answer": "Distributor", "correct": false }
+    ]
+  },
+  {
+    "question": "For a consumer, what is the most economical power factor?",
+    "options": [
+      { "answer": "0.25 - 0.5 leading", "correct": false },
+      { "answer": "0.25 - 0.5 lagging", "correct": false },
+      { "answer": "0.85 - 0.95 leading", "correct": false },
+      { "answer": "0.85 - 0.95 lagging", "correct": true }
+    ]
+  },
+  {
+    "question": "Which tariff is most ideal for the consumer?",
+    "options": [
+      { "answer": "Two part tariff", "correct": false },
+      { "answer": "Three part tariff", "correct": true },
+      { "answer": "Both (1) and (2)", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the average demand if the maximum demand of generation of power is 50 MW and the load factor of the plant is 60%?",
+    "options": [
+      { "answer": "20 MW", "correct": false },
+      { "answer": "30 MW", "correct": true },
+      { "answer": "40 MW", "correct": false },
+      { "answer": "50 MW", "correct": false }
+    ]
+  },
+  {
+    "question": "A consumer consumes 600 kWh per day at a load factor of 0.5. Without increasing the maximum demand, if the consumer increases the load factor to 0.8, the consumption of energy in kWh would be:",
+    "options": [
+      { "answer": "480", "correct": false },
+      { "answer": "960", "correct": true },
+      { "answer": "900", "correct": false },
+      { "answer": "300", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the reserve capacity, if the maximum demand of generation of power is 50 MW, the load factor of the plant is 60% and the plant capacity factor is 50%?",
+    "options": [
+      { "answer": "15 MW", "correct": false },
+      { "answer": "10 MW", "correct": true },
+      { "answer": "20 MW", "correct": false },
+      { "answer": "6 MW", "correct": false }
+    ]
+  },
+  {
+    "question": "The diversity factor between transformers for residential lighting is:",
+    "options": [
+      { "answer": "1.8", "correct": false },
+      { "answer": "2.5", "correct": false },
+      { "answer": "1.3", "correct": true },
+      { "answer": "3", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following expressions depicts the Utilization Factor?",
+    "options": [
+      { "answer": "Ratio of maximum generator demand to the generator capacity", "correct": true },
+      { "answer": "Ratio of actual energy produced to the generator capacity", "correct": false },
+      { "answer": "Ratio of generator capacity to maximum generation demand", "correct": false },
+      { "answer": "Ratio of generator capacity to actual energy produced", "correct": false }
+    ]
+  },
+  {
+    "question": "The skin effect does not depend on:",
+    "options": [
+      { "answer": "Nature of material", "correct": false },
+      { "answer": "Size of wire", "correct": false },
+      { "answer": "Supply frequency", "correct": false },
+      { "answer": "Ambient temperature", "correct": true }
+    ]
+  },
+  {
+    "question": "Skin effects and proximity effects are found in ______:",
+    "options": [
+      { "answer": "AC systems", "correct": true },
+      { "answer": "DC systems", "correct": false },
+      { "answer": "Converted systems", "correct": false },
+      { "answer": "Both AC and DC systems", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the diameter of a conductor inversely proportional to?",
+    "options": [
+      { "answer": "The cube of skin effect", "correct": false },
+      { "answer": "The square of skin effect", "correct": true },
+      { "answer": "The square root of skin effect", "correct": false },
+      { "answer": "The cube root of skin effect", "correct": false }
+    ]
+  },
+  {
+    "question": "Skin and proximity effects are ________ frequency:",
+    "options": [
+      { "answer": "Independent of", "correct": false },
+      { "answer": "Negligible at small", "correct": true },
+      { "answer": "Important at small", "correct": false },
+      { "answer": "Negligible at large", "correct": false }
+    ]
+  },
+  {
+    "question": "The skin effect increases the:",
+    "options": [
+      { "answer": "Inductance of line", "correct": false },
+      { "answer": "Resistance of line", "correct": true },
+      { "answer": "Capacitance of line", "correct": false },
+      { "answer": "Voltage of line", "correct": false }
+    ]
+  },
+  {
+    "question": "Skin effect is proportional to:",
+    "options": [
+      { "answer": "(Conductor diameter)^12", "correct": false },
+      { "answer": "(Conductor diameter)^4", "correct": false },
+      { "answer": "(Conductor diameter)^2", "correct": true },
+      { "answer": "(Conductor diameter)^3", "correct": false }
+    ]
+  },
+  {
+    "question": "The skin effect in a transmission line is affected by:",
+    "options": [
+      { "answer": "The resistivity of the transmission line", "correct": false },
+      { "answer": "The current magnitude in the transmission line", "correct": false },
+      { "answer": "The cross-sectional area of the transmission line", "correct": true },
+      { "answer": "The voltage applied across the transmission line", "correct": false }
+    ]
+  },
+  {
+    "question": "Skin effect is only noticeable at _______ frequencies:",
+    "options": [
+      { "answer": "Audio", "correct": false },
+      { "answer": "Low", "correct": false },
+      { "answer": "High", "correct": true },
+      { "answer": "All", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following phenomena is NOT accompanied with the corona effect on conductors of overhead power transmission lines?",
+    "options": [
+      { "answer": "Deep red glow", "correct": true },
+      { "answer": "Hissing noise", "correct": false },
+      { "answer": "Production of ozone gas", "correct": false },
+      { "answer": "Radio interference", "correct": false }
+    ]
+  }
+
+
+
+];
+
+   let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

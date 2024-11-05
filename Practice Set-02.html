@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-02 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-02</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    const questions = [
+
+{
+  question: "The steel used in steel cored conductors is usually:",
+  options: [
+    { answer: "Alloy steel", correct: false },
+    { answer: "Stainless steel", correct: false },
+    { answer: "Mild steel", correct: true },
+    { answer: "High speed steel", correct: false }
+  ]
+},
+{
+  question: "The underground system cannot be operated above:",
+  options: [
+    { answer: "440 V", correct: false },
+    { answer: "11 V", correct: false },
+    { answer: "33 V", correct: false },
+    { answer: "66 V", correct: true }
+  ]
+},
+{
+  question: "310 km line is considered as:",
+  options: [
+    { answer: "A long line", correct: true },
+    { answer: "A medium line", correct: false },
+    { answer: "A short line", correct: false },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "Which of the following is usually not the generating voltage?",
+  options: [
+    { answer: "6.6 kV", correct: false },
+    { answer: "8.8 kV", correct: true },
+    { answer: "11 kV", correct: false },
+    { answer: "13.2 kV", correct: false }
+  ]
+},
+{
+  question: "For which of the following equipment current rating is not necessary?",
+  options: [
+    { answer: "Circuit breakers", correct: false },
+    { answer: "Isolators", correct: true },
+    { answer: "Load break switch", correct: false },
+    { answer: "Circuit breakers and load break switches", correct: false }
+  ]
+},
+{
+  question: "The power factor of industrial loads is generally:",
+  options: [
+    { answer: "Unity", correct: false },
+    { answer: "Lagging", correct: true },
+    { answer: "Leading", correct: false },
+    { answer: "Zero", correct: false }
+  ]
+},
+{
+  question: "Galvanized steel wire is generally used as:",
+  options: [
+    { answer: "Stay wire", correct: false },
+    { answer: "Earth wire", correct: false },
+    { answer: "Structural components", correct: false },
+    { answer: "All of the above", correct: true }
+  ]
+},
+{
+  question: "In transmission lines the cross-arms are made of:",
+  options: [
+    { answer: "Copper", correct: false },
+    { answer: "Wood", correct: false },
+    { answer: "R.C.C.", correct: false },
+    { answer: "Steel", correct: true }
+  ]
+},
+{
+  question: "By which of the following methods string efficiency can be improved?",
+  options: [
+    { answer: "Using a guard ring", correct: false },
+    { answer: "Grading the insulator", correct: false },
+    { answer: "Using long cross arm", correct: false },
+    { answer: "Any of the above", correct: true }
+  ]
+},
+{
+  question: "A ______ is a device used in electrical power systems and telecommunication systems to protect the insulation and conductors of the system from the damaging effects of lightning.",
+  options: [
+    { answer: "Lightning arrester", correct: true },
+    { answer: "Bus bar", correct: false },
+    { answer: "Buchholz relay", correct: false },
+    { answer: "Feeder", correct: false }
+  ]
+},
+{
+  question: "A relay is used to:",
+  options: [
+    { answer: "Break the fault current", correct: false },
+    { answer: "Sense the fault", correct: false },
+    { answer: "Sense the fault and direct to trip the circuit breaker", correct: true },
+    { answer: "All of these", correct: false }
+  ]
+},
+{
+  question: "Relay gets its operating energy from:",
+  options: [
+    { answer: "Transformer", correct: false },
+    { answer: "Alternator", correct: false },
+    { answer: "Overhead lines", correct: false },
+    { answer: "C.T., P.T.", correct: true }
+  ]
+},
+{
+  question: "Location of lightning arrester is:",
+  options: [
+    { answer: "After the transformer", correct: false },
+    { answer: "After the distributor", correct: false },
+    { answer: "Near or Before the transformer", correct: true },
+    { answer: "None of these", correct: false }
+  ]
+},
+{
+  question: "Lightning arrestors are:",
+  options: [
+    { answer: "Surge reflectors", correct: false },
+    { answer: "Surge divertors", correct: true },
+    { answer: "Surge absorbers", correct: false },
+    { answer: "Surge attenuators", correct: false }
+  ]
+},
+{
+  question: "Which of the following range of voltage is used in medium transmission lines?",
+  options: [
+    { answer: "20 kV to 100 kV", correct: true },
+    { answer: "66 kV to 400 kV", correct: false },
+    { answer: "100 kV to 400 kV", correct: false },
+    { answer: "3.3 kV to 6.6 kV", correct: false }
+  ]
+},
+{
+  question: "Dielectric strength of rubber is around:",
+  options: [
+    { answer: "5 kV/mm", correct: false },
+    { answer: "15 kV/mm", correct: false },
+    { answer: "30 kV/mm", correct: true },
+    { answer: "200 kV/mm", correct: false }
+  ]
+},
+{
+  question: "As per Indian Electricity rule in overhead systems, the recommended span in case of wooden poles is ______.",
+  options: [
+    { answer: "100-300 meters", correct: false },
+    { answer: "40-50 meters", correct: true },
+    { answer: "50-80 meters", correct: false },
+    { answer: "80-100 meters", correct: false }
+  ]
+},
+{
+  question: "Which among the following cables are generally suited for the voltages up to 11 kV?",
+  options: [
+    { answer: "Belted cables", correct: true },
+    { answer: "Screened cables", correct: false },
+    { answer: "Pressure cables", correct: false },
+    { answer: "None of these", correct: false }
+  ]
+},
+{
+  question: "What is the permissible limit of voltage variations allowed in the distribution systems?",
+  options: [
+    { answer: "± 2 %", correct: false },
+    { answer: "± 5 %", correct: false },
+    { answer: "± 10 %", correct: false },
+    { answer: "± 6 %", correct: true }
+  ]
+},
+{
+  question: "Which component connects the substation to the area where power is to be distributed?",
+  options: [
+    { answer: "Distributors", correct: false },
+    { answer: "Service mains", correct: false },
+    { answer: "Feeders", correct: true },
+    { answer: "All of these", correct: false }
+  ]
+},
+{
+  question: "Name the cable which connects the distributor to the consumer terminals.",
+  options: [
+    { answer: "Distributors", correct: false },
+    { answer: "Service mains", correct: true },
+    { answer: "Feeders", correct: false },
+    { answer: "All of these", correct: false }
+  ]
+},
+{
+  question: "In a distribution system, which of the following items shares the major cost?",
+  options: [
+    { answer: "Conductors", correct: false },
+    { answer: "Earthing systems", correct: false },
+    { answer: "Distribution transformer", correct: true },
+    { answer: "Insulators", correct: false }
+  ]
+},
+{
+  question: "What are boosters?",
+  options: [
+    { answer: "Is a high voltage and low circuit machine", correct: false },
+    { answer: "Is a series wound dc generator driven by dc shunt motor", correct: false },
+    { answer: "Is a low voltage and high current generator operating on straight or linear portion of its voltage current characteristics", correct: false },
+    { answer: "Both (b) and (c)", correct: true }
+  ]
+},
+{
+  question: "Why are the boosters inserted in the circuit?",
+  options: [
+    { answer: "Reduce current", correct: false },
+    { answer: "Increase current", correct: false },
+    { answer: "Reduce voltage drop", correct: false },
+    { answer: "Compensate for voltage drop", correct: true }
+  ]
+},
+{
+  question: "The form factor of a sinusoidal wave is:",
+  options: [
+    { answer: "1.414", correct: false },
+    { answer: "1.11", correct: true },
+    { answer: "2", correct: false },
+    { answer: "1.5", correct: false }
+  ]
+},
+{
+  question: "The purpose of choke in a fluorescent tube is:",
+  options: [
+    { answer: "To decrease the current", correct: false },
+    { answer: "To increase the current", correct: false },
+    { answer: "To decrease the voltage momentarily", correct: false },
+    { answer: "To increase the voltage momentarily", correct: true }
+  ]
+},
+{
+  question: "The power factor of an A.C. circuit is given by:",
+  options: [
+    { answer: "XL/R", correct: false },
+    { answer: "Z/R", correct: false },
+    { answer: "R/XL", correct: false },
+    { answer: "R/Z", correct: true }
+  ]
+},
+{
+  question: "If in an R-L-C series circuit, the frequency is below the resonance frequency, then:",
+  options: [
+    { answer: "Xc = XL", correct: false },
+    { answer: "Xc < XL", correct: false },
+    { answer: "Xc > XL", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In a series RLC circuit that is operating above the resonant frequency, the current:",
+  options: [
+    { answer: "Lags the applied voltage", correct: true },
+    { answer: "Leads the applied voltage", correct: false },
+    { answer: "Is in phase with the applied voltage", correct: false },
+    { answer: "Is zero", correct: false }
+  ]
+},
+{
+  question: "At series resonance:",
+  options: [
+    { answer: "Circuit impedance is very large", correct: false },
+    { answer: "Circuit power factor is minimum", correct: false },
+    { answer: "Voltage across L or C is zero", correct: false },
+    { answer: "Circuit power factor is unity", correct: true }
+  ]
+},
+{
+  question: "The impedance at the resonant frequency of a series RLC circuit with L = 20 mH, C = 0.02 F, and RW = 90 is:",
+  options: [
+    { answer: "0", correct: false },
+    { answer: "90", correct: true },
+    { answer: "20 k", correct: false },
+    { answer: "40 k", correct: false }
+  ]
+},
+{
+  question: "At parallel resonance:",
+  options: [
+    { answer: "Circuit impedance is minimum", correct: false },
+    { answer: "Power factor is zero", correct: false },
+    { answer: "Line current is maximum", correct: true },
+    { answer: "Power factor is unity", correct: false }
+  ]
+},
+{
+  question: "Time constant of an inductive circuit:",
+  options: [
+    { answer: "Increases with increase of inductance and decrease of resistance", correct: true },
+    { answer: "Increases with the increase of inductance and the increase of resistance", correct: false },
+    { answer: "Increases with decrease of inductance and decrease of resistance", correct: false },
+    { answer: "Increases with decrease of inductance and increase of resistance", correct: false }
+  ]
+},
+{
+  question: "Power factor of the system is kept high:",
+  options: [
+    { answer: "To reduce line losses", correct: false },
+    { answer: "To maximize the utilization of the capacities of generators, lines and transformers", correct: false },
+    { answer: "To reduce voltage regulation of the line", correct: false },
+    { answer: "Due to all above reasons", correct: true }
+  ]
+},
+{
+  question: "The square waveform of current has the following relation between r.m.s. value and average value:",
+  options: [
+    { answer: "R.m.s. value is equal to average value", correct: true },
+    { answer: "R.m.s. value of current is greater than average value", correct: false },
+    { answer: "R.m.s. value of current is less than average value", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In an A.C. circuit power is dissipated in:",
+  options: [
+    { answer: "Resistance only", correct: true },
+    { answer: "Inductance only", correct: false },
+    { answer: "Capacitance only", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In each of the three coils of a three phase generator, an alternating voltage having an r.m.s. value of 220 V is induced. Which of the following values is indicated by the voltmeters?",
+  options: [
+    { answer: "220 V", correct: true },
+    { answer: "220V3V", correct: false },
+    { answer: "220/V3 V", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In R-L-C series resonant circuit, magnitude of resonance frequency can be changed by changing the value of:",
+  options: [
+    { answer: "R only", correct: false },
+    { answer: "L only", correct: false },
+    { answer: "C only", correct: false },
+    { answer: "L or C", correct: true }
+  ]
+},
+{
+  question: "The time constant of a series R-C circuit is given by:",
+  options: [
+    { answer: "R/C", correct: false },
+    { answer: "RC2", correct: false },
+    { answer: "RC", correct: true },
+    { answer: "R2C", correct: false }
+  ]
+},
+{
+  question: "What is the resonance frequency of an AC circuit?",
+  options: [
+    { answer: "1/√LC", correct: true },
+    { answer: "√(L/C)", correct: false },
+    { answer: "√LC", correct: false },
+    { answer: "LC", correct: false }
+  ]
+},
+{
+  question: "Which type of current can be stored in a capacitor?",
+  options: [
+    { answer: "Alternating current", correct: false },
+    { answer: "Direct current", correct: true },
+    { answer: "Both alternating current and direct current", correct: false },
+    { answer: "Neither alternating current nor direct current", correct: false }
+  ]
+},
+{
+  question: "The energy stored in the inductor is of ___ nature.",
+  options: [
+    { answer: "Electrostatic", correct: false },
+    { answer: "Magnetic", correct: true },
+    { answer: "Neither electrostatic nor magnetic", correct: false },
+    { answer: "Either electrostatic or magnetic", correct: false }
+  ]
+},
+{
+  question: "The energy stored in the capacitor is of ___ nature.",
+  options: [
+    { answer: "Electrostatic", correct: true },
+    { answer: "Magnetic", correct: false },
+    { answer: "Neither electrostatic nor magnetic", correct: false },
+    { answer: "Either electrostatic or magnetic", correct: false }
+  ]
+},
+{
+  question: "Which of the following capacitors is polarized? (SSC JE 2017)",
+  options: [
+    { answer: "Mica", correct: false },
+    { answer: "Ceramic", correct: false },
+    { answer: "Plastic-film", correct: false },
+    { answer: "Electrolytic", correct: true }
+  ]
+},
+{
+  question: "Of the following capacitors, which one has the highest dielectric constant?",
+  options: [
+    { answer: "Air", correct: false },
+    { answer: "Mica", correct: false },
+    { answer: "Glass", correct: true },
+    { answer: "Paper", correct: false }
+  ]
+},
+{
+  question: "When the plate area of a capacitor increases:",
+  options: [
+    { answer: "The capacitance increases", correct: true },
+    { answer: "The capacitance decreases", correct: false },
+    { answer: "The capacitance is unaffected", correct: false },
+    { answer: "The voltage it can withstand increases", correct: false }
+  ]
+},
+{
+  question: "Cells are connected in parallel to:",
+  options: [
+    { answer: "Increase the voltage output", correct: false },
+    { answer: "Increase the internal resistance", correct: false },
+    { answer: "Decrease the current capacity", correct: false },
+    { answer: "Increase the current capacity", correct: true }
+  ]
+},
+{
+  question: "Cells are connected in series in order to:",
+  options: [
+    { answer: "Increase the voltage rating", correct: true },
+    { answer: "Increase the current rating", correct: false },
+    { answer: "Increase the life of the cells", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In high voltage transmission line, the topmost conductor is:",
+  options: [
+    { answer: "R-phase", correct: false },
+    { answer: "Y-phase", correct: false },
+    { answer: "B-phase", correct: false },
+    { answer: "Earth", correct: true }
+  ]
+},
+{
+  question: "Guy wire is employed for:",
+  options: [
+    { answer: "Providing protection against surges", correct: false },
+    { answer: "Providing emergency earth route", correct: false },
+    { answer: "Supporting the pole", correct: false },
+    { answer: "All of the above", correct: true }
+  ]
+}
+
+
+
+];
+
+   let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

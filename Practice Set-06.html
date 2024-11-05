@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-06 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-06</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    const questions = [
+
+
+  {
+  question: "Which of the following effects is used in measurement of magnetic flux?",
+  options: [
+    { answer: "Hall effect", correct: true },
+    { answer: "Seebeck effect", correct: false },
+    { answer: "Piezoelectric effect", correct: false },
+    { answer: "Photoelectric effect", correct: false }
+  ]
+},
+{
+  question: "In current transformers:",
+  options: [
+    { answer: "The number of turns in primary and secondary windings are nearly equal", correct: false },
+    { answer: "The number of primary turns is very small as compared to the number of secondary turns", correct: true },
+    { answer: "The number of secondary turns is very small as compared to the number of primary turns", correct: false },
+    { answer: "Either (a) or (c)", correct: false }
+  ]
+},
+{
+  question: "A dynamometer wattmeter can be used for:",
+  options: [
+    { answer: "DC only", correct: false },
+    { answer: "AC only", correct: false },
+    { answer: "DC and 50 Hz AC", correct: true },
+    { answer: "DC and high frequency AC", correct: false }
+  ]
+},
+{
+  question: "Wagner earthing device is used to eliminate error due to:",
+  options: [
+    { answer: "Electromagnetic coupling", correct: false },
+    { answer: "Electrostatic coupling", correct: true },
+    { answer: "Both electrostatic and electromagnetic coupling", correct: false },
+    { answer: "Either (a) or (b)", correct: false }
+  ]
+},
+{
+  question: "It is required to measure pressure using LVDT. The additional device needed is:",
+  options: [
+    { answer: "Strain gauge", correct: false },
+    { answer: "Pitot tube", correct: false },
+    { answer: "Bourdon tube", correct: true },
+    { answer: "Rotameter", correct: false }
+  ]
+},
+{
+  question: "The phenomenon of creep occurs in:",
+  options: [
+    { answer: "Energy meters", correct: true },
+    { answer: "Voltmeters", correct: false },
+    { answer: "Ammeters", correct: false },
+    { answer: "Wattmeters", correct: false }
+  ]
+},
+{
+  question: "A direct current can be measured:",
+  options: [
+    { answer: "Directly by DC potentiometer", correct: false },
+    { answer: "By DC potentiometer in conjunction with a standard resistance", correct: true },
+    { answer: "By DC potentiometer in conjunction with volt ratio box", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "A moving iron instrument has:",
+  options: [
+    { answer: "Two iron vanes, one fixed and one movable", correct: true },
+    { answer: "Two movable iron vanes", correct: false },
+    { answer: "Two aluminium vanes, one fixed and one movable", correct: false },
+    { answer: "Two vanes, one fixed made of aluminium and the other movable made of iron", correct: false }
+  ]
+},
+{
+  question: "The controlling torque in gravity controlled meter is proportional to (SSC JE 2010):",
+  options: [
+    { answer: "Cosθ", correct: false },
+    { answer: "Sinθ", correct: true },
+    { answer: "Tanθ", correct: false },
+    { answer: "θ", correct: false }
+  ]
+},
+{
+  question: "Dynamometer type moving instruments are provided with (SSC JE 2017):",
+  options: [
+    { answer: "Eddy current damping", correct: false },
+    { answer: "Pneumatic damping", correct: true },
+    { answer: "Fluid friction damping", correct: false },
+    { answer: "Electrostatic damping", correct: false }
+  ]
+},
+{
+  question: "The damping method used in horizontally mounted moving iron instruments is (POWER GRID EXAM):",
+  options: [
+    { answer: "Eddy current damping", correct: false },
+    { answer: "Electromagnetic damping", correct: false },
+    { answer: "Fluid friction damping", correct: false },
+    { answer: "Air friction damping", correct: true }
+  ]
+},
+{
+  question: "A moving iron instrument is used as an ammeter. Its range can be extended by using:",
+  options: [
+    { answer: "Suitable shunt across its terminal", correct: true },
+    { answer: "A high non-inductive resistance", correct: false },
+    { answer: "Both (a) and (b)", correct: false },
+    { answer: "Neither (a) nor (b)", correct: false }
+  ]
+},
+{
+  question: "The scale of PMMC type instruments is:",
+  options: [
+    { answer: "Uniform", correct: true },
+    { answer: "Non-uniform", correct: false },
+    { answer: "Cramped at the lower ends", correct: false },
+    { answer: "Crowded in the middle", correct: false }
+  ]
+},
+{
+  question: "Moving iron and PMMC instruments can be distinguished from each other by looking at (SSC JE 2014):",
+  options: [
+    { answer: "Pointer", correct: false },
+    { answer: "Terminal size", correct: false },
+    { answer: "Scale", correct: true },
+    { answer: "Scale range", correct: false }
+  ]
+},
+{
+  question: "To increase the range of an AC ammeter you would use (SSC JE 2014, UPPCL JE 2018):",
+  options: [
+    { answer: "A condenser across the meter", correct: false },
+    { answer: "Current transformer", correct: true },
+    { answer: "A potential transformer", correct: false },
+    { answer: "An inductance across the meter", correct: false }
+  ]
+},
+{
+  question: "Ammeter and voltmeter are connected across the load in _______ and _______ respectively (SSC JE EE 2018):",
+  options: [
+    { answer: "Series, Parallel", correct: true },
+    { answer: "Parallel, Series", correct: false },
+    { answer: "Series, Series", correct: false },
+    { answer: "Parallel, Parallel", correct: false }
+  ]
+},
+{
+  question: "Insulation resistance is measured in (UPPCL JE 2019):",
+  options: [
+    { answer: "Milli ohm", correct: false },
+    { answer: "Ohm meter", correct: false },
+    { answer: "Micro ohm", correct: false },
+    { answer: "Mega ohm", correct: true }
+  ]
+},
+{
+  question: "Megger is also used for:",
+  options: [
+    { answer: "Providing additional e.m.f", correct: false },
+    { answer: "Bridge balance", correct: false },
+    { answer: "Testing insulation resistance", correct: true },
+    { answer: "Controlling the temperature", correct: false }
+  ]
+},
+{
+  question: "In a low power factor wattmeter, the compensating coil is connected (ESE Electrical 2013):",
+  options: [
+    { answer: "In series with current coil", correct: false },
+    { answer: "In parallel with current coil", correct: false },
+    { answer: "In series with pressure coil", correct: true },
+    { answer: "In parallel with pressure coil", correct: false }
+  ]
+},
+{
+  question: "A moving-coil permanent-magnet instrument can be used as a flux-meter by (ESE Electrical 2013):",
+  options: [
+    { answer: "Using a low resistance shunt", correct: false },
+    { answer: "Using a high series resistance", correct: false },
+    { answer: "Eliminating the control springs", correct: true },
+    { answer: "Making control springs of large moment of inertia", correct: false }
+  ]
+},
+{
+  question: "The chemical effect of current is used in (UPPCL JE 2016):",
+  options: [
+    { answer: "D.C. ammeter hour meter", correct: true },
+    { answer: "D.C. ammeter", correct: false },
+    { answer: "D.C. energy meter", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The two pressure coils of a single phase power factor meter have (WBSETCL JE Gr-II 2016):",
+  options: [
+    { answer: "The same dimensions and the same number of turns", correct: true },
+    { answer: "The same dimension but different number of turns", correct: false },
+    { answer: "The same number of turns but different dimensions", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "If an instrument has a cramped scale for larger values, it follows (LMRC Asst Manager Electrical 2018):",
+  options: [
+    { answer: "Square law", correct: false },
+    { answer: "Logarithmic law", correct: true },
+    { answer: "Uniform law", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The power of an n-phase circuit can be measured by using a minimum of:",
+  options: [
+    { answer: "(n - 1) wattmeter elements", correct: true },
+    { answer: "n wattmeter elements", correct: false },
+    { answer: "(n + 1) wattmeter elements", correct: false },
+    { answer: "2n wattmeter elements", correct: false }
+  ]
+},
+{
+  question: "Induction type single phase energy meters measure electric energy in (SSC JE 2018):",
+  options: [
+    { answer: "kW", correct: false },
+    { answer: "Wh", correct: false },
+    { answer: "kWh", correct: true },
+    { answer: "VAR", correct: false }
+  ]
+},
+{
+  question: "In a 3-phase power measurement by two wattmeter method, both the wattmeters had identical readings. The power factor of the load was:",
+  options: [
+    { answer: "Unity", correct: true },
+    { answer: "0.8 lagging", correct: false },
+    { answer: "0.8 leading", correct: false },
+    { answer: "Zero", correct: false }
+  ]
+},
+{
+  question: "A power factor meter has (WBSETCL JE Gr-II 2016):",
+  options: [
+    { answer: "One current circuit and two pressure circuits", correct: true },
+    { answer: "One current circuit and one pressure circuit", correct: false },
+    { answer: "Two current circuits and one pressure circuit", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In a single phase power factor meter, the phase difference between the currents in the two pressure coils is:",
+  options: [
+    { answer: "Exactly 0°", correct: false },
+    { answer: "Approximately 0°", correct: false },
+    { answer: "Exactly 90°", correct: true },
+    { answer: "Approximately 90°", correct: false }
+  ]
+},
+{
+  question: "To measure a resistance with the help of a potentiometer, it is:",
+  options: [
+    { answer: "Necessary to standardize the potentiometer", correct: false },
+    { answer: "Not necessary to standardize the potentiometer", correct: true },
+    { answer: "Necessary to use a volt ratio box in conjunction with the potentiometer", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The disc of an instrument using eddy current damping should be made of (ESE Electronics 2015):",
+  options: [
+    { answer: "Conducting and magnetic material", correct: false },
+    { answer: "Non-conducting and magnetic material", correct: false },
+    { answer: "Conducting and nonmagnetic material", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In a 3-phase power measurement by two wattmeter method, the reading of one of the wattmeters was zero. The power factor of the load must be (RSMSSB JE Electrical 2020):",
+  options: [
+    { answer: "Unity", correct: false },
+    { answer: "0.5", correct: true },
+    { answer: "0.3", correct: false },
+    { answer: "Zero", correct: false }
+  ]
+},
+{
+  question: "The scale of a rectifier instrument is (CIL MT Electrical 2020):",
+  options: [
+    { answer: "Linear", correct: true },
+    { answer: "Nonlinear", correct: false },
+    { answer: "Either (A) or (B)", correct: false },
+    { answer: "Neither (A) nor (B)", correct: false }
+  ]
+},
+{
+  question: "Murray loop test can be used for location of:",
+  options: [
+    { answer: "Ground fault on a cable", correct: false },
+    { answer: "Short circuit fault on a cable", correct: false },
+    { answer: "Both the ground fault and the short-circuit fault", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The function of a shunt in an ammeter is to (ALP CBT 2 2019):",
+  options: [
+    { answer: "Bypass the current", correct: true },
+    { answer: "Increase the sensitivity of the ammeter", correct: false },
+    { answer: "Increase the resistance of the ammeter", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In a low power factor wattmeter, the pressure coil is connected (ESE Electrical 2013):",
+  options: [
+    { answer: "To the supply side of the current coil", correct: false },
+    { answer: "To the load side of the current coil", correct: true },
+    { answer: "In either of the two methods", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "For measuring current at high frequency, we should use (DSSSB JE ME 2019):",
+  options: [
+    { answer: "Moving iron instrument", correct: false },
+    { answer: "Electrostatic instrument", correct: false },
+    { answer: "Thermocouple instrument", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "A _____ device prevents the oscillation of the moving system and enables the latter to reach its final position quickly:",
+  options: [
+    { answer: "Deflecting", correct: false },
+    { answer: "Controlling", correct: false },
+    { answer: "Damping", correct: true },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "The electrical power to a Megger is provided by (WBPSC 2018, UPRVUNL JE 2015):",
+  options: [
+    { answer: "Battery", correct: false },
+    { answer: "Permanent magnet DC generator", correct: true },
+    { answer: "AC generator", correct: false },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "To avoid the effect of stray magnetic fields in AC bridges, we can use (MP Vyapam 2016):",
+  options: [
+    { answer: "Magnetic screening", correct: true },
+    { answer: "Wagner earthing device", correct: false },
+    { answer: "Wave filters", correct: false },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "Two holes in the disc of an energy meter are drilled at the opposite sides of the spindle to (Vizag MT 2015):",
+  options: [
+    { answer: "Improve its ventilation", correct: false },
+    { answer: "Eliminate creeping at no load", correct: true },
+    { answer: "Increase its deflecting torque", correct: false },
+    { answer: "Increase its braking torque", correct: false }
+  ]
+},
+{
+  question: "In an Anderson bridge, the unknown inductance is measured in terms of (LMRC Asst Manager Electrical 2018):",
+  options: [
+    { answer: "Known inductance and resistance", correct: false },
+    { answer: "Known capacitance and resistance", correct: true },
+    { answer: "Known resistance", correct: false },
+    { answer: "Known inductance", correct: false }
+  ]
+},
+{
+  question: "The resistance in the circuit of the moving coil of a dynamometer wattmeter should be (BSF RM 2019):",
+  options: [
+    { answer: "Almost zero", correct: false },
+    { answer: "Low", correct: false },
+    { answer: "High", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The stator of a phase shifting transformer for use in conjunction with an AC potentiometer usually has a:",
+  options: [
+    { answer: "Single-phase winding", correct: false },
+    { answer: "Two-phase winding", correct: true },
+    { answer: "Three-phase winding", correct: false },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "A Schering bridge can be used for (RSMSSB JE Electrical 2020):",
+  options: [
+    { answer: "Capacitance and its power factor", correct: true },
+    { answer: "‘Q’ of a coil", correct: false },
+    { answer: "Inductance and its ‘Q’ value", correct: false },
+    { answer: "Very small resistance", correct: false }
+  ]
+},
+{
+  question: "The primary winding of a current transformer is connected in _________ with the line carrying the main current and the secondary winding is directly connected across __________ (HPCL Engineer Instrumentation 2021):",
+  options: [
+    { answer: "Series, ammeter", correct: true },
+    { answer: "Parallel, voltmeter", correct: false },
+    { answer: "Parallel, ammeter", correct: false },
+    { answer: "Series, voltmeter", correct: false }
+  ]
+},
+{
+  question: "The windings of a CT are:",
+  options: [
+    { answer: "Tied together", correct: false },
+    { answer: "Shorted", correct: false },
+    { answer: "Wound over one another", correct: true },
+    { answer: "Grounded", correct: false }
+  ]
+},
+{
+  question: "Under operating conditions, the secondary of a current transformer is always short-circuited because it (SSC JE 2017):",
+  options: [
+    { answer: "Protects the primary circuits", correct: false },
+    { answer: "Is safe to human beings", correct: false },
+    { answer: "Avoids core saturation and high voltage induction", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "If a current transformer has ratio 100:5 and the ammeter connected to its secondary reads 2.5 A, the actual line current is:",
+  options: [
+    { answer: "12.5 A", correct: false },
+    { answer: "250 A", correct: true },
+    { answer: "50 A", correct: false },
+    { answer: "0.125 A", correct: false }
+  ]
+},
+{
+  question: "Wheatstone bridge is used for measurement of:",
+  options: [
+    { answer: "Impedance", correct: false },
+    { answer: "Inductance", correct: false },
+    { answer: "Resistance", correct: true },
+    { answer: "Capacitance", correct: false }
+  ]
+},
+{
+  question: "The “swamping” resistance, connected in series with the working coil of a voltmeter to drastically reduce the error in measurement caused due to variation in temperature, is made up of (ISRO Scientist Electrical 2014):",
+  options: [
+    { answer: "Constantan", correct: false },
+    { answer: "Eureka", correct: false },
+    { answer: "Manganin", correct: true },
+    { answer: "Nichrome", correct: false }
+  ]
+}
+
+
+];
+
+   let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

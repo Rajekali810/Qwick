@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-10 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-10</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+
+    const questions = [
+
+
+{
+  question: "_____ lamps are used to light up sports stadiums.",
+  options: [
+    { answer: "LED lamps", correct: false },
+    { answer: "Incandescent lamps", correct: false },
+    { answer: "Fluorescent lamps", correct: false },
+    { answer: "Sodium vapor lamps", correct: true }
+  ]
+},
+{
+  question: "Which of the following lamps employs a bimetallic strip?",
+  options: [
+    { answer: "Sodium vapor lamp", correct: false },
+    { answer: "Fluorescent lamp", correct: true },
+    { answer: "Incandescent lamp", correct: false },
+    { answer: "Mercury vapor lamp", correct: false }
+  ]
+},
+{
+  question: "A room of dimensions 12 m × 16 m is to be lighted by 24 lamps of uniform illumination of around 100 lm/m². If the output of each lamp is around 1600 lumens, what will be the utilization factor of the room?",
+  options: [
+    { answer: "0.4", correct: false },
+    { answer: "0.6", correct: false },
+    { answer: "0.45", correct: false },
+    { answer: "0.5", correct: true }
+  ]
+},
+{
+  question: "The main application of indirect arc furnace is to melt:",
+  options: [
+    { answer: "Iron", correct: false },
+    { answer: "Steel", correct: false },
+    { answer: "Non-ferrous metals", correct: true },
+    { answer: "None of these", correct: false }
+  ]
+},
+{
+  question: "Which of the following lamps is used as a sign or an indicator lamp?",
+  options: [
+    { answer: "Incandescent lamp", correct: false },
+    { answer: "Halogen lamp", correct: false },
+    { answer: "Neon lamp", correct: true },
+    { answer: "Fluorescent lamp", correct: false }
+  ]
+},
+{
+  question: "Which of the following lamps does NOT suffer from stroboscopic effect?",
+  options: [
+    { answer: "Fluorescent lamp", correct: false },
+    { answer: "Mercury vapour lamp", correct: false },
+    { answer: "Incandescent lamp", correct: true },
+    { answer: "Sodium vapour lamp", correct: false }
+  ]
+},
+{
+  question: "Light waves travel with a velocity of:",
+  options: [
+    { answer: "3 x 10¹⁰ cm/s", correct: true },
+    { answer: "3 x 10¹² cm/s", correct: false },
+    { answer: "3 x 10¹⁵ cm/s", correct: false },
+    { answer: "3 x 10¹⁸ cm/s", correct: false }
+  ]
+},
+{
+  question: "The illumination is directly proportional to the cosine of the angle made by the normal to the illuminated surface with the direction of the incident flux. Above statement is associated with:",
+  options: [
+    { answer: "Planck’s law", correct: false },
+    { answer: "Macbeth’s law of illumination", correct: false },
+    { answer: "Bunsen’s law of illumination", correct: false },
+    { answer: "Lambert’s cosine law", correct: true }
+  ]
+},
+{
+  question: "Which of the following will need the lowest level of illumination?",
+  options: [
+    { answer: "Displays", correct: false },
+    { answer: "Fine engraving", correct: false },
+    { answer: "Railway platform", correct: true },
+    { answer: "Auditoriums", correct: false }
+  ]
+},
+{
+  question: "The illumination level in houses is in the range:",
+  options: [
+    { answer: "10-20 lumen/m²", correct: false },
+    { answer: "30-50 lumen/m²", correct: false },
+    { answer: "40-75 lumen/m²", correct: true },
+    { answer: "100-140 lumen/m²", correct: false }
+  ]
+},
+{
+  question: "Illumination level in public areas should be around:",
+  options: [
+    { answer: "100 lux", correct: false },
+    { answer: "50 lux", correct: true },
+    { answer: "200 lux", correct: false },
+    { answer: "1000 lux", correct: false }
+  ]
+},
+{
+  question: "The standard wattage of a 3 ft. fluorescent tube is:",
+  options: [
+    { answer: "10 W", correct: false },
+    { answer: "40 W", correct: true },
+    { answer: "65 W", correct: false },
+    { answer: "100 W", correct: false }
+  ]
+},
+{
+  question: "For the same wastage, which lamp is cheapest?",
+  options: [
+    { answer: "Sodium vapor lamp", correct: false },
+    { answer: "Mercury vapor lamp", correct: false },
+    { answer: "Fluorescent tube", correct: false },
+    { answer: "GLS lamps", correct: true }
+  ]
+},
+{
+  question: "Which photometer is used for comparing the lights of different colours?",
+  options: [
+    { answer: "Bunson photometer", correct: false },
+    { answer: "Grease spot photometer", correct: false },
+    { answer: "Lummer Brodhum photometer", correct: false },
+    { answer: "Guilds Flicker Photometer", correct: true }
+  ]
+},
+{
+  question: "Which photometer depends for its operation on Lambert’s cosine law?",
+  options: [
+    { answer: "Macbeth Illumino meter", correct: false },
+    { answer: "Trotter Illumination Photometer", correct: false },
+    { answer: "Lummer Brodhum Photometer", correct: true },
+    { answer: "Guild’s Flicker Photometer", correct: false }
+  ]
+},
+{
+  question: "Photometer is used to determine:",
+  options: [
+    { answer: "Density", correct: false },
+    { answer: "Potential difference", correct: false },
+    { answer: "Intensity of light", correct: true },
+    { answer: "Atmospheric pressure and altitude", correct: false }
+  ]
+},
+{
+  question: "The colour temperature of daylight is around:",
+  options: [
+    { answer: "50 K", correct: false },
+    { answer: "160 K", correct: false },
+    { answer: "600 K", correct: false },
+    { answer: "6000 K", correct: true }
+  ]
+},
+{
+  question: "The melting temperature of tungsten is:",
+  options: [
+    { answer: "3830°C", correct: false },
+    { answer: "3308°C", correct: false },
+    { answer: "3083°C", correct: false },
+    { answer: "3380°C", correct: true }
+  ]
+},
+{
+  question: "The life of an incandescent lamp is expected to be:",
+  options: [
+    { answer: "100 hours", correct: false },
+    { answer: "200 hours", correct: false },
+    { answer: "1000 hours", correct: true },
+    { answer: "10000 hours", correct: false }
+  ]
+},
+{
+  question: "An autotransformer used with a sodium vapor lamp should have:",
+  options: [
+    { answer: "High efficiency", correct: false },
+    { answer: "High step-up ratio", correct: false },
+    { answer: "High step-down ratio", correct: false },
+    { answer: "High leakage reactance", correct: true }
+  ]
+},
+{
+  question: "The capacitor used in an autotransformer circuit for sodium vapor lamps is for:",
+  options: [
+    { answer: "Protection against accidental power failure", correct: false },
+    { answer: "Controlling illumination level of the lamp", correct: false },
+    { answer: "Regulating discharge voltage", correct: false },
+    { answer: "Improving the power factor of the circuit", correct: true }
+  ]
+},
+{
+  question: "The power factor is highest in the case of:",
+  options: [
+    { answer: "Mercury arc lamp", correct: false },
+    { answer: "Sodium vapor lamps", correct: false },
+    { answer: "Tube lights", correct: false },
+    { answer: "GLS lamps", correct: true }
+  ]
+},
+{
+  question: "One Angstrom is:",
+  options: [
+    { answer: "10^-4 micron", correct: false },
+    { answer: "10^-6 micron", correct: false },
+    { answer: "10^-10 micron", correct: true },
+    { answer: "10^-2 micron", correct: false }
+  ]
+},
+{
+  question: "Light is produced in electric discharge lamps by:",
+  options: [
+    { answer: "Heating effect of current", correct: false },
+    { answer: "Magnetic effect of current", correct: false },
+    { answer: "Ionization in a gas or vapor", correct: true },
+    { answer: "Carbon electrodes", correct: false }
+  ]
+},
+{
+  question: "The purpose of providing a choke in a tube light is:",
+  options: [
+    { answer: "To eliminate corona effects", correct: false },
+    { answer: "To avoid radio interference", correct: false },
+    { answer: "To improve power factor", correct: false },
+    { answer: "To limit current to appropriate value", correct: true }
+  ]
+},
+{
+  question: "Which of the following application does not need ultraviolet lamps?",
+  options: [
+    { answer: "Medical purposes", correct: false },
+    { answer: "Aircraft cockpit dashboard lighting", correct: true },
+    { answer: "Car lighting", correct: false },
+    { answer: "Blueprint machines", correct: false }
+  ]
+},
+{
+  question: "If 'd' is the distance of a surface from a source, the illumination of the surface will vary as:",
+  options: [
+    { answer: "d", correct: false },
+    { answer: "2d", correct: false },
+    { answer: "1/d", correct: false },
+    { answer: "1/d²", correct: true }
+  ]
+},
+{
+  question: "The level of illumination on a surface least depends on:",
+  options: [
+    { answer: "Candle power of the source", correct: false },
+    { answer: "Distance of the source", correct: false },
+    { answer: "Type of reflector used", correct: true },
+    { answer: "Ambient temperature", correct: false }
+  ]
+},
+{
+  question: "The level of illumination from a 100 W incandescent lamp will not increase by:",
+  options: [
+    { answer: "Increasing the supply voltage", correct: false },
+    { answer: "Increasing filament temperature", correct: false },
+    { answer: "Increasing glass shell diameter", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "When a fluorescent lamp is to be operated on DC, which of the following additional devices must be incorporated in the circuit?",
+  options: [
+    { answer: "Condenser", correct: false },
+    { answer: "Transformer", correct: false },
+    { answer: "Resistance", correct: true },
+    { answer: "Inductance", correct: false }
+  ]
+},
+{
+  question: "The melting point of carbon is:",
+  options: [
+    { answer: "1800°C", correct: false },
+    { answer: "2200°C", correct: false },
+    { answer: "3500°C", correct: true },
+    { answer: "5500°C", correct: false }
+  ]
+},
+{
+  question: "While comparing tungsten filament lamps with fluorescent tubes, all of the following are the advantages in favor of tungsten filament lamps EXCEPT:",
+  options: [
+    { answer: "Longer life", correct: true },
+    { answer: "Less costly", correct: false },
+    { answer: "More brightness", correct: false },
+    { answer: "Simple installation", correct: false }
+  ]
+},
+{
+  question: "Glare may result from:",
+  options: [
+    { answer: "Excessive lighting contrast in the field of vision", correct: false },
+    { answer: "Excessive luminance", correct: false },
+    { answer: "Either (A) or (B)", correct: true },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "To avoid glare:",
+  options: [
+    { answer: "Object should be viewed from a distance", correct: true },
+    { answer: "Object should be viewed from a close vicinity", correct: false },
+    { answer: "Object should be moved constantly", correct: false },
+    { answer: "Viewer should move constantly", correct: false }
+  ]
+},
+{
+  question: "The normal lifespan of a fluorescent lamp is:",
+  options: [
+    { answer: "500 hours", correct: false },
+    { answer: "1000 hours", correct: false },
+    { answer: "1500 hours", correct: false },
+    { answer: "7500 hours", correct: true }
+  ]
+},
+{
+  question: "Which bulb operates on the lowest power?",
+  options: [
+    { answer: "Night bulb", correct: false },
+    { answer: "Neon bulb", correct: false },
+    { answer: "GLS bulb", correct: false },
+    { answer: "Torch bulb", correct: true }
+  ]
+},
+{
+  question: "Which one of the following is a cold cathode lamp?",
+  options: [
+    { answer: "Sodium lamp", correct: false },
+    { answer: "Neon lamp", correct: true },
+    { answer: "GLS lamp", correct: false },
+    { answer: "Tube light", correct: false }
+  ]
+},
+{
+  question: "In a mercury vapor lamp, red objects appear black due to:",
+  options: [
+    { answer: "High wavelength of red objects", correct: false },
+    { answer: "Color mixing", correct: false },
+    { answer: "Absence of red light from lamp radiation", correct: true },
+    { answer: "Absorption of red light by the lamp radiation", correct: false }
+  ]
+},
+{
+  question: "The wavelength of green color is nearly:",
+  options: [
+    { answer: "4000 A", correct: false },
+    { answer: "4500 A", correct: false },
+    { answer: "5000 A", correct: false },
+    { answer: "5500 A", correct: true }
+  ]
+},
+{
+  question: "A 60 W lamp gives a luminous flux of 1500 lumen. Its efficiency is:",
+  options: [
+    { answer: "1500 lumen/watt", correct: false },
+    { answer: "250 lumen/watt", correct: false },
+    { answer: "25 lumen/watt", correct: true },
+    { answer: "2.5 lumen/watt", correct: false }
+  ]
+},
+{
+  question: "The vacuum inside an incandescent lamp is of the order of:",
+  options: [
+    { answer: "10⁻² mm Hg", correct: false },
+    { answer: "10⁻³ mm Hg", correct: false },
+    { answer: "10⁻⁴ mm Hg", correct: true },
+    { answer: "10⁻⁵ mm Hg", correct: false }
+  ]
+},
+{
+  question: "In neon signs, neon with a mixture of mercury gives:",
+  options: [
+    { answer: "Green color", correct: false },
+    { answer: "Blue color", correct: true },
+    { answer: "Red color", correct: false },
+    { answer: "Yellow color", correct: false }
+  ]
+},
+{
+  question: "The wavelength for blue color is:",
+  options: [
+    { answer: "4400 A", correct: true },
+    { answer: "5250 A", correct: false },
+    { answer: "6150 A", correct: false },
+    { answer: "5950 A", correct: false }
+  ]
+},
+{
+  question: "In electric discharge lamps, to stabilize the arc:",
+  options: [
+    { answer: "A condenser is connected in parallel to supply", correct: false },
+    { answer: "A condenser is connected in series to supply", correct: false },
+    { answer: "A variable resistor is connected in the circuit", correct: false },
+    { answer: "A reactive choke is connected in series with supply", correct: true }
+  ]
+},
+{
+  question: "In a steam locomotive, electric power is provided through:",
+  options: [
+    { answer: "Overhead wire", correct: false },
+    { answer: "Battery system", correct: false },
+    { answer: "Small turbo-generator", correct: true },
+    { answer: "Diesel engine generator", correct: false }
+  ]
+},
+{
+  question: "For handling greater currents, induction watt-meters are used in conjunction with:",
+  options: [
+    { answer: "Potential transformers", correct: false },
+    { answer: "Current transformers", correct: true },
+    { answer: "Power transformers", correct: false },
+    { answer: "Either of the above", correct: false }
+  ]
+},
+{
+  question: "The chemical effect of current is used in:",
+  options: [
+    { answer: "D.C. ammeter hour meter", correct: true },
+    { answer: "D.C. ammeter", correct: false },
+    { answer: "D.C. energy meter", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Wagner earthing device is used to eliminate errors due to:",
+  options: [
+    { answer: "Electrostatic coupling", correct: true },
+    { answer: "Electromagnetic coupling", correct: false },
+    { answer: "Both (A) and (B)", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "In a Weston frequency meter, the magnetic axes of the two fixed coils are:",
+  options: [
+    { answer: "Parallel", correct: false },
+    { answer: "Perpendicular", correct: true },
+    { answer: "Inclined at 60°", correct: false },
+    { answer: "Inclined at 120°", correct: false }
+  ]
+},
+{
+  question: "The power of an n-phase circuit can be measured by using a minimum of:",
+  options: [
+    { answer: "(n - 1) wattmeter elements", correct: true },
+    { answer: "n wattmeter elements", correct: false },
+    { answer: "(n + 1) wattmeter elements", correct: false },
+    { answer: "2n wattmeter elements", correct: false }
+  ]
+}
+
+
+];
+
+   let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

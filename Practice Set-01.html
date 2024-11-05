@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-01 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='Practice_mcq.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-01</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+
+    const questions = [
+       {
+        question: "What is the correct formula for Ohm's Law?",
+        options: [
+          { answer: "V = I + R", correct: false },
+          { answer: "V = I * R", correct: true },
+          { answer: "V = I / R", correct: false },
+          { answer: "V = I^2 * R", correct: false }
+        ]
+      },
+      {
+        question: "An electric bulb draws a current of 0.2 A when the voltage is 220. Calculate the amount of electric charge flowing through it in one hour.",
+        options: [
+          { answer: "720C", correct: true },
+          { answer: "100C", correct: false },
+          { answer: "450C", correct: false },
+          { answer: "350C", correct: false }
+        ]
+      },
+      {
+        question: "What is the power dissipated by a resistor connected to a 12V battery with 2A current?",
+        options: [
+          { answer: "8W", correct: false },
+          { answer: "24W", correct: true },
+          { answer: "36W", correct: false },
+          { answer: "48W", correct: false }
+        ]
+      },
+    
+      {
+        question: "1milliampere equals-",
+        options: [
+          { answer: "100µA", correct: false },
+          { answer: "10µA", correct: false },
+          { answer: "1000µA", correct: true },
+          { answer: "10A", correct: false }
+        ]
+      },
+{
+        question: "The Tungsten filament in a light bulb has a resistance of-",
+        options: [
+          { answer: "Linear", correct: false },
+          { answer: "Non-Linear", correct: true },
+          { answer: "Fixed", correct: false },
+          { answer: "Both A&B", correct: false }
+        ]
+      },
+{
+        question: "Conductance is expressed in-",
+        options: [
+          { answer: "mho", correct: true },
+          { answer: "mho/m", correct: false },
+          { answer: "ohm/m", correct: false },
+          { answer: "m/ohm", correct: false }
+        ]
+      },
+{
+        question: "A wire’s resistance is y. When the wire is extended to three times its original length, the resistance is -",
+        options: [
+          { answer: "5y", correct: false },
+          { answer: "3y", correct: true },
+          { answer: "6y", correct: false },
+          { answer: "y/6", correct: false }
+        ]
+      },
+
+{
+        question: "At both ends of a copper wire of length l and diameter d, a potential difference V is applied. V is the drift velocity. When the wire diameter is d/4, the drift velocity becomes",
+        options: [
+          { answer: "V/16", correct: false },
+          { answer: "16V", correct: true },
+          { answer: "V", correct: false },
+          { answer: "V/4", correct: false }
+        ]
+      },
+{
+        question: " Ohm’s law does not apply to-",
+        options: [
+          { answer: "dc circuits", correct: false },
+          { answer: "high currents", correct: false },
+          { answer: "small resistors", correct: false },
+          { answer: "semi-conductors", correct: true }
+        ]
+      },
+{
+        question: "The resistivity of a wire depends on its(KMC 2018/KMDA 2020) -",
+        options: [
+          { answer: "length", correct: false },
+          { answer: "area of cross-section", correct: false },
+          { answer: "materials", correct: true },
+          { answer: "All of the above", correct: false }
+        ]
+      },
+{
+        question: "Current density is represented by the alphabet -",
+        options: [
+          { answer: "C", correct: false },
+          { answer: "D", correct: false },
+          { answer: "I", correct: false },
+          { answer: "J", correct: true }
+        ]
+      },
+{
+        question: "Specific resistance of a wire depends on the -",
+        options: [
+          { answer: "Length of the wire", correct: false },
+          { answer: "Area of cross-section of the wire", correct:false },
+          { answer: "Resistance of the wire", correct: false },
+          { answer: "Material of the wire", correct: true }
+        ]
+      },
+{
+        question: "The breaking stress of a wire depends on -",
+        options: [
+          { answer: " material of the wire", correct: true },
+          { answer: "length of the wire", correct: false },
+          { answer: "radius of the wire", correct: false },
+          { answer: "shape of he cross section.", correct: false }
+        ]
+      },
+
+{
+        question: "Which of the following type of circuits in electrical engineering cannot be analyzed using Ohm’s law?",
+        options: [
+          { answer: "Unilateral", correct: true },
+          { answer: "Bilateral", correct: false },
+          { answer: "Linear", correct: false },
+          { answer: "Conductors", correct: false }
+        ]
+      },
+{
+        question: "Which of the following is correct about the power consumed <br>by R1 and R2 connected in series if the value of R1 is greater than R2?",
+        options: [
+          { answer: "R1 will consume more power", correct: true },
+          { answer: "R2 will consume more power", correct: false },
+          { answer: "R1 and R2 will consume the same power", correct: false },
+          { answer: "The relationship between the power consumed cannot be established", correct: false }
+        ]
+      },
+{
+        question: "The unit of Resistivity is -",
+        options: [
+          { answer: " Ω", correct: false },
+          { answer: " Ω m", correct: true },
+          { answer: " Ω/m", correct: false },
+          { answer: "m", correct: false }
+        ]
+      },
+{
+        question: "Resistance of a copper wire is R. Four such wires with the same cross sectional area, but twice the length are connected in parallel. The net resistance is -",
+        options: [
+          { answer: "R", correct: false },
+          { answer: "R/2", correct: true },
+          { answer: "R/4", correct: false },
+          { answer: "R/8", correct: false }
+        ]
+      },
+{
+        question: "What percentage of the current carrying capacity of aluminum is that of copper? -",
+        options: [
+          { answer: "15%", correct: false },
+          { answer: "30%", correct: false },
+          { answer: "75%", correct: true },
+          { answer: "25%", correct: false }
+        ]
+      },
+
+{
+        question: "Voltage dependent resistors are used ?(kmc 2018) -",
+        options: [
+          { answer: "for inductive circuits ", correct: false },
+          { answer: "to suppress surges ", correct:true },
+          { answer: "as heating elements", correct: false },
+          { answer: "as current stabilizers ", correct: false }
+        ]
+      },
+{
+        question: "Two resistors are said to be connected in series when(BSNL JE (TTA) 27 September 2016) -",
+        options: [
+          { answer: "same current passes in turn through both", correct:true },
+          { answer: "both carry the same value of current", correct: false },
+          { answer: "total current equals the sum of branch currents", correct: false },
+          { answer: "sum of IR drops equals the applied e.m.f", correct: false }
+        ]
+      },
+{
+        question: "A circuit contains two unequal resistances in parallel, then:(CIL MT Electrical: 2017) -",
+        options: [
+          { answer: "Large current flows in larger value resistance", correct: false },
+          { answer: "Smaller current flows in smaller value resistance", correct: false },
+          { answer: "Potential difference across each is same", correct: true },
+          { answer: "Current is same in both", correct: false }
+        ]
+      },
+{
+        question: "Bulbs in street lighting are all connected in ?(WBSETCL JE Gr-II Electrical 2016) -",
+        options: [
+          { answer: "parallel", correct: true },
+          { answer: "series", correct: false },
+          { answer: "series-parallel", correct: false },
+          { answer: "End to-end", correct: false }
+        ]
+      },
+{
+        question: "Which of the following material has nearly zero temperature co-efficient of resistance ?(PGCIL Junior Technician Trainee Electrical Nov 2018)  -",
+        options: [
+          { answer: "Manganin", correct: true },
+          { answer: "Porcelain", correct: false },
+          { answer: "Carbon", correct: false },
+          { answer: "Copper", correct: false }
+        ]
+      },
+{
+        question: "An instrument which detects electric current is known as ? -",
+        options: [
+          { answer: "voltmeter", correct: false },
+          { answer: "rheostat", correct: false },
+          { answer: "wattmeter", correct: false },
+          { answer: "galvanometer", correct: true }
+        ]
+      },
+{
+        question: "A thermistor has  -",
+        options: [
+          { answer: "positive temperature coefficient", correct: false },
+          { answer: "Negative temperature coefficient", correct: true },
+          { answer: "zero temperature coefficient", correct: false },
+          { answer: "variable temperature coefficient", correct: false }
+        ]
+      },
+{
+        question: "Which of the following materials has a negative temperature co-efficient of resistance ? -",
+        options: [
+          { answer: "Copper", correct: false },
+          { answer: "Aluminum", correct: false },
+          { answer: "Carbon", correct: true },
+          { answer: "Brass", correct: false }
+        ]
+      },
+{
+        question: "A galvanometer can be converted into at ammeter by connecting(UP TGT Science 2011)",
+        options: [
+          { answer: "A low resistance in series", correct: false },
+          { answer: "A low resistance in parallel", correct:true },
+          { answer: "A high resistance in series", correct: false },
+          { answer: "A high resistance in parallel", correct: false }
+        ]
+      },
+{
+        question: "The rating of a fuse wire is always expressed in ?(SSC JE 2018)",
+        options: [
+          { answer: "ampere-hours", correct: false },
+          { answer: "ampere-volts", correct: false },
+          { answer: "kWh", correct: false },
+          { answer: "ampere", correct: true }
+        ]
+      },
+{
+        question: "For testing appliances, the wattage of test lamp should be ?(UPSSSC JE Electrical 2016)",
+        options: [
+          { answer: "very low", correct: false },
+          { answer: "low", correct: false },
+          { answer: "high", correct: true },
+          { answer: "any value", correct: false }
+        ]
+      },
+{
+        question: "A rheostat differs from potentiometer in the respect that it ?(JVVNL Technical Helper 2018)",
+        options: [
+          { answer: "has lower wattage rating ", correct: false },
+          { answer: "has higher wattage rating", correct: true },
+          { answer: "has large number of turns ", correct: false },
+          { answer: "offers large number of tappings ", correct: false }
+        ]
+      },
+
+{
+        question: "Two lamps 100 W and 40 W are connected in series across 230 V (alternating).<br> Which of the following statement is correct ?(MPSC Assistant Engineer EE Mains 2018)",
+        options: [
+          { answer: "100 W lamp will glow brighter ", correct: false },
+          { answer: "40 W lamp will glow brighter ", correct: true },
+          { answer: "Both lamps will glow equally bright", correct: false },
+          { answer: "40 W lamp will fuse ", correct: false }
+        ]
+      },
+{
+        question: "Voltage dependent resistors are usually made from-(DRMC JE Electrical 2018)",
+        options: [
+          { answer: "charcoal", correct: false },
+          { answer: "nichrome", correct: false },
+          { answer: "silicon carbide", correct: true },
+          { answer: "graphite", correct: false }
+        ]
+      },
+{
+        question: "The weight of an aluminium conductor as compared to a copper conductor of identical cross-section, for the same electrical resistance, is ?(SSC JE 2018 Evening)",
+        options: [
+          { answer: "50%", correct: true },
+          { answer: "60%", correct: false },
+          { answer: "100%", correct: false },
+          { answer: "150%", correct: false }
+        ]
+      },
+{
+        question: "Which method can be used for absolute measurement of resistances ?(ISRO Scientist Electrical 2019)",
+        options: [
+          { answer: "Wheatstone bridge method", correct: false },
+          { answer: "Releigh method", correct: false },
+          { answer: "Lorentz method", correct: true },
+          { answer: "Ohm's law method", correct: false }
+        ]
+      },
+
+{
+        question: "If the voltage across a 5 μF capacitor is 24 V at t = 6 ms,<br> what is the energy stored in the capacitor at that time?(SSC JE Electrical 4 Dec 2023)",
+        options: [
+          { answer: "720 mJ", correct: false },
+          { answer: "1440 μJ", correct: true },
+          { answer: "120 mJ", correct: false },
+          { answer: "360μJ", correct: false }
+        ]
+      },
+{
+        question: "When a 40-watt lamp is connected in series with a 100 W lamp across a 220 V supply, which one glows brighter?(MPSC Assistant Engineer EE Mains 2018)",
+        options: [
+          { answer: "100-watt lamp", correct: false },
+          { answer: "40-watt lamp", correct: true },
+          { answer: "Both will glow with equal brightness", correct:false },
+          { answer: "It cannot be predicted.", correct: false }
+        ]
+      },
+{
+        question: "Four, 100 W bulbs are connected in parallel across 200 V supply line, If one bulb gets fused ?",
+        options: [
+          { answer: "no bulb will light", correct: false },
+          { answer: "all the four bulbs will light", correct: false },
+          { answer: "rest of the three bulbs will light", correct: true },
+          { answer: "none of the above", correct: false }
+        ]
+      },
+{
+        question: "Which ofthe following lamps will have least resistance at room temperature?(UPPCL JE 2018)",
+        options: [
+          { answer: "25 W, 220V", correct: false },
+          { answer: "100 W, 220V", correct: false },
+          { answer: "200W, 220 V", correct: true },
+          { answer: "60W, 220 V", correct: false }
+        ]
+      },
+{
+        question: "A resistance having rating 10 ohms, 10 W is likely to be a  ?(WBSETCL JE 2016)",
+        options: [
+          { answer: "metallic resistor", correct: false },
+          { answer: "carbon resistor", correct: false },
+          { answer: "wire wound resistor", correct: true },
+          { answer: "variable resistor", correct: false }
+        ]
+      },
+{
+        question: "The maximum current rating for a 10 k?, 0.5 W resistor is ?",
+        options: [
+          { answer: "0.707 mA", correct: false },
+          { answer: "7.07 mA", correct: true },
+          { answer: "14.14 mA", correct: false },
+          { answer: "28.28 mA ", correct: false }
+        ]
+      },
+{
+        question: "Three 6 ohm resistors are connected to form a triangle. What is the resistance between any two corners?(KMC 2018)",
+        options: [
+          { answer: "3/2 ω", correct: false },
+          { answer: "6ω", correct: false },
+          { answer: "4ω", correct: true },
+          { answer: "8/3ω", correct: false }
+        ]
+      },
+{
+        question: "Two bulbs of 600 Wand 200 W rated at 250 V will have resistance ratio as ?(UPPCL JE  2018 Shift 1))",
+        options: [
+          { answer: "4:25", correct: false },
+          { answer: "25:4", correct: false },
+          { answer: "2:5", correct: true },
+          { answer: "5:2", correct: false }
+        ]
+      },
+{
+        question: "A 220 volt and 100 watt bulb is connected to a 110 volt source. The power consumption by the bulb is(CG TET 2021 Paper- II Mathematics and Science)",
+        options: [
+          { answer: "25Watt", correct: true },
+          { answer: "35Watt", correct: false },
+          { answer: "55Watt", correct: false },
+          { answer: "60Watt", correct: false }
+        ]
+      },
+{
+        question: "The thickness of insulation provided on the conductor depends on ?(ISRO JE 2019)",
+        options: [
+          { answer: "Reactive power", correct: false },
+          { answer: "Power factor", correct: false },
+          { answer: "Voltage", correct: true },
+          { answer: "Current", correct: false }
+        ]
+      },
+{
+        question: "A 40W bulb is connected in series with a room beater. H now 40 W bulb is replaced, by 100 W bulb, the heater output will ?(UPSSSC JE Electrical 2016)",
+        options: [
+          { answer: "Decrease", correct: false },
+          { answer: "Renain Same", correct: false },
+          { answer: "Increase", correct: true },
+          { answer: "heater will bum out ", correct: false }
+        ]
+      },
+{
+  question: "Power plant is expected to have the longest life.",
+  options: [
+    { answer: "Steam", correct: false },
+    { answer: "Diesel", correct: false },
+    { answer: "Hydroelectric", correct: true },
+    { answer: "Any of the above", correct: false }
+  ]
+},
+{
+  question: "If the length of a cable is doubled, its capacitance",
+  options: [
+    { answer: "Becomes one-fourth", correct: false },
+    { answer: "Becomes one-half", correct: false },
+    { answer: "Becomes double", correct: true },
+    { answer: "Remains unchanged", correct: false }
+  ]
+},
+{
+  question: "In a cable, the maximum stress under operating conditions is at",
+  options: [
+    { answer: "Insulation layer", correct: false },
+    { answer: "Sheath", correct: false },
+    { answer: "Armour", correct: false },
+    { answer: "Conductor surface", correct: true }
+  ]
+},
+{
+  question: "What are the line constants in a transmission line?",
+  options: [
+    { answer: "Resistance and series conductance only", correct: false },
+    { answer: "Series and shunt conductance", correct: false },
+    { answer: "Resistance, inductance and capacitance", correct: false },
+    { answer: "Resistance, inductance, capacitance and shunt conductance", correct: true }
+  ]
+},
+{
+  question: "Skin effect in a conductor is proportional to",
+  options: [
+    { answer: "(Diameter of conductor)^1/2", correct: false },
+    { answer: "Diameter of conductor", correct: false },
+    { answer: "(Diameter of conductor)^2", correct: true },
+    { answer: "(Diameter of conductor)^4", correct: false }
+  ]
+},
+{
+  question: "Why is the transmission lines transposed?",
+  options: [
+    { answer: "Reduce corona loss", correct: false },
+    { answer: "Reduce skin effect", correct: false },
+    { answer: "Prevent interference with the neighbouring telephone lines", correct: true },
+    { answer: "Prevent short circuit between any two lines", correct: false }
+  ]
+},
+{
+  question: "The instrument which can be used only with the d.c. supply is",
+  options: [
+    { answer: "PMMC instrument", correct: true },
+    { answer: "Electrodynamometer instrument", correct: false },
+    { answer: "Hot-wire instrument", correct: false },
+    { answer: "Split phase induction type instrument", correct: false }
+  ]
+},
+{
+  question: "Power dissipated in a pure capacitor is",
+  options: [
+    { answer: "Minimum", correct: false },
+    { answer: "Maximum", correct: false },
+    { answer: "Infinite", correct: false },
+    { answer: "Zero", correct: true }
+  ]
+},
+{
+  question: "A parallel A.C circuit in resonance will",
+  options: [
+    { answer: "Have high impedance", correct: true },
+    { answer: "Generate maximum noise", correct: false },
+    { answer: "Generate maximum heat", correct: false },
+    { answer: "Generate maximum power", correct: false }
+  ]
+},
+{
+  question: "Sheath is used in the cables to",
+  options: [
+    { answer: "Prevent the moisture from entering the cable", correct: true },
+    { answer: "Provide the strength to the cable", correct: false },
+    { answer: "Avoid the chances of the rust on the strands", correct: false },
+    { answer: "Provide proper insulation", correct: false }
+  ]
+},
+{
+  question: "The cells are connected in series to",
+  options: [
+    { answer: "Increase the current output", correct: false },
+    { answer: "Increase the voltage output", correct: true },
+    { answer: "Decrease the internal resistance", correct: false },
+    { answer: "Decrease the amount of charging voltage required", correct: false }
+  ]
+},
+{
+  question: "Open circuit test on transformer measures",
+  options: [
+    { answer: "Impedance and insulation resistance", correct: false },
+    { answer: "Voltage regulation", correct: false },
+    { answer: "Eddy current loss", correct: false },
+    { answer: "Core loss", correct: true }
+  ]
+},
+
+{
+        question: "Low power factor is usually not due to(MPSC AE 2019)",
+        options: [
+          { answer: "Arc lamps", correct: false },
+          { answer: "Induction motors", correct: false },
+          { answer: "Fluorescent tubes", correct: false },
+          { answer: "Incandescent lamp", correct: true }
+        ]
+      },
+{
+        question: "Capacitive reactance is more when(WBPSC JE 2016)",
+        options: [
+          { answer: "Capacitance is less and frequency of supply is less", correct:true },
+          { answer: "Capacitance is less and frequency of supply is more", correct: false },
+          { answer: "Capacitance is more and frequency of supply is less", correct: false },
+          { answer: "Capacitance is more and frequency of supply is more", correct: false }
+        ]
+      },
+{
+        question: "Form Factor is the ratio of ?(ISRO JE 2019)",
+        options: [
+          { answer: "Average value/r.m.s. value", correct: false },
+          { answer: "Average value/peak value", correct: false },
+          { answer: "r.m.s. value/average value", correct: true },
+          { answer: "r.m.s. value/peak value", correct: false }
+        ]
+      },
+{
+  question: "Corona loss in DC transmission line is:",
+  options: [
+    { answer: "Minimum", correct: true },
+    { answer: "High", correct: false },
+    { answer: "Infinite", correct: false },
+    { answer: "Extra High", correct: false }
+  ]
+},
+{
+  question: "Hollow conductors are used in transmission line to:",
+  options: [
+    { answer: "Reduce weight of copper", correct: false },
+    { answer: "Improve stability", correct: false },
+    { answer: "Reduce corona", correct: true },
+    { answer: "Increase power transmission capacity", correct: false }
+  ]
+},
+{
+  question: "Corona loss does not depend on:",
+  options: [
+    { answer: "Atmosphere", correct: false },
+    { answer: "Conductor size", correct: false },
+    { answer: "Line voltage", correct: false },
+    { answer: "Height of the conductor", correct: true }
+  ]
+},
+{
+  question: "The good effect of corona on overhead lines is to:",
+  options: [
+    { answer: "Increase the line carrying capacity due to conducting ionized air envelope around conductor", correct: false },
+    { answer: "Increase the power factor due to corona loss", correct: false },
+    { answer: "Reduce the radio interference from the conductor", correct: false },
+    { answer: "Reduce the steepness of surge fronts", correct: true }
+  ]
+},
+{
+  question: "What is the main purpose of oil in oil circuit breakers?",
+  options: [
+    { answer: "Provide insulation", correct: false },
+    { answer: "Quenching arc", correct: true },
+    { answer: "Provide cooling of contacts", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "Fuse protection is used for current ratings up to:",
+  options: [
+    { answer: "10 A", correct: false },
+    { answer: "20 A", correct: false },
+    { answer: "50 A", correct: false },
+    { answer: "100 A", correct: true }
+  ]
+},
+{
+  question: "The fuse current in amperes is related with fuse wire diameter D as:",
+  options: [
+    { answer: "I ∞ I/D", correct: false },
+    { answer: "I ∞ D", correct: false },
+    { answer: "I ∞ D^(3/2)", correct: true },
+    { answer: "I ∞ D^2", correct: false }
+  ]
+},
+{
+  question: "Which circuit breaker is generally used in railway traction?",
+  options: [
+    { answer: "SF6 gas circuit breaker", correct: false },
+    { answer: "Air break circuit breaker", correct: true },
+    { answer: "Vacuum circuit breaker", correct: false },
+    { answer: "Minimum oil circuit breaker", correct: false }
+  ]
+},
+{
+  question: "Out of the following, which one is correct in case of a circuit breaker?(WBPSC AE 2019)",
+  options: [
+    { answer: "Making capacity = 2.55 X breaking capacity", correct: true },
+    { answer: "Breaking capacity = 2.55 X making capacity", correct: false },
+    { answer: "Making capacity = 1.8 X breaking capacity", correct: false },
+    { answer: "Breaking capacity = 1.8 X making capacity", correct: false }
+  ]
+},
+{
+  question: "Which part of the circuit breaker is helpful in breaking the current?",
+  options: [
+    { answer: "Trip coil", correct: false },
+    { answer: "Contacts", correct: true },
+    { answer: "Medium", correct: false },
+    { answer: "Handle", correct: false }
+  ]
+},
+{
+  question: "Breaking capacity of a circuit breaker is usually expressed in terms of:",
+  options: [
+    { answer: "Amperes", correct: false },
+    { answer: "Volts", correct: false },
+    { answer: "MW", correct: false },
+    { answer: "MVA", correct: true }
+  ]
+},
+{
+  question: "HRC fuses are:",
+  options: [
+    { answer: "High resistance and capacitance fuses", correct: false },
+    { answer: "Heat reflecting cool fuses", correct: false },
+    { answer: "Holding and resisting current fuses", correct: false },
+    { answer: "High rupturing capacity fuses", correct: true }
+  ]
+},
+{
+  question: "For high speed circuit breakers, the total time is nearly:",
+  options: [
+    { answer: "Half cycle", correct: true },
+    { answer: "One cycle", correct: false },
+    { answer: "Few cycles", correct: false },
+    { answer: "Ten cycles", correct: false }
+  ]
+},
+{
+  question: "For a high speed circuit breaker, the total clearing time is nearly:",
+  options: [
+    { answer: "1 to 2 cycles", correct: true },
+    { answer: "5 to 10 cycles", correct: false },
+    { answer: "10 to 15 cycles", correct: false },
+    { answer: "Less than 50 cycles", correct: false }
+  ]
+},
+{
+  question: "Which of the following relays is used on transformers?",
+  options: [
+    { answer: "Buchholz relay", correct: true },
+    { answer: "MHO relay", correct: false },
+    { answer: "Merz price relay", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "The cosine of the angle between useful power and total power is (SSC JE 2016).",
+  options: [
+    { answer: "Diversity factor", correct: false },
+    { answer: "Load factor", correct: false },
+    { answer: "Power factor", correct: true },
+    { answer: "Demand factor", correct: false }
+  ]
+},
+{
+  question: "For a consumer what is the most economical power factor? (KMC 2018)",
+  options: [
+    { answer: "0.25 – 0.5 lagging", correct: false },
+    { answer: "0.25 – 0.5 leading", correct: false },
+    { answer: "0.85 – 0.95 lagging", correct: true },
+    { answer: "0.85 – 0.95 leading", correct: false }
+  ]
+},
+{
+  question: "For which among the following consumers is penalty imposed for low power factor?",
+  options: [
+    { answer: "Residential and commercial consumers", correct: false },
+    { answer: "Industrial consumers", correct: true },
+    { answer: "Agricultural consumers", correct: false },
+    { answer: "All of the above", correct: false }
+  ]
+},
+{
+  question: "Power factor can be improved by connecting which among these?",
+  options: [
+    { answer: "Static capacitors", correct: false },
+    { answer: "Resistors", correct: false },
+    { answer: "Synchronous condensers", correct: false },
+    { answer: "Both (a) and (c)", correct: true }
+  ]
+},
+{
+  question: "Phase advancers are used for which among the following machines?",
+  options: [
+    { answer: "Transformers", correct: false },
+    { answer: "Synchronous machines", correct: false },
+    { answer: "Induction motors", correct: true },
+    { answer: "DC machines", correct: false }
+  ]
+},
+{
+  question: "The most suitable location for the power factor improvement device is:",
+  options: [
+    { answer: "Near the electrical appliance which is responsible for the poor power factor", correct: false },
+    { answer: "At the sending end", correct: false },
+    { answer: "At the receiving end in case of transmission lines", correct: false },
+    { answer: "Both (a) and (c)", correct: true }
+  ]
+},
+{
+  question: "Medium size induction motor will operate at maximum power factor while operating at:",
+  options: [
+    { answer: "Full load", correct: true },
+    { answer: "50% of full load", correct: false },
+    { answer: "25% of full load", correct: false },
+    { answer: "Any load", correct: false }
+  ]
+},
+{
+  question: "Static capacitors are rated in terms of:",
+  options: [
+    { answer: "KVAR", correct: true },
+    { answer: "kW", correct: false },
+    { answer: "kVA", correct: false },
+    { answer: "kWh", correct: false }
+  ]
+},
+{
+  question: "A synchronous condenser is virtually:",
+  options: [
+    { answer: "Induction motor", correct: false },
+    { answer: "Over excited synchronous motor", correct: true },
+    { answer: "Under excited synchronous motor", correct: false },
+    { answer: "Commutator motor", correct: false }
+  ]
+},
+{
+  question: "To improve the power factor of a single phase motor, the capacitor should be connected in:",
+  options: [
+    { answer: "Series with the motor", correct: false },
+    { answer: "Parallel to the motor", correct: true },
+    { answer: "Series with the main winding", correct: false },
+    { answer: "Series with the starting winding", correct: false }
+  ]
+},
+{
+  question: "Active power and apparent power are respectively represented by:",
+  options: [
+    { answer: "kW and kVAR", correct: false },
+    { answer: "kVAR and kVA", correct: false },
+    { answer: "kVA and kVAR", correct: false },
+    { answer: "kW and kVA", correct: true }
+  ]
+},
+{
+  question: "Domestic consumers are charged _____________.",
+  options: [
+    { answer: "Flat demand tariff", correct: false },
+    { answer: "Block rate tariff", correct: true },
+    { answer: "Flat rate tariff", correct: false },
+    { answer: "Off peak tariff", correct: false }
+  ]
+},
+{
+  question: "What is demand factor?",
+  options: [
+    { answer: "Average load to maximum demand", correct: false },
+    { answer: "Maximum demand to connected load", correct: true },
+    { answer: "Connected load to maximum demand", correct: false },
+    { answer: "Maximum demand to average load", correct: false }
+  ]
+},
+{
+  question: "What does the highest point on the daily load curve represent?",
+  options: [
+    { answer: "Peak load", correct: false },
+    { answer: "Maximum demand", correct: true },
+    { answer: "Both (a) & (d)", correct: false },
+    { answer: "None of these", correct: false }
+  ]
+},
+{
+  question: "The power factor of capacitive circuits is:",
+  options: [
+    { answer: "Leading", correct: true },
+    { answer: "Lagging", correct: false },
+    { answer: "Both of these", correct: false },
+    { answer: "Any of these", correct: false }
+  ]
+},
+{
+  question: "A circuit having poor power factor will draw:",
+  options: [
+    { answer: "No current", correct: false },
+    { answer: "Low current", correct: false },
+    { answer: "Normal current", correct: false },
+    { answer: "High current", correct: true }
+  ]
+},
+{
+  question: "An alternator is supplying a load of 300 kW at a power factor of 0.6 lagging. If the power factor is raised to 0.9 lagging, how much more kW can alternator supply?",
+  options: [
+    { answer: "200 kW", correct: false },
+    { answer: "450 kW", correct: false },
+    { answer: "90 kW", correct: false },
+    { answer: "150 kW", correct: true }
+  ]
+},
+{
+  question: "To improve the power factor of a single phase motor, the capacitor should be connected in:",
+  options: [
+    { answer: "Series with the motor", correct: false },
+    { answer: "Parallel to the motor", correct: true },
+    { answer: "Series with the main winding", correct: false },
+    { answer: "Series with the starting winding", correct: false }
+  ]
+},
+{
+  question: "What is the formula of power factor?",
+  options: [
+    { answer: "R/Z", correct: false },
+    { answer: "KW / KVA", correct: false },
+    { answer: "Active power / Apparent power", correct: false },
+    { answer: "All of this", correct: true }
+  ]
+},
+{
+  question: "For improving power factor, capacitor bank always connected in ________:",
+  options: [
+    { answer: "Star", correct: false },
+    { answer: "Delta", correct: true },
+    { answer: "Series-parallel", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "A power factor meter has:",
+  options: [
+    { answer: "One current circuit and two pressure circuits", correct: true },
+    { answer: "One current circuit and one pressure circuit", correct: false },
+    { answer: "Two current circuits and one pressure circuit", correct: false },
+    { answer: "None of the above", correct: false }
+  ]
+},
+{
+  question: "A feeder, in a transmission system, feeds power to:",
+  options: [
+    { answer: "Distributors", correct: true },
+    { answer: "Generating stations", correct: false },
+    { answer: "Service mains", correct: false },
+    { answer: "All of the above", correct: false }
+  ]
+},
+{
+  question: "For transmission of power over a distance of 200 km, the transmission voltage should be:",
+  options: [
+    { answer: "132 kV", correct: true },
+    { answer: "66 kV", correct: false },
+    { answer: "33 kV", correct: false },
+    { answer: "11 kV", correct: false }
+  ]
+},
+{
+  question: "Which of the following materials is used for overhead transmission lines?",
+  options: [
+    { answer: "Steel cored aluminium", correct: false },
+    { answer: "Galvanised steel", correct: false },
+    { answer: "Cadmium copper", correct: false },
+    { answer: "Any of the above", correct: true }
+  ]
+},
+{
+  question: "In ACSR Conductors, the insulation between aluminium and steel conductors is:",
+  options: [
+    { answer: "Insulin", correct: false },
+    { answer: "Bitumen", correct: false },
+    { answer: "Varnish", correct: false },
+    { answer: "No insulation is required", correct: true }
+  ]
+}
+
+];
+let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
