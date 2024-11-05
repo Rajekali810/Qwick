@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy PWD Engineers Set</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        /* 3D product card styles */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card i {
+            font-size: 50px;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .product-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .buy-button {
+            background-color: #ff9900;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .buy-button:hover {
+            background-color: #e68a00;
+        }
+
+        /* Special Offer Section */
+        .special-offer {
+            background-color: #007bff;
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 50px;
+        }
+
+        .special-offer h2 {
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        .special-offer .buy-button {
+            background-color: #ff4b5c;
+        }
+
+        .special-offer .buy-button:hover {
+            background-color: #ff1c3a;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 50px;
+        }
+
+        /* WhatsApp Message Styling */
+        .whatsapp-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Buy PWD Engineers Set For Your Exam to Crack</h1>
+
+        <!-- Product Grid -->
+        <div class="product-grid">
+
+            <!-- Product 1 -->
+            <div class="product-card">
+                <i class="fas fa-file-pdf"></i>
+                <div class="product-title">Basic Electrical (Imp. 350 Mcqs) - PDF</div>
+                <div class="price">Buy @Rs. 200</div>
+                <button class="buy-button" onclick="sendMessage('Basic Electrical')">Click Here to Buy</button>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <i class="fas fa-file-pdf"></i>
+                <div class="product-title">Electrical Machine Set (650 Mcqs) - PDF</div>
+                <div class="price">Buy @Rs. 499</div>
+                <button class="buy-button" onclick="sendMessage('Electrical Machine Set')">Click Here to Buy</button>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <i class="fas fa-file-pdf"></i>
+                <div class="product-title">Power System (750 Mcqs) - PDF</div>
+                <div class="price">Buy @Rs. 550</div>
+                <button class="buy-button" onclick="sendMessage('Power System')">Click Here to Buy</button>
+            </div>
+
+        </div>
+
+        <!-- Special Offer Section -->
+        <div class="special-offer">
+            <h2>Special Purchase</h2>
+
+            <div class="product-title">e-Book (2050 Mcqs with Analyses) - @Rs. 1099</div>
+            <button class="buy-button" onclick="sendMessage('e-Book 2050 Mcqs')">
+                <i class="fas fa-book"></i> Buy Now
+            </button>
+
+            <div class="product-title">WBPSC (AE) Solved e-Book - @Rs. 599</div>
+            <button class="buy-button" onclick="sendMessage('WBPSC (AE) e-Book 599')">
+                <i class="fas fa-book"></i> Buy Now
+            </button>
+
+            <div class="product-title">WBPSC (JE) Solved e-Book - @Rs. 499</div>
+            <button class="buy-button" onclick="sendMessage('WBPSC (JE) e-Book 499')">
+                <i class="fas fa-book"></i> Buy Now
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 e-Xamine. All rights reserved.</p>
+    </div>
+
+    <!-- WhatsApp Message Form -->
+    <form class="whatsapp-form" id="whatsappForm" action="https://api.whatsapp.com/send" method="get" target="_blank">
+        <input type="hidden" name="phone" value="7908684378">
+        <input type="hidden" id="whatsappMessage" name="text" value="">
+    </form>
+
+    <script>
+        function sendMessage(productName) {
+            const form = document.getElementById('whatsappForm');
+            const messageField = document.getElementById('whatsappMessage');
+            messageField.value = `I would like to purchase the ${productName}. Please contact me for further details.`;
+            form.submit();
+        }
+    </script>
+</body>
+</html>
