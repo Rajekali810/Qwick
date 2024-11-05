@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+    .header { background-color: #003366; color: white; padding: 15px; width: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+
+    /* Home Button */
+    .home-button { 
+      position: absolute; 
+      left: 20px; 
+      background-color: #ff6600; 
+      color: white; 
+      padding: 8px 16px; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      font-weight: bold; 
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+      transition: background-color 0.3s;
+    }
+    .home-button:hover { background-color: #e65c00; }
+
+    /* Institute Name */
+    .header h1 { font-size: 24px; margin: 0; color: #fff; }
+
+    /* Main Container */
+    .result-container { max-width: 800px; margin-top: 20px; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 90%; }
+    .result-container h2 { text-align: center; color: #333; }
+
+    /* Question Details */
+    .question { margin-bottom: 20px; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+
+    /* Download Button */
+    .download-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    .download-button:hover { background-color: #45a049; }
+  </style>
+
+  <!-- Include jsPDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<!-- Header with Home Button and Institute Name -->
+<div class="header">
+  <button class="home-button" onclick="location.href='index.html';">Home</button>
+  <h1>QwickLumen Institute for Engineers</h1>
+</div>
+
+<!-- Result Summary Container -->
+<div class="result-container">
+  <h2>Congratulations! Your Online Test Results</h2>
+  <div id="result-list"></div>
+  <button class="download-button" onclick="downloadPDF()">Download: Result PDF</button>
+</div>
+
+<script>
+  const questions = JSON.parse(sessionStorage.getItem("questions"));
+  const userAnswers = JSON.parse(sessionStorage.getItem("userAnswers"));
+  const resultList = document.getElementById("result-list");
+
+  questions.forEach((question, index) => {
+    const userAnswer = userAnswers[index];
+    const correctAnswer = question.options.find(option => option.correct).answer;
+
+    const questionElement = document.createElement("div");
+    questionElement.className = "question";
+    questionElement.innerHTML = `
+      <h3>Q${index + 1}: ${question.question}</h3>
+      <p>Your Answer: <span class="${userAnswer && userAnswer.correct ? 'correct' : 'incorrect'}">
+        ${userAnswer ? question.options[userAnswer.answer].answer : "Not Answered"}</span></p>
+      <p>Correct Answer: <span class="correct">${correctAnswer}</span></p>
+    `;
+    resultList.appendChild(questionElement);
+  });
+
+  // Function to generate and download PDF
+  function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+    let yOffset = 40;
+
+    pdf.setFontSize(18);
+    pdf.text("QwickLumen Institute for Engineers", 20, 20);
+    pdf.setFontSize(16);
+    pdf.text("Congratulations! Your Quiz Results", 20, 30);
+
+    pdf.setFontSize(12);
+    questions.forEach((question, index) => {
+      const userAnswer = userAnswers[index];
+      const correctAnswer = question.options.find(option => option.correct).answer;
+      const userAnswerText = userAnswer ? question.options[userAnswer.answer].answer : "Not Answered";
+      const status = userAnswer && userAnswer.correct ? "Correct" : "Incorrect";
+
+      // Ensure each question block has space to avoid overwriting
+      const questionText = `Q${index + 1}: ${question.question}`;
+      const answerText = `Your Answer: ${userAnswerText} (${status})`;
+      const correctAnswerText = `Correct Answer: ${correctAnswer}`;
+
+      if (yOffset > 270) { // Check if page space is low and add a new page if needed
+        pdf.addPage();
+        yOffset = 20;
+      }
+
+      pdf.text(questionText, 20, yOffset);
+      yOffset += 8;
+      pdf.text(answerText, 20, yOffset);
+      yOffset += 8;
+      pdf.text(correctAnswerText, 20, yOffset);
+      yOffset += 12; // Extra space between questions
+    });
+
+    pdf.save("Quiz_Result.pdf");
+  }
+</script>
+
+</body>
+</html>
