@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job for Engineers | 100% Trusted | Job in West Bengal</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #0d47a1;
+            color: #fff;
+            padding: 15px 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 22px;
+        }
+
+        header a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        header a:hover {
+            text-decoration: underline;
+        }
+
+        /* Job Listing Styling */
+        .job-container {
+            width: 90%;
+            max-width: 800px;
+            margin-top: 30px;
+            display: grid;
+            gap: 15px;
+        }
+
+        .job-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .job-item h2 {
+            font-size: 18px;
+            color: #0d47a1;
+        }
+
+        .job-item span {
+            font-size: 15px;
+            color: #555;
+        }
+
+        .apply-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #0d47a1;
+            color: #fff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .apply-button:hover {
+            background-color: #083377;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            resize: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0d47a1;
+            box-shadow: 0 0 4px rgba(13, 71, 161, 0.2);
+        }
+
+        .btnSubmit {
+            background-color: #0d47a1;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .btnSubmit:hover {
+            background-color: #083377;
+        }
+
+        /* Footer Styling */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <a href="index.html">Home</a>
+    <h1>Job for Engineers | 100% Trusted | Job in West Bengal</h1>
+</header>
+
+<!-- Job Container -->
+<div class="job-container">
+    <!-- Job 1 -->
+    <div class="job-item">
+        <h2>Software Engineer</h2>
+        <span>Location: Kolkata</span>
+        <span>Experience: 2+ Years</span>
+        <span>Salary: ₹50,000/mo</span>
+        <span>Qualification: B.Tech in CSE/IT</span>
+        <button class="apply-button" onclick="openModal()">Apply</button>
+    </div>
+    
+    <!-- Job 2 -->
+    <div class="job-item">
+        <h2>Electrical Engineer</h2>
+        <span>Location: Durgapur</span>
+        <span>Experience: 3+ Years</span>
+        <span>Salary: ₹45,000/mo</span>
+        <span>Qualification: B.Tech in EE</span>
+        <button class="apply-button" onclick="openModal()">Apply</button>
+    </div>
+    
+    <!-- Job 3 -->
+    <div class="job-item">
+        <h2>Civil Engineer</h2>
+        <span>Location: Asansol</span>
+        <span>Experience: 5+ Years</span>
+        <span>Salary: ₹60,000/mo</span>
+        <span>Qualification: B.Tech in Civil Engineering</span>
+        <button class="apply-button" onclick="openModal()">Apply</button>
+    </div>
+</div>
+
+<!-- Application Modal -->
+<div class="modal" id="applyModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">×</span>
+        <h2>Job Application Form</h2>
+        <form id="google-sheet-form">
+            <div class="form-group">
+                <label for="Name">Your Name *</label>
+                <input type="text" name="Name" id="Name" placeholder="Enter your name" required />
+            </div>
+            <div class="form-group">
+                <label for="Email">Your Email *</label>
+                <input type="email" name="Email" id="Email" placeholder="Enter your email" required />
+            </div>
+            <div class="form-group">
+                <label for="Phone">Your Contact Number *</label>
+                <input type="text" name="Phone" id="Phone" placeholder="Enter 10-digit contact number" required />
+            </div>
+            <div class="form-group">
+                <label for="Message">Your Message *</label>
+                <textarea name="Message" id="Message" placeholder="Briefly explain why you're a good fit" rows="4" required></textarea>
+            </div>
+            <button type="button" class="btnSubmit" onclick="submitForm()">Submit Application</button>
+             <a href="terms.html">See our Terms & Conditions</a>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>Contact Us: +7908684378</p>
+    <p>Email: info@examine.com</p>
+    <p>Designer: Md Rajek Ali (PWD Engg)</p>
+    <p>© 2024 WebXamina. All rights reserved.</p>
+</footer>
+
+<script>
+    // Modal functionality
+    function openModal() {
+        document.getElementById("applyModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("applyModal").style.display = "none";
+    }
+
+    // Form submission functionality
+    function submitForm() {
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxKXXZVSz7JhLWBYWi09iVREdlgDRePNwKhfxO7whCOMC6Zuiq2mCGFQccocRxNruMtrg/exec';
+        const form = document.getElementById('google-sheet-form');
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            .then(response => {
+                alert("Succeed! Your application has been submitted.");
+                form.reset();
+                closeModal();
+            })
+            .catch(error => {
+                alert("An error occurred while submitting your application.");
+            });
+    }
+</script>
+
+</body>
+</html>
