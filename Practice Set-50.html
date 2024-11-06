@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-50 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-50</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+
+{
+    "question": " The connection of NVC in DC 3 point starter, is connected across DC supply in series with:",
+    "options": [
+      { "answer": "field winding", "correct": true },
+      { "answer": "handle", "correct": false },
+      { "answer": "overload relay", "correct": false },
+      { "answer": "starting resistor", "correct": false }
+    ]
+  },
+  {
+    "question": " High speed alternators are generally termed as turbo-generators. They are characterized by:",
+    "options": [
+      { "answer": "large diameters and small axial lengths", "correct": false },
+      { "answer": "short diameters and small axial lengths", "correct": false },
+      { "answer": "short diameters and long axial lengths", "correct": true },
+      { "answer": "large diameters and long axial lengths", "correct": false }
+    ]
+  },
+  {
+    "question": " A wattmeter consists of:",
+    "options": [
+      { "answer": "four coils: two current coils and two potential coils", "correct": false },
+      { "answer": "three coils: one current coil and two potential coils", "correct": false },
+      { "answer": "two coils: one current coil and one potential coil", "correct": true },
+      { "answer": "three coils: two current coils and one potential coil", "correct": false }
+    ]
+  },
+  {
+    "question": " With an increase in temperature, the magnetic susceptibility of a ferromagnetic material will:",
+    "options": [
+      { "answer": "remain constant", "correct": false },
+      { "answer": "decrease", "correct": false },
+      { "answer": "increase and then decrease", "correct": true },
+      { "answer": "increase", "correct": false }
+    ]
+  },
+  {
+    "question": " For a balanced three-phase system, the value of zero sequence components is:",
+    "options": [
+      { "answer": "zero", "correct": true },
+      { "answer": "infinity", "correct": false },
+      { "answer": "dependent on load condition", "correct": false },
+      { "answer": "dependent on grid frequency", "correct": false }
+    ]
+  },
+  {
+    "question": " In an ideal transformer at no load, the phase difference between primary voltage and secondary voltage is:",
+    "options": [
+      { "answer": "90°", "correct": false },
+      { "answer": "120°", "correct": false },
+      { "answer": "180°", "correct": true },
+      { "answer": "360°", "correct": false }
+    ]
+  },
+  {
+    "question": " In a separately excited DC generator, the prime mover is connected:",
+    "options": [
+      { "answer": "in series with field winding", "correct": false },
+      { "answer": "with armature", "correct": true },
+      { "answer": "with field", "correct": false },
+      { "answer": "in parallel with supply voltage", "correct": false }
+    ]
+  },
+  {
+    "question": " The distribution factor in alternators is defined as the ratio of e.m.fs. of:",
+    "options": [
+      { "answer": "distributed winding to full pitch winding", "correct": true },
+      { "answer": "concentrated winding to distributed winding", "correct": false },
+      { "answer": "distributed winding to concentrated winding", "correct": false },
+      { "answer": "full pitch winding to distributed winding", "correct": false }
+    ]
+  },
+  {
+    "question": " In a shell type transformer, the leakage current is reduced by:",
+    "options": [
+      { "answer": "opening HV and LV windings", "correct": false },
+      { "answer": "placing a magnet between HV and LV windings", "correct": false },
+      { "answer": "sandwiching HV and LV windings", "correct": true },
+      { "answer": "providing air cooling between HV and LV windings", "correct": false }
+    ]
+  },
+  {
+    "question": " Two alternators are coupled mechanically. If they are delivering power at 40 Hz and 50 Hz, respectively, then the highest speed of the set is:",
+    "options": [
+      { "answer": "600 RPM", "correct": true },
+      { "answer": "2400 RPM", "correct": false },
+      { "answer": "3000 RPM", "correct": false },
+      { "answer": "500 RPM", "correct": false }
+    ]
+  },
+  {
+    "question": " Which of the following is correct regarding high voltage transmission line?",
+    "options": [
+      { "answer": "With increase in transmission voltage, efficiency is reduced", "correct": false },
+      { "answer": "With increase in transmission voltage, line losses are increased", "correct": false },
+      { "answer": "With increase in transmission voltage, voltage regulation is improved", "correct": true },
+      { "answer": "With increase in transmission voltage, line current is increased", "correct": false }
+    ]
+  },
+  {
+    "question": " The most important feature of star-delta starter is that it:",
+    "options": [
+      { "answer": "Reduces starting current", "correct": true },
+      { "answer": "Increases speed", "correct": false },
+      { "answer": "Lowers starting torque", "correct": false },
+      { "answer": "Increases torque", "correct": false }
+    ]
+  },
+  {
+    "question": " For a three-phase transformer connected in star-star, the line current is:",
+    "options": [
+      { "answer": "equal to phase current", "correct": false },
+      { "answer": "greater than phase current", "correct": false },
+      { "answer": "less than phase current", "correct": true },
+      { "answer": "depends on load condition", "correct": false }
+    ]
+  },
+  {
+    "question": " The frequency of induced e.m.f in an alternator is directly proportional to:",
+    "options": [
+      { "answer": "number of poles and speed", "correct": true },
+      { "answer": "number of poles and load", "correct": false },
+      { "answer": "speed and load", "correct": false },
+      { "answer": "none of the above", "correct": false }
+    ]
+  },
+  {
+    "question": " When a DC motor is supplied from a single phase supply, the flux produced in the machine will be:",
+    "options": [
+      { "answer": "uniform and constant", "correct": false },
+      { "answer": "non-uniform and constant", "correct": false },
+      { "answer": "non-uniform and fluctuating", "correct": true },
+      { "answer": "uniform and fluctuating", "correct": false }
+    ]
+  },
+  {
+    "question": " For a synchronous machine, the power factor is given as:",
+    "options": [
+      { "answer": "V = E", "correct": false },
+      { "answer": "V + E = I", "correct": false },
+      { "answer": "V = I", "correct": false },
+      { "answer": "P = VIcosθ", "correct": true }
+    ]
+  },
+  {
+    "question": " The purpose of using the air gap in a DC machine is to:",
+    "options": [
+      { "answer": "reduce copper loss", "correct": false },
+      { "answer": "reduce iron loss", "correct": false },
+      { "answer": "increase magnetic field strength", "correct": false },
+      { "answer": "allow movement of rotor", "correct": true }
+    ]
+  },
+  {
+    "question": " The change in the field current of a DC motor is due to the:",
+    "options": [
+      { "answer": "change in armature current", "correct": false },
+      { "answer": "change in back e.m.f", "correct": false },
+      { "answer": "change in terminal voltage", "correct": true },
+      { "answer": "none of these", "correct": false }
+    ]
+  },
+  {
+    "question": " The synchronous speed of a synchronous motor depends upon:",
+    "options": [
+      { "answer": "supply voltage and load", "correct": false },
+      { "answer": "number of poles and supply frequency", "correct": true },
+      { "answer": "supply frequency and rotor resistance", "correct": false },
+      { "answer": "none of these", "correct": false }
+    ]
+  },
+  {
+    "question": " The effect of harmonics in electrical machines results in:",
+    "options": [
+      { "answer": "Increased torque", "correct": false },
+      { "answer": "Increased efficiency", "correct": false },
+      { "answer": "Reduced losses", "correct": false },
+      { "answer": "Increased losses", "correct": true }
+    ]
+  },
+  {
+    "question": " For an ideal transformer, the primary voltage is:",
+    "options": [
+      { "answer": "inversely proportional to the turns ratio", "correct": false },
+      { "answer": "directly proportional to the turns ratio", "correct": true },
+      { "answer": "constant regardless of load", "correct": false },
+      { "answer": "depends on the secondary current", "correct": false }
+    ]
+  },
+  {
+    "question": " The voltage ratio in a transformer is given by:",
+    "options": [
+      { "answer": "V1 / V2 = N1 / N2", "correct": true },
+      { "answer": "V1 = N1 * N2", "correct": false },
+      { "answer": "V1 / V2 = N2 / N1", "correct": false },
+      { "answer": "V1 = N2 / N1", "correct": false }
+    ]
+  },
+  {
+    "question": " A 100 kVA transformer has 4% impedance and a 50 kVA transformer has 3% impedance. When they are operated in parallel, which transformer will reach full load first?",
+    "options": [
+      { "answer": "3%", "correct": true },
+      { "answer": "4%", "correct": false },
+      { "answer": "data is insufficient", "correct": false },
+      { "answer": "none of these", "correct": false }
+    ]
+  },
+
+{
+    "question": "The dc output voltage of a lead-acid cell is:",
+    "options": [
+      { "answer": "1.35 V", "correct": false },
+      { "answer": "1.5 V", "correct": false },
+      { "answer": "2.1 V", "correct": true },
+      { "answer": "about 12 V", "correct": false }
+    ]
+  },
+  {
+    "question": "A 250 V lamp has 20 lm/W and takes a current of 0.6 A. Its total flux, in lumens, is:",
+    "options": [
+      { "answer": "750", "correct": false },
+      { "answer": "5000", "correct": false },
+      { "answer": "3000", "correct": true },
+      { "answer": "7.5", "correct": false }
+    ]
+  }
+
+
+  
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrical Engineering MCQ Set-53 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>Electrical Engineering MCQ Set-53</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+
+
+ 
+  {
+    "question": "If the conductor radius increases, inductance of the line,",
+    "options": [
+      { "answer": "increases", "correct": false },
+      { "answer": "decreases", "correct": true },
+      { "answer": "remains same", "correct": false },
+      { "answer": "may increase or decrease", "correct": false }
+    ]
+  },
+  {
+    "question": "The leakage current in the transmission lines is referred to as the –",
+    "options": [
+      { "answer": "Resistance", "correct": false },
+      { "answer": "Radiation", "correct": false },
+      { "answer": "Conductance", "correct": true },
+      { "answer": "Polarisation", "correct": false }
+    ]
+  },
+  {
+    "question": "The presence of earth in case of overhead transmission line-",
+    "options": [
+      { "answer": "increases capacitance", "correct": true },
+      { "answer": "increases inductance", "correct": false },
+      { "answer": "decreases capacitance", "correct": false },
+      { "answer": "decreases inductance", "correct": false }
+    ]
+  },
+  {
+    "question": "If the frequency of a transmission system is changed from 60 Hz to 50 Hz, the string efficiency, will",
+    "options": [
+      { "answer": "Decrease", "correct": false },
+      { "answer": "Increase", "correct": false },
+      { "answer": "May increase or decrease", "correct": false },
+      { "answer": "Does not change", "correct": true }
+    ]
+  },
+  {
+    "question": "Pin-type insulators are used for:",
+    "options": [
+      { "answer": "lines of up to 33 kV", "correct": true },
+      { "answer": "lines of above 33 kV", "correct": false },
+      { "answer": "lines of below 33 kV", "correct": false },
+      { "answer": "lines of 400 kV and above", "correct": false }
+    ]
+  },
+  {
+    "question": "The starting current of a 3-phase induction motor is 5 times the rated current, while the rated slip is 4%. The ratio of starting torque to full load torque is-",
+    "options": [
+      { "answer": "1.4", "correct": false },
+      { "answer": "0.6", "correct": false },
+      { "answer": "0.8", "correct": false },
+      { "answer": "1.0", "correct": true }
+    ]
+  },
+  {
+    "question": "Reduction in supply voltage by 10% will change the torque of an induction motor by",
+    "options": [
+      { "answer": "38%", "correct": false },
+      { "answer": "19%", "correct": true },
+      { "answer": "9.5%", "correct": false },
+      { "answer": "No change", "correct": false }
+    ]
+  },
+  {
+    "question": "When the supply frequency of a three-phase induction motor is increased, then its synchronous speed is",
+    "options": [
+      { "answer": "decreases", "correct": false },
+      { "answer": "increases", "correct": true },
+      { "answer": "remain same", "correct": false },
+      { "answer": "none of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The starting current of a three-phase induction motor is equal to three times the full-load current. If the full-load slip is 2%, then the starting torque as a percentage of full-load torque is-",
+    "options": [
+      { "answer": "18% of full-load torque", "correct": true },
+      { "answer": "6% of full-load torque", "correct": false },
+      { "answer": "36% of full-load torque", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+
+  {
+    "question": "In a string of suspension insulator, the maximum voltage appears across the unit",
+    "options": [
+      { "answer": "Most far from the conductor", "correct": true },
+      { "answer": "Nearest to the conductor", "correct": false },
+      { "answer": "At the middle", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Plugging braking of an induction motor is done by:",
+    "options": [
+      { "answer": "disconnecting one phase from the source", "correct": false },
+      { "answer": "disconnecting all phases", "correct": false },
+      { "answer": "disconnecting all phases and connecting it with DC supply", "correct": false },
+      { "answer": "reversing the phase sequence of the motor", "correct": true }
+    ]
+  },
+  {
+    "question": "AC Dynamic braking in induction motor is done by:",
+    "options": [
+      { "answer": "disconnecting one phase from the source", "correct": false },
+      { "answer": "disconnecting all phases", "correct": true },
+      { "answer": "disconnecting all phases and connecting it with DC supply", "correct": false },
+      { "answer": "reversing the phase sequence of the motor", "correct": false }
+    ]
+  },
+  {
+    "question": "Which braking method is selected in applications like hoists, trains, and electric vehicles?",
+    "options": [
+      { "answer": "Plugging or Reverse Voltage Braking", "correct": false },
+      { "answer": "Dynamic Braking", "correct": false },
+      { "answer": "Regenerative Braking", "correct": true },
+      { "answer": "All of these", "correct": false }
+    ]
+  },
+  {
+    "question": "For a DC motor with constant load torque, what happens to the armature current if armature resistance increases?",
+    "options": [
+      { "answer": "Remains unchanged", "correct": false },
+      { "answer": "Increases", "correct": true },
+      { "answer": "Decreases", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Two PMMC meters of 10 μA are used to construct 100 V and 10 V full-scale voltmeters. What is the figure of merit for these meters?",
+    "options": [
+      { "answer": "10 kΩ/V", "correct": false },
+      { "answer": "100 kΩ/V", "correct": true },
+      { "answer": "1000 kΩ/V", "correct": false },
+      { "answer": "10 Ω/V", "correct": false }
+    ]
+  },
+  {
+    "question": "If a DC voltmeter is made from an ammeter with a full-scale deflection of 100 μA, its sensitivity (in k-ohm/V) is:",
+    "options": [
+      { "answer": "1", "correct": false },
+      { "answer": "10", "correct": true },
+      { "answer": "100", "correct": false },
+      { "answer": "1000", "correct": false }
+    ]
+  },
+  {
+    "question": "A voltage has a true value of 1.5 V. An analog indicating instrument with a range of 0 - 2.5 V shows 1.46 V. The relative error is:",
+    "options": [
+      { "answer": "26.6%", "correct": false },
+      { "answer": "-2.66%", "correct": true },
+      { "answer": "-0.04%", "correct": false },
+      { "answer": "-4.0%", "correct": false }
+    ]
+  },
+  {
+    "question": "Permanent-magnet moving-coil ammeters have uniform scales because:",
+    "options": [
+      { "answer": "due to eddy current damping", "correct": false },
+      { "answer": "they are spring-controlled", "correct": false },
+      { "answer": "their deflecting torque varies directly with current", "correct": false },
+      { "answer": "both (b) and (c)", "correct": true }
+    ]
+  },
+  {
+    "question": "A moving coil voltmeter measures:",
+    "options": [
+      { "answer": "only AC voltages", "correct": false },
+      { "answer": "only DC voltages", "correct": true },
+      { "answer": "both AC and DC voltages", "correct": false }
+    ]
+  },
+  {
+    "question": "Moving iron instruments can be used for measuring:",
+    "options": [
+      { "answer": "direct currents and voltages", "correct": false },
+      { "answer": "alternating current and voltages", "correct": false },
+      { "answer": "radio frequency currents", "correct": false },
+      { "answer": "both (a) and (b)", "correct": true }
+    ]
+  },
+  {
+    "question": "Harmonic distortion is due to:",
+    "options": [
+      { "answer": "Change in circuit element behavior due to temperature", "correct": false },
+      { "answer": "Change in circuit element behavior due to environment", "correct": false },
+      { "answer": "Linear behavior of circuit elements", "correct": false },
+      { "answer": "Non-linear behavior of circuit elements", "correct": true }
+    ]
+  },
+  {
+    "question": "A shunt in a current meter is a resistance connected:",
+    "options": [
+      { "answer": "In series with the meter to increase its range", "correct": false },
+      { "answer": "Across the meter to increase its range", "correct": true },
+      { "answer": "Across the meter to decrease its range", "correct": false },
+      { "answer": "Across the meter to reduce voltage drop", "correct": false }
+    ]
+  },
+  {
+    "question": "No eddy current and hysteresis losses occur in:",
+    "options": [
+      { "answer": "Electrostatic instruments", "correct": true },
+      { "answer": "PMMC type instruments", "correct": false },
+      { "answer": "Moving iron instruments", "correct": false },
+      { "answer": "Electrodynamometer instruments", "correct": false }
+    ]
+  },
+  {
+    "question": "How many pressure and current coils are present in a Megger?",
+    "options": [
+      { "answer": "Two pressure coils and one current coil", "correct": true },
+      { "answer": "Two pressure coils and two current coils", "correct": false },
+      { "answer": "One pressure coil and one current coil", "correct": false },
+      { "answer": "One pressure coil and two current coils", "correct": false }
+    ]
+  },
+  {
+    "question": "The current and potential coils of a wattmeter were accidentally interchanged while connecting. After energizing, it was observed that the wattmeter did not show a reading. This could be due to:",
+    "options": [
+      { "answer": "damage to the potential coil", "correct": true },
+      { "answer": "damage to the current coil", "correct": false },
+      { "answer": "damage to both coils", "correct": false },
+      { "answer": "loose contact", "correct": false }
+    ]
+  }
+
+
+  
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

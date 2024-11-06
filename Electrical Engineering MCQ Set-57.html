@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrical Engineering MCQ Set-57 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>Electrical Engineering MCQ Set-57</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+{
+"question": "A 3-phase star connected system is supplied by a line voltage of 440 V. The value of phase current is 50 A. What is the power (in kW) consumed by the system, if the current lags the voltage by 45 degrees?",
+"options": [
+{"answer": "8.95", "correct": false},
+{"answer": "24", "correct": false},
+{"answer": "26.94", "correct": true},
+{"answer": "47", "correct": false}
+]
+},
+/////
+{
+"question": "In poly phase AC circuits, the phase sequence RYB is same as ___.",
+"options": [
+{"answer": "YRB phase sequence", "correct": false},
+{"answer": "RBY phase sequence", "correct": false},
+{"answer": "BYR phase sequence", "correct": false},
+{"answer": "YBR phase sequence", "correct": true}
+]
+},
+
+{
+"question": "In a three-phase system, the order in which the voltages attain their maximum positive value is called ___.",
+"options": [
+{"answer": "RMS voltage", "correct": false},
+{"answer": "peak-to-peak voltage", "correct": false},
+{"answer": "a phase sequence", "correct": true},
+{"answer": "power factor", "correct": false}
+]
+},
+
+{
+"question": "If a phase sequence indicator rotates clockwise for a phase sequence of RYB, then what happens when the phase sequence is changed to BRY?",
+"options": [
+{"answer": "It will not rotate.", "correct": false},
+{"answer": "It will rotate anticlockwise only.", "correct": false},
+{"answer": "It will rotate clockwise or anticlockwise.", "correct": false},
+{"answer": "It will rotate clockwise only.", "correct": true}
+]
+},
+
+{
+"question": "AT/m is the unit of-",
+"options": [
+{"answer": "m.m.f.", "correct": false},
+{"answer": "reluctance", "correct": false},
+{"answer": "magnetizing force", "correct": true},
+{"answer": "magnetic flux density", "correct": false}
+]
+},
+
+{
+"question": "In a fluxmeter, the controlling torque is-",
+"options": [
+{"answer": "Produced by weight attached to the moving coil", "correct": false},
+{"answer": "Produced by spring", "correct": false},
+{"answer": "Not provided at all", "correct": true},
+{"answer": "Provided by crossed coil mechanism", "correct": false}
+]
+},
+
+{
+"question": "A potentiometer may be used for",
+"options": [
+{"answer": "measurement of resistance", "correct": true},
+{"answer": "measurement of current", "correct": true},
+{"answer": "calibration of ammeter", "correct": true},
+{"answer": "calibration of voltmeter", "correct": true},
+{"answer": "all of the above", "correct": true}
+]
+},
+
+{
+"question": "Hay’s bridge is used to measure an inductance of",
+"options": [
+{"answer": "low Q", "correct": false},
+{"answer": "medium Q", "correct": false},
+{"answer": "high Q", "correct": true},
+{"answer": "very high Q", "correct": false}
+]
+},
+
+{
+"question": "Speed of the megger is kept at-",
+"options": [
+{"answer": "160 rpm", "correct": true},
+{"answer": "100 rpm", "correct": false},
+{"answer": "120 rpm", "correct": false},
+{"answer": "140 rpm", "correct": false}
+]
+},
+
+{
+"question": "AC bridges cannot be used for the direct measurement of-",
+"options": [
+{"answer": "Inductance", "correct": false},
+{"answer": "Capacitance storage factor", "correct": false},
+{"answer": "Loss factor", "correct": false},
+{"answer": "Capacitance", "correct": true}
+]
+},
+
+{
+"question": "What is a load cell?-",
+"options": [
+{"answer": "A strain gauge", "correct": true},
+{"answer": "A photo voltaic cell", "correct": false},
+{"answer": "A thermistor", "correct": false},
+{"answer": "A pressure pick up device", "correct": false}
+]
+},
+
+{
+"question": "The output of a piezoelectric crystal has",
+"options": [
+{"answer": "low amplitude and low impedance", "correct": false},
+{"answer": "high amplitude and high impedance", "correct": false},
+{"answer": "low amplitude and high impedance", "correct": true},
+{"answer": "high amplitude and low impedance", "correct": false}
+]
+},
+
+{
+"question": "Power generation of thermal power plant is based on-",
+"options": [
+{"answer": "Rankine Cycle", "correct": true},
+{"answer": "Otto cycle", "correct": false},
+{"answer": "Diesel Cycle", "correct": false},
+{"answer": "Carnot Cycle", "correct": false}
+]
+},
+
+{
+"question": "The overall efficiency of thermal power plant is equal to",
+"options": [
+{"answer": "Rankine cycle efficiency", "correct": false},
+{"answer": "Carnot cycle efficiency", "correct": false},
+{"answer": "Regenerative cycle efficiency", "correct": false},
+{"answer": "Boiler efficiency x turbine efficiency x generator efficiency", "correct": true}
+]
+},
+
+{
+"question": "The overall efficiency of thermal station is-",
+"options": [
+{"answer": "40%", "correct": false},
+{"answer": "less than 40%", "correct": true},
+{"answer": "more than 40%", "correct": false},
+{"answer": "50%", "correct": false}
+]
+},
+
+{
+"question": "The term ‘Surge Tank’ is associated with which type of power plant?",
+"options": [
+{"answer": "High head hydro", "correct": true},
+{"answer": "Low head hydro", "correct": false},
+{"answer": "Medium head hydro", "correct": false},
+{"answer": "Thermal", "correct": false}
+]
+},
+
+{
+"question": "A consumer consumes 600 kWh per day at a load factor of 0.40. If the consumer increases the load factor to 0.70 without increasing the maximum demand. The consumption of energy in kWh is",
+"options": [
+{"answer": "1050 kWh", "correct": true},
+{"answer": "1500 kWh", "correct": false},
+{"answer": "1005 kWh", "correct": false},
+{"answer": "5010 kWh", "correct": false}
+]
+},
+
+{
+"question": "A generating station has a connected load of 43 MW and a maximum demand of 20 MW. Calculate the demand factor.",
+"options": [
+{"answer": "0.11", "correct": false},
+{"answer": "1.0", "correct": false},
+{"answer": "0.82", "correct": false},
+{"answer": "0.46", "correct": true}
+]
+},
+
+{
+"question": "Load duration curve is the plot between:",
+"options": [
+{"answer": "load and time", "correct": true},
+{"answer": "load and frequency", "correct": false},
+{"answer": "load and temperature", "correct": false},
+{"answer": "load and voltage", "correct": false}
+]
+},
+
+{
+"question": "A power plant has a maximum demand of 15 MW. The annual load factor is 50% and annual plant capacity factor is 40%. The operating reserve capacity is.",
+"options": [
+{"answer": "6 MW", "correct": false},
+{"answer": "3 MW", "correct": false},
+{"answer": "3.75 MW", "correct": true},
+{"answer": "7.5 MW", "correct": false}
+]
+},
+
+{
+"question": "Single phase induction motor usually operates on –",
+"options": [
+{"answer": "0.6 power factor lagging", "correct": true},
+{"answer": "0.8 power factor lagging", "correct": false},
+{"answer": "0.8 power factor leading", "correct": false},
+{"answer": "unity power factor", "correct": false}
+]
+},
+
+{
+"question": "The rotor slots, in an induction motor, are usually not quite parallel to the shaft because it",
+"options": [
+{"answer": "improves the efficiency", "correct": false},
+{"answer": "helps the rotor teeth to remain under the stator teeth", "correct": false},
+{"answer": "helps in reducing the tendency of the rotor teeth to remain under the stator teeth", "correct": true},
+{"answer": "improves the power factor", "correct": false}
+]
+},
+
+{
+"question": "For eliminating 3rd harmonic from the phase emf generated in an alternator, the coil span in terms of full-pitch would be",
+"options": [
+{"answer": "5/4", "correct": false},
+{"answer": "4/3", "correct": false},
+{"answer": "5/3", "correct": false},
+{"answer": "2/3", "correct": true}
+]
+},
+{
+"question": "An auto transformer used with neon lamp should have",
+"options": [
+{"answer": "High efficiency", "correct": false},
+{"answer": "High step-up ratio", "correct": false},
+{"answer": "High step-down ratio", "correct": false},
+{"answer": "High leakage reactance", "correct": true}
+]
+},
+{
+"question": "A 2500/230 V transformer draws a no load primary current of 0.5 A and absorbs 500 W. Find the magnetizing and iron loss current, respectively.",
+"options": [
+{"answer": "0.458 A, 0.2A", "correct": true},
+{"answer": "45 A, 20 A", "correct": false},
+{"answer": "0.045 A, 0.02 A", "correct": false},
+{"answer": "4.58 A, 2 A", "correct": false}
+]
+}
+
+    
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

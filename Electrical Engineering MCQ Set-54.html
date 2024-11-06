@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrical Engineering MCQ Set-54 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>Electrical Engineering MCQ Set-54</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+
+  {
+    "question": "If a power transformer has a star-connected primary and a delta-connected secondary, then the CT connections on its primary and secondary sides should be:",
+    "options": [
+      { "answer": "Delta and Star respectively", "correct": true },
+      { "answer": "Star and Delta respectively", "correct": false },
+      { "answer": "Delta and Delta respectively", "correct": false },
+      { "answer": "Star and Star respectively", "correct": false }
+    ]
+  },
+  {
+    "question": "A 2500/230 V transformer draws a no-load primary current of 0.5 A and absorbs 500 W. Find the magnetizing and iron loss current, respectively.",
+    "options": [
+      { "answer": "0.458 A, 0.2 A", "correct": true },
+      { "answer": "45 A, 20 A", "correct": false },
+      { "answer": "0.045 A, 0.02 A", "correct": false },
+      { "answer": "4.58 A, 2 A", "correct": false }
+    ]
+  },
+  {
+    "question": "The no-load current drawn by a transformer is usually what percentage of the full-load current?",
+    "options": [
+      { "answer": "0.2 to 0.5 per cent", "correct": false },
+      { "answer": "2 to 5 per cent", "correct": true },
+      { "answer": "12 to 15 per cent", "correct": false },
+      { "answer": "20 to 30 per cent", "correct": false }
+    ]
+  },
+  {
+    "question": "The coils of a D.C. motor starter are wound with wire of:",
+    "options": [
+      { "answer": "Copper", "correct": false },
+      { "answer": "Kanthal", "correct": false },
+      { "answer": "Manganin", "correct": true },
+      { "answer": "Nichrome", "correct": false }
+    ]
+  },
+  {
+    "question": "A star circuit has an element of resistance \( R \). The equivalent delta elements will be:",
+    "options": [
+      { "answer": "R/6", "correct": false },
+      { "answer": "3/2R", "correct": true },
+      { "answer": "2R", "correct": false },
+      { "answer": "4R", "correct": false }
+    ]
+  },
+  {
+    "question": "Empire tape is:",
+    "options": [
+      { "answer": "Varnished cambric", "correct": true },
+      { "answer": "Vulcanized rubber", "correct": false },
+      { "answer": "Impregnated paper", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following equipment, for regulating the voltage in a distribution feeder, will be most economical?",
+    "options": [
+      { "answer": "Static condenser", "correct": false },
+      { "answer": "Synchronous condenser", "correct": false },
+      { "answer": "Tap changing transformer", "correct": false },
+      { "answer": "Booster transformer", "correct": true }
+    ]
+  },
+  {
+    "question": "Grounding is generally done in transmission line at:",
+    "options": [
+      { "answer": "the supply end", "correct": true },
+      { "answer": "the receiving end", "correct": false },
+      { "answer": "middle of the line", "correct": false },
+      { "answer": "anywhere", "correct": false }
+    ]
+  },
+  {
+    "question": "Ferranti effect on transmission lines is a phenomenon which represents:",
+    "options": [
+      { "answer": "rise in receiving end voltage on lagging load", "correct": false },
+      { "answer": "rise in receiving end voltage on leading load", "correct": true },
+      { "answer": "load impedance equals to surge impedance", "correct": false },
+      { "answer": "rise in receiving end voltage on no load", "correct": false }
+    ]
+  },
+  {
+    "question": "The stator of a D.C. machine comprises of:",
+    "options": [
+      { "answer": "main poles", "correct": false },
+      { "answer": "interpoles", "correct": false },
+      { "answer": "frame", "correct": false },
+      { "answer": "all of the above", "correct": true }
+    ]
+  },
+  {
+    "question": "Ferranti effect in transmission lines is due to the presence of:",
+    "options": [
+      { "answer": "line inductance", "correct": false },
+      { "answer": "line capacitance", "correct": true },
+      { "answer": "line capacitance and inductance", "correct": false },
+      { "answer": "line resistance and capacitance", "correct": false }
+    ]
+  },
+
+    {
+        "question": "The type-2 system has ________ at the origin.",
+        "options": [
+            { "answer": "No net pole", "correct": false },
+            { "answer": "Net pole", "correct": false },
+            { "answer": "Simple pole", "correct": false },
+            { "answer": "Two poles", "correct": true }
+        ]
+    },
+    {
+        "question": "The type-1 system has ______ at the origin.",
+        "options": [
+            { "answer": "No pole", "correct": false },
+            { "answer": "Net pole", "correct": false },
+            { "answer": "Simple pole", "correct": true },
+            { "answer": "Two poles", "correct": false }
+        ]
+    },
+    {
+        "question": "An automatic toaster is a ______ loop control system.",
+        "options": [
+            { "answer": "Open", "correct": true },
+            { "answer": "Closed", "correct": false },
+            { "answer": "Partially closed", "correct": false },
+            { "answer": "Any of the above", "correct": false }
+        ]
+    },
+    {
+        "question": "For transmission lines, the curves of tension and sag versus _______ are called the stringing charts.",
+        "options": [
+            { "answer": "Temperature", "correct": true },
+            { "answer": "Time", "correct": false },
+            { "answer": "Cable weight", "correct": false },
+            { "answer": "Wind velocity", "correct": false }
+        ]
+    },
+    {
+        "question": "A closed path made by several branches of the network is known as-",
+        "options": [
+            { "answer": "Circuit", "correct": false },
+            { "answer": "Loop", "correct": true },
+            { "answer": "Junction", "correct": false },
+            { "answer": "Branch", "correct": false }
+        ]
+    },
+    {
+        "question": "Basically, what is an AC servo-motor?",
+        "options": [
+            { "answer": "Hysteresis motor", "correct": false },
+            { "answer": "Synchronous motor", "correct": false },
+            { "answer": "DC shunt motor", "correct": false },
+            { "answer": "Two-phase induction motor", "correct": true }
+        ]
+    },
+    {
+        "question": "A stepper motor may be considered as a ____________ converter.",
+        "options": [
+            { "answer": "DC to DC", "correct": false },
+            { "answer": "AC to AC", "correct": false },
+            { "answer": "DC to AC", "correct": false },
+            { "answer": "Digital-to-analogue", "correct": true }
+        ]
+    },
+    {
+        "question": "A stepper motor having a resolution of 300 steps/revolution and running at 2400 rpm has a pulse rate of ______ pps.",
+        "options": [
+            { "answer": "4000", "correct": false },
+            { "answer": "8000", "correct": false },
+            { "answer": "6000", "correct": true },
+            { "answer": "10000", "correct": false }
+        ]
+    },
+    {
+        "question": "The rotor of a stepper motor has no:",
+        "options": [
+            { "answer": "Winding", "correct": false },
+            { "answer": "Commutator", "correct": false },
+            { "answer": "Brushes", "correct": false },
+            { "answer": "All of the above", "correct": true }
+        ]
+    },
+    {
+        "question": "Which of the following happens in Kando system?",
+        "options": [
+            { "answer": "Three-phase A.C. is converted into D.C.", "correct": false },
+            { "answer": "Single-phase A.C. is converted into D.C.", "correct": false },
+            { "answer": "Single-phase supply is converted into three-phase system", "correct": true },
+            { "answer": "None of the above", "correct": false }
+        ]
+    },
+    {
+        "question": "In case of locomotives, the tractive power is provided by",
+        "options": [
+            { "answer": "Single cylinder double acting steam engine", "correct": false },
+            { "answer": "Double cylinder, single acting steam engine", "correct": false },
+            { "answer": "Double cylinder, double acting steam engine", "correct": true },
+            { "answer": "Single stage steam turbine", "correct": false }
+        ]
+    },
+    {
+        "question": "Long distance railways use which of the following?",
+        "options": [
+            { "answer": "200 V D.C.", "correct": false },
+            { "answer": "25 kV single phase A.C.", "correct": true },
+            { "answer": "25 kV two phase A.C.", "correct": false },
+            { "answer": "25 kV three phase A.C.", "correct": false }
+        ]
+    },
+    {
+        "question": "A fault current of 2000A is passing on the primary side of a 400/5 CT. On the secondary side of the C.T., an inverse time overcurrent relay is connected with a plug setting set at 50%. The PSM will be",
+        "options": [
+            { "answer": "25", "correct": false },
+            { "answer": "50", "correct": false },
+            { "answer": "10", "correct": true },
+            { "answer": "30", "correct": false }
+        ]
+    },
+    {
+        "question": "Which one of the following terms is associated with relay?",
+        "options": [
+            { "answer": "Breaking capacity", "correct": false },
+            { "answer": "Making capacity", "correct": false },
+            { "answer": "Short time capacity", "correct": false },
+            { "answer": "Drop out ratio", "correct": true }
+        ]
+    }
+    
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

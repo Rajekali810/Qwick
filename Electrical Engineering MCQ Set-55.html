@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrical Engineering MCQ Set-55 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>Electrical Engineering MCQ Set-55</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+
+ {
+        "question": "A negative sequence relay is commonly used to protect",
+        "options": [
+            { "answer": "An alternator", "correct": true },
+            { "answer": "A transformer", "correct": false },
+            { "answer": "A transmission line", "correct": false },
+            { "answer": "A bus bar", "correct": false }
+        ]
+    },
+
+    {
+        "question": "Plug setting Multiplier (P.S.M) of relay is the ratio:",
+        "options": [
+            { "answer": "pick up current to normal current", "correct": false },
+            { "answer": "rated secondary current of CT to rated current of CT", "correct": false },
+            { "answer": "fault current in circuit breaker to normal current", "correct": false },
+            { "answer": "fault current in relay coil to pick up current", "correct": true }
+        ]
+    },
+    {
+        "question": "Which of the following can be used for measuring magnetic flux density?",
+        "options": [
+            { "answer": "LVDT", "correct": false },
+            { "answer": "synchro", "correct": false },
+            { "answer": "hall effect transducer", "correct": true },
+            { "answer": "thermocouple", "correct": false }
+        ]
+    },
+    {
+        "question": "A reluctance motor runs at",
+        "options": [
+            { "answer": "synchronous speed", "correct": true },
+            { "answer": "slightly less than synchronous speed", "correct": false },
+            { "answer": "approximately at half of synchronous speed", "correct": false },
+            { "answer": "above the synchronous speed", "correct": false }
+        ]
+    },
+    {
+        "question": "Swamping resistance is a resistance which is added to the moving coil of a meter to",
+        "options": [
+            { "answer": "reduce full scale current", "correct": false },
+            { "answer": "reduce the temperature error", "correct": true },
+            { "answer": "increase the sensitivity", "correct": false },
+            { "answer": "increase the field strength", "correct": false }
+        ]
+    },
+    {
+        "question": "Stringing chart is useful for",
+        "options": [
+            { "answer": "finding sag in the conductor", "correct": true },
+            { "answer": "design of transmission line tower", "correct": false },
+            { "answer": "design of insulator string", "correct": false },
+            { "answer": "finding distance between the towers", "correct": false }
+        ]
+    },
+    {
+        "question": "The triac is equivalent to",
+        "options": [
+            { "answer": "two SCRs connected in parallel", "correct": false },
+            { "answer": "two SCRs connected in anti-parallel", "correct": true },
+            { "answer": "one SCR, one diode connected in parallel", "correct": false },
+            { "answer": "one SCR, one diode connected in anti-parallel", "correct": false }
+        ]
+    },
+    {
+        "question": "The SCR is turned off when the anode current falls below the",
+        "options": [
+            { "answer": "forward current rating", "correct": false },
+            { "answer": "breakover voltage", "correct": false },
+            { "answer": "holding current", "correct": true },
+            { "answer": "latching current", "correct": false }
+        ]
+    },
+    {
+        "question": "For a diesel generating station the useful life is expected to be around",
+        "options": [
+            { "answer": "15 to 20 years", "correct": true },
+            { "answer": "20 to 50 years", "correct": false },
+            { "answer": "50 to 75 years", "correct": false },
+            { "answer": "75 to 100 years", "correct": false }
+        ]
+    },
+    {
+        "question": "For a consumer, the most economical power factor is generally",
+        "options": [
+            { "answer": "0.5 lagging", "correct": false },
+            { "answer": "0.5 leading", "correct": false },
+            { "answer": "0.95 lagging", "correct": true },
+            { "answer": "0.95 leading", "correct": false }
+        ]
+    },
+    {
+        "question": "Generators for peak load plants are usually designed for maximum efficiency at",
+        "options": [
+            { "answer": "25 to 50 percent full load", "correct": false },
+            { "answer": "50 to 75 percent full load", "correct": true },
+            { "answer": "full load", "correct": false },
+            { "answer": "25 percent overload", "correct": false }
+        ]
+    },
+    {
+        "question": "A load curve indicates",
+        "options": [
+            { "answer": "Average power used during the period", "correct": false },
+            { "answer": "Average kWh (kW) energy consumption during the period", "correct": true },
+            { "answer": "Either of the above", "correct": false },
+            { "answer": "None of the above", "correct": false }
+        ]
+    },
+    {
+        "question": "Power plant cannot have single unit of 100 MW",
+        "options": [
+            { "answer": "Hydroelectric", "correct": false },
+            { "answer": "Nuclear", "correct": false },
+            { "answer": "Steam", "correct": false },
+            { "answer": "Diesel", "correct": true }
+        ]
+    },
+    {
+        "question": "The knowledge of diversity factor helps in determining",
+        "options": [
+            { "answer": "Plant capacity", "correct": true },
+            { "answer": "Average load", "correct": false },
+            { "answer": "Peak load", "correct": false },
+            { "answer": "kWh generated", "correct": false }
+        ]
+    },
+    {
+        "question": "Average voltage of an alternating current is given as",
+        "options": [
+            { "answer": "Vav = 0.637 Vmax", "correct": true },
+            { "answer": "Vav = 0.363 Vmax", "correct": false },
+            { "answer": "Vav = 0.336 Vmax", "correct": false },
+            { "answer": "Vav = 0.636/Vmax", "correct": false }
+        ]
+    },
+    {
+        "question": "MHCP stands for",
+        "options": [
+            { "answer": "Magnetic Hemi-Spherical Candle Power", "correct": false },
+            { "answer": "Mean Hemi-Spherical Candle Power", "correct": false },
+            { "answer": "Metallic Horizontal Candle Power", "correct": false },
+            { "answer": "Mean Horizontal Candle Power", "correct": true }
+        ]
+    },
+    {
+        "question": "A flux of 0.4 mWb is produced by a coil of 800 turns wound on a ring with a current of 2 A in it. Calculate the inductance of the coil.",
+        "options": [
+            { "answer": "0.18 H", "correct": false },
+            { "answer": "0.14 H", "correct": false },
+            { "answer": "0.16 H", "correct": true },
+            { "answer": "0.22 H", "correct": false }
+        ]
+    },
+    {
+        "question": "Which of the following is NOT the parameter of the transmission line?",
+        "options": [
+            { "answer": "Shunt conductance", "correct": false },
+            { "answer": "Resistance", "correct": false },
+            { "answer": "Inductance", "correct": false },
+            { "answer": "Series capacitance", "correct": true }
+        ]
+    },
+    {
+        "question": "The high voltage and low voltage winding resistances of a distribution transformer of 1000 KVA, 1100/220 equivalent resistances referred to high voltage side and low voltage side are respectively:",
+        "options": [
+            { "answer": "2.504Ω and 0.2Ω", "correct": false },
+            { "answer": "0.2Ω and 0.008Ω", "correct": true },
+            { "answer": "0.10016Ω and 2.504Ω", "correct": false },
+            { "answer": "0.008Ω and 0.10016Ω", "correct": false }
+        ]
+    },
+    {
+        "question": "A 4 kVA, 400/200V single-phase transformer has resistance of 0.02 p.u. and reactance of 0.06 p.u. Its actual resistance and reactance referred to high voltage side are respectively",
+        "options": [
+            { "answer": "0.2 ohm and 0.6 ohm", "correct": false },
+            { "answer": "0.8 ohm and 2.4 ohm", "correct": true },
+            { "answer": "0.08 ohm and 0.24 ohm", "correct": false },
+            { "answer": "2 ohm and 6 ohm", "correct": false }
+        ]
+    },
+    {
+        "question": "For the parallel operation of two single-phase transformers, it is necessary that they should have",
+        "options": [
+            { "answer": "same efficiency", "correct": false },
+            { "answer": "same polarity", "correct": true },
+            { "answer": "same kVA rating", "correct": false },
+            { "answer": "same number of turns on the secondary side", "correct": false }
+        ]
+    },
+    {
+        "question": "Transformers operating in parallel mode of operation will share the load depending upon their",
+        "options": [
+            { "answer": "leakage reactance", "correct": false },
+            { "answer": "per unit impedance", "correct": true },
+            { "answer": "efficiencies", "correct": false },
+            { "answer": "ratings", "correct": false }
+        ]
+    },
+    {
+        "question": "Scott connections are used for",
+        "options": [
+            { "answer": "single-phase to three-phase transformation", "correct": false },
+            { "answer": "three-phase to single-phase transformation", "correct": false },
+            { "answer": "three-phase to two-phase transformation", "correct": true },
+            { "answer": "any of the above", "correct": false }
+        ]
+    },
+{
+        "question": "Thermocouple instruments are also known as",
+        "options": [
+            { "answer": "R.F. instruments", "correct": false },
+            { "answer": "PMMC instruments", "correct": false },
+            { "answer": "Rectifier instruments", "correct": true },
+            { "answer": "Digital instruments", "correct": false }
+        ]
+    },
+    {
+        "question": "Which of the following instrument will be used to measure a small current of very high frequency?",
+        "options": [
+            { "answer": "Electrodynamic ammeter", "correct": false },
+            { "answer": "Moving coil galvanometer", "correct": false },
+            { "answer": "Thermocouple type instrument", "correct": true },
+            { "answer": "Induction type instrument", "correct": false }
+        ]
+    }
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrical Engineering MCQ Set-58 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>Electrical Engineering MCQ Set-58</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+{
+"question": "In repulsion motor, maximum torque is developed when",
+"options": [
+{"answer": "Brush axis is at 45° electrical to the field axis", "correct": true},
+{"answer": "Brush axis coincides with the field axis", "correct": false},
+{"answer": "Brush axis is at 90° electrical to the field axis", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "In repulsion motor, zero torque is developed when",
+"options": [
+{"answer": "Brush axis is 45° electrical to field axis", "correct": false},
+{"answer": "Brush axis coincides with the field axis", "correct": true},
+{"answer": "Brush axis is 90° electrical to field axis", "correct": true},
+{"answer": "Both (B) and (C)", "correct": true}
+]
+},
+
+{
+"question": "The range of efficiency for shaded pole motors is",
+"options": [
+{"answer": "95% to 99%", "correct": false},
+{"answer": "80% to 90%", "correct": false},
+{"answer": "50% to 75%", "correct": false},
+{"answer": "5% to 35%", "correct": true}
+]
+},
+
+{
+"question": "Which of the following motors is used in tape-recorders?",
+"options": [
+{"answer": "Hysteresis motor", "correct": true},
+{"answer": "Reluctance motor", "correct": false},
+{"answer": "Capacitor-run motor", "correct": false},
+{"answer": "Universal motor", "correct": false}
+]
+},
+
+{
+"question": "The drive motor used in a mixer-grinder is:",
+"options": [
+{"answer": "A universal motor", "correct": true},
+{"answer": "A synchronous motor", "correct": false},
+{"answer": "An induction motor", "correct": false},
+{"answer": "A DC motor", "correct": false}
+]
+},
+
+{
+"question": "The capacitors used in single-phase capacitor motors have no",
+"options": [
+{"answer": "Voltage rating", "correct": false},
+{"answer": "Dielectric medium", "correct": false},
+{"answer": "Polarity marking", "correct": true},
+{"answer": "Definite value", "correct": false}
+]
+},
+
+{
+"question": "A capacitor in a circuit became hot and ultimately exploded due to wrong connections, which type of capacitor it would be?",
+"options": [
+{"answer": "Paper Capacitor", "correct": false},
+{"answer": "Ceramic capacitor", "correct": false},
+{"answer": "Electrolytic capacitor", "correct": true},
+{"answer": "Any of the above", "correct": false}
+]
+},
+
+{
+"question": "Which of the following instruments is used for the comparison of candle powers of different sources?",
+"options": [
+{"answer": "Radio meter", "correct": false},
+{"answer": "Bunsen meter", "correct": false},
+{"answer": "Photo meter", "correct": true},
+{"answer": "Candle meter", "correct": false}
+]
+},
+
+{
+"question": "A lamp emitting light uniformly in all directions has a mean spherical candle power of 15. What will be the total luminous flux radiated by the lamp in all directions?",
+"options": [
+{"answer": "18.85 lumens", "correct": false},
+{"answer": "188.5 lumens", "correct": true},
+{"answer": "31.42 lumens", "correct": false},
+{"answer": "314.2 lumens", "correct": false}
+]
+},
+
+{
+"question": "A zero watt lamp consumes –",
+"options": [
+{"answer": "No power", "correct": false},
+{"answer": "About 25 to 30 W power", "correct": false},
+{"answer": "About 15 to W power", "correct": false},
+{"answer": "About 5 to 7 W power", "correct": true}
+]
+},
+{
+"question": "Harmonics in the EMF generated in alternator can be reduced by",
+"options": [
+{"answer": "Skewing the slots", "correct": true},
+{"answer": "Chamfering the salient pole tips", "correct": true},
+{"answer": "Using distributed winding", "correct": true},
+{"answer": "All of the above", "correct": true}
+]
+},
+{
+"question": "In case of a uniformly distributed winding, the value of distribution factor is",
+"options": [
+{"answer": "0.65", "correct": false},
+{"answer": "0.76", "correct": false},
+{"answer": "0.85", "correct": false},
+{"answer": "0.995", "correct": true}
+]
+},
+
+{
+"question": "Turbo-alternators usually have -",
+"options": [
+{"answer": "12 poles", "correct": false},
+{"answer": "8 poles", "correct": false},
+{"answer": "4 poles", "correct": false},
+{"answer": "2 poles", "correct": true}
+]
+},
+
+{
+"question": "The power factor of an alternator is determined by its-",
+"options": [
+{"answer": "Primemover", "correct": false},
+{"answer": "Excitation", "correct": false},
+{"answer": "Speed", "correct": false},
+{"answer": "Load", "correct": true}
+]
+},
+
+{
+"question": "In which coil the harmonic component of the generated e.m.f. will be more ?",
+"options": [
+{"answer": "Full pitch coil", "correct": true},
+{"answer": "Short pitch coil", "correct": false},
+{"answer": "Long pitch coil", "correct": false},
+{"answer": "Same in all coils", "correct": false}
+]
+},
+
+{
+"question": "To eliminate the 5th harmonic voltage from the phase voltage of an alternator, the coils need to be short pitched by an electrical angle of-",
+"options": [
+{"answer": "30°", "correct": false},
+{"answer": "36°", "correct": true},
+{"answer": "18°", "correct": false},
+{"answer": "72°", "correct": false}
+]
+},
+
+{
+"question": "In synchronous generator, pitch factor is __.",
+"options": [
+{"answer": "2", "correct": false},
+{"answer": ">1", "correct": false},
+{"answer": "<1", "correct": true},
+{"answer": "=1", "correct": false}
+]
+},
+
+{
+"question": "Distributed winding and fractional pitching employed in A.C. machines result in:-",
+"options": [
+{"answer": "Increase of e.m.f. and reduction of harmonics", "correct": false},
+{"answer": "Reduction of both e.m.f. and harmonics", "correct": true},
+{"answer": "Increase in both e.m.f. and harmonics", "correct": false},
+{"answer": "No effects on both e.m.f. and harmonics", "correct": false}
+]
+},
+
+{
+"question": "High speed alternators are generally termed as turbo-generators. They are characterized by",
+"options": [
+{"answer": "Large diameters and small axial lengths", "correct": false},
+{"answer": "Short diameters and small axial lengths", "correct": false},
+{"answer": "Short diameters and long axial lengths", "correct": true},
+{"answer": "Large diameters and long axial lengths", "correct": false}
+]
+},
+
+{
+"question": "An exciter for a turbo generator is a –",
+"options": [
+{"answer": "Separately excited generator", "correct": false},
+{"answer": "Shunt generator", "correct": true},
+{"answer": "Series generator", "correct": false},
+{"answer": "Compound generator", "correct": false}
+]
+},
+
+{
+"question": "At leading power factor, the armature flux in an alternator",
+"options": [
+{"answer": "Distorts the rotor flux", "correct": false},
+{"answer": "Aids the rotor flux", "correct": true},
+{"answer": "Opposes the rotor flux", "correct": false},
+{"answer": "Does not affect the rotor flux", "correct": false}
+]
+},
+
+{
+"question": "Which of the following motor is suitable for driving cranes, hoists, traction, large lifts, air compressors....etc.?",
+"options": [
+{"answer": "DC series motor", "correct": true},
+{"answer": "DC shunt motor", "correct": false},
+{"answer": "DC compound wound motor", "correct": false},
+{"answer": "Any of these", "correct": false}
+]
+},
+{
+"question": "Hysteresis loss depends on which of the following factors?",
+"options": [
+{"answer": "Frequency of magnetic reversals", "correct": true},
+{"answer": "Square of the Steinmetz hysteresis coefficient", "correct": true},
+{"answer": "Square of the thickness of the material", "correct": false},
+{"answer": "Square of the maximum flux density", "correct": true}
+]
+},
+
+{
+"question": "As the load on the transformer is increased, the core losses:-",
+"options": [
+{"answer": "May decrease or increase slightly depending upon the nature of the load", "correct": false},
+{"answer": "Remain constant", "correct": true},
+{"answer": "Increase slightly", "correct": false},
+{"answer": "Decrease slightly", "correct": false}
+]
+},
+{
+"question": "B-H curve is also known as __.",
+"options": [
+{"answer": "Curie point curve", "correct": false},
+{"answer": "Open circuit characteristics", "correct": false},
+{"answer": "Hysteresis loop", "correct": false},
+{"answer": "Magnetisation curve", "correct": true}
+]
+}
+
+
+    
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

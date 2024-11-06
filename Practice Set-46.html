@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-46 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-46</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+ {
+    "question": "For maximum efficiency in a transformer:",
+    "options": [
+      { "answer": "Core losses = 2 * copper losses", "correct": false },
+      { "answer": "Core losses = copper losses / 2", "correct": false },
+      { "answer": "Core losses = copper losses", "correct": true },
+      { "answer": "Core losses = copper losses ^ 2", "correct": false }
+    ]
+  },
+  {
+    "question": "A three-phase, 33 kV oil circuit breaker is rated 1200 A, 2000 MVA, 3s. The symmetrical breaking current is:",
+    "options": [
+      { "answer": "1200 A", "correct": false },
+      { "answer": "3600 A", "correct": false },
+      { "answer": "35 kA", "correct": true },
+      { "answer": "104.8 kA", "correct": false }
+    ]
+  },
+
+  {
+    "question": "In a BJT, which of the following layers is heavily doped?",
+    "options": [
+      { "answer": "Collector", "correct": false },
+      { "answer": "Emitter", "correct": true },
+      { "answer": "Base", "correct": false },
+      { "answer": "All of the mentioned", "correct": false }
+    ]
+  },
+  {
+    "question": "According to Lambert's law, the illumination on a surface is proportional to:",
+    "options": [
+      { "answer": "cos^2 θ", "correct": false },
+      { "answer": "cos^3 θ", "correct": true },
+      { "answer": "1/cos^3 θ", "correct": false },
+      { "answer": "1/cos^2 θ", "correct": false }
+    ]
+  },
+  {
+    "question": "Which photometer is used for comparing the lights of different colors?",
+    "options": [
+      { "answer": "Bunson photometer", "correct": false },
+      { "answer": "Grease spot photometer", "correct": false },
+      { "answer": "Lummer Brodhum photometer", "correct": false },
+      { "answer": "Guilds Flicker Photometer", "correct": true }
+    ]
+  },
+  {
+    "question": "Melting temperature of tungsten is:",
+    "options": [
+      { "answer": "2000°K", "correct": false },
+      { "answer": "2500°K", "correct": false },
+      { "answer": "2655°K", "correct": false },
+      { "answer": "3655°K", "correct": true }
+    ]
+  },
+  {
+    "question": "The life of an incandescent lamp is expected to be:",
+    "options": [
+      { "answer": "100 hours", "correct": false },
+      { "answer": "200 hours", "correct": false },
+      { "answer": "1000 hours", "correct": true },
+      { "answer": "10000 hours", "correct": false }
+    ]
+  },
+  {
+    "question": "Sodium vapor lamps need an ionization potential of about:",
+    "options": [
+      { "answer": "5 volts", "correct": true },
+      { "answer": "50 volts", "correct": false },
+      { "answer": "100 volts", "correct": false },
+      { "answer": "112 volts", "correct": false }
+    ]
+  },
+  {
+    "question": "When a sodium vapor lamp is switched on, initially the color is:",
+    "options": [
+      { "answer": "Pink", "correct": true },
+      { "answer": "Yellow", "correct": false },
+      { "answer": "Green", "correct": false },
+      { "answer": "Blue", "correct": false }
+    ]
+  },
+  {
+    "question": "A mercury vapor lamp gives:",
+    "options": [
+      { "answer": "Pink light", "correct": false },
+      { "answer": "Yellow light", "correct": false },
+      { "answer": "Greenish blue light", "correct": true },
+      { "answer": "White light", "correct": false }
+    ]
+  },
+  {
+    "question": "Power factor is highest in the case of:",
+    "options": [
+      { "answer": "Mercury arc lamp", "correct": false },
+      { "answer": "Sodium vapor lamps", "correct": false },
+      { "answer": "Tube lights", "correct": false },
+      { "answer": "GLS lamps", "correct": true }
+    ]
+  },
+  {
+    "question": "The solid angle subtended at the center of a hemisphere of diameter D will be:",
+    "options": [
+      { "answer": "4Πd", "correct": false },
+      { "answer": "2πD", "correct": false },
+      { "answer": "2π", "correct": true },
+      { "answer": "4π", "correct": false }
+    ]
+  },
+  {
+    "question": "One Angstrom is:",
+    "options": [
+      { "answer": "10^-6 meter", "correct": false },
+      { "answer": "10^-8 meter", "correct": false },
+      { "answer": "10^-8 cm", "correct": true },
+      { "answer": "10^-8 mm", "correct": false }
+    ]
+  },
+  {
+    "question": "If d is the distance of a surface from a source, the illumination of the surface will vary as:",
+    "options": [
+      { "answer": "d", "correct": false },
+      { "answer": "2d", "correct": false },
+      { "answer": "1/d", "correct": false },
+      { "answer": "1/d^2", "correct": true }
+    ]
+  },
+  {
+    "question": "The induced emf in the armature conductors of a DC motor is:",
+    "options": [
+      { "answer": "Sinusoidal", "correct": true },
+      { "answer": "Trapezoidal", "correct": false },
+      { "answer": "Rectangular", "correct": false },
+      { "answer": "Alternating", "correct": false }
+    ]
+  },
+  {
+    "question": "The current drawn by the line due to corona losses is:",
+    "options": [
+      { "answer": "Non-sinusoidal", "correct": true },
+      { "answer": "Sinusoidal", "correct": false },
+      { "answer": "Triangular", "correct": false },
+      { "answer": "Square", "correct": false }
+    ]
+  },
+  {
+    "question": "By using bundle conductors, the critical voltage for the formation of corona will:",
+    "options": [
+      { "answer": "Remain same", "correct": false },
+      { "answer": "Decrease", "correct": false },
+      { "answer": "Increase", "correct": true },
+      { "answer": "Not occur", "correct": false }
+    ]
+  },
+
+  {
+    "question": "The sag of the transmission line is least affected by __________.",
+    "options": [
+      { "answer": "Conductor length", "correct": false },
+      { "answer": "Rust on conductor", "correct": false },
+      { "answer": "Conductor current", "correct": true },
+      { "answer": "Weather condition", "correct": false }
+    ]
+  },
+  {
+    "question": "The sag of a transmission line conductor in summer is_____",
+    "options": [
+      { "answer": "less than that in winter", "correct": false },
+      { "answer": "more than that in winter", "correct": true },
+      { "answer": "same as in winter", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "Power loss due to corona is not directly proportional to",
+    "options": [
+      { "answer": "Spacing between conductors", "correct": true },
+      { "answer": "Supply voltage frequency", "correct": false },
+      { "answer": "Phase-neutral voltage", "correct": false },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Hall effect generators are used to measure:",
+    "options": [
+      { "answer": "Direct current", "correct": false },
+      { "answer": "High-frequency alternating current", "correct": false },
+      { "answer": "Both of these", "correct": true },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "Delta connection is also known as____________",
+    "options": [
+      { "answer": "Y-connection", "correct": false },
+      { "answer": "Mesh connection", "correct": true },
+      { "answer": "Either Y-connection or mesh connection", "correct": false },
+      { "answer": "Neither Y-connection nor mesh connection", "correct": false }
+    ]
+  },
+  {
+    "question": "Transient voltages typically last for:",
+    "options": [
+      { "answer": "10 seconds to 1 minute", "correct": false },
+      { "answer": "1 to 10 seconds", "correct": false },
+      { "answer": "Few milliseconds to seconds", "correct": false },
+      { "answer": "A microsecond to several milliseconds", "correct": true }
+    ]
+  },
+  {
+    "question": "A cumulatively compounded long shunt generator when operating as a motor would be",
+    "options": [
+      { "answer": "Cumulatively compounded long shunt", "correct": false },
+      { "answer": "Differentially compounded long shunt", "correct": true },
+      { "answer": "Cumulatively compounded short shunt", "correct": false },
+      { "answer": "Differentially compounded short shunt", "correct": false }
+    ]
+  },
+  {
+    "question": "Hopkinson’s test is conducted at",
+    "options": [
+      { "answer": "no load", "correct": false },
+      { "answer": "low load", "correct": false },
+      { "answer": "part load", "correct": false },
+      { "answer": "full load", "correct": true }
+    ]
+  }
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

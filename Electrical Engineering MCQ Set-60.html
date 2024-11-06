@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrical Engineering MCQ Set-60 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>Electrical Engineering MCQ Set-60</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+
+{
+"question": "Wb/AT is the unit of which of the following parameters?",
+"options": [
+{"answer": "Reluctance", "correct": false},
+{"answer": "MMF", "correct": false},
+{"answer": "Flux", "correct": true},
+{"answer": "Permanence", "correct": false}
+]
+},
+
+{
+"question": "Two coils having self-inductance of 10 mH and 15 mH give an effective inductance of 20 mH when connected in series opposition. What will be the effective inductance if they are connected in series aiding?",
+"options": [
+{"answer": "80 mH", "correct": false},
+{"answer": "30 mH", "correct": true},
+{"answer": "60 mH", "correct": false},
+{"answer": "40 mH", "correct": false}
+]
+},
+
+{
+"question": "Two coils have self-inductance of 20 H and 20 H connected in series, and the mutual inductance between the two coils is 2.5 H. The value of total equivalent inductance is:",
+"options": [
+{"answer": "40 H", "correct": false},
+{"answer": "45 H", "correct": true},
+{"answer": "12.5H", "correct": false},
+{"answer": "42.5 H", "correct": false}
+]
+},
+
+{
+"question": "Which of the following statements is correct regarding balance load?",
+"options": [
+{"answer": "A balance load draws equal power from all the three phases.", "correct": true},
+{"answer": "In a balance load, the voltage lags behind 90° from each other in all three phases.", "correct": false},
+{"answer": "A balance load draws unequal power from all the three phases.", "correct": false},
+{"answer": "A balance load can never draw power from all three phases.", "correct": false}
+]
+},
+
+{
+"question": "In the case of moving coil instruments, the moving coil is wound on a thin aluminum former to produce the ___ force.",
+"options": [
+{"answer": "eddy currents damping", "correct": true},
+{"answer": "air friction", "correct": false},
+{"answer": "gravitational controlling", "correct": false},
+{"answer": "spring controlling", "correct": false}
+]
+},
+
+{
+"question": "Which of the following three phase wattmeter arrangements is used for measuring the power in balanced and unbalanced loads?",
+"options": [
+{"answer": "3-element 4-wire type", "correct": false},
+{"answer": "2-element 3-wire type", "correct": true},
+{"answer": "1-element 2-wire type", "correct": false},
+{"answer": "3-element 3-wire type", "correct": false}
+]
+},
+
+{
+"question": "Which method can be used to measure the power in a three phase unbalanced load system?",
+"options": [
+{"answer": "One wattmeter method", "correct": false},
+{"answer": "Two wattmeter method", "correct": true},
+{"answer": "Three voltmeter method", "correct": false},
+{"answer": "Three ammeter method", "correct": false}
+]
+},
+
+
+{
+"question": "Errors are introduced in the measurement by wattmeter due to ___ between current coil & pressure coil.",
+"options": [
+{"answer": "Self-inductance", "correct": false},
+{"answer": "Mutual inductance", "correct": true},
+{"answer": "Resistance", "correct": false},
+{"answer": "Self-capacitance", "correct": false}
+]
+},
+
+{
+"question": "How many minimum numbers of wattmeters can be used for measuring power in 3-phase balanced system?",
+"options": [
+{"answer": "One", "correct": true},
+{"answer": "Two", "correct": false},
+{"answer": "Three", "correct": false},
+{"answer": "Any of the above", "correct": false}
+]
+},
+
+{
+"question": "A DC series motor has 0.5 Ω resistance between its terminals. It runs at 730 rpm while taking 20 A from 300 V supply. Assume there is no saturation. What is the speed at which it will run when taking only 10 A from the same supply?",
+"options": [
+{"answer": "365 rpm", "correct": false},
+{"answer": "730 rpm", "correct": false},
+{"answer": "1440 rpm", "correct": false},
+{"answer": "1500 rpm", "correct": true}
+]
+},
+
+{
+"question": "The starting torque of a DC motor is independent of-",
+"options": [
+{"answer": "Speed", "correct": true},
+{"answer": "Magnetic flux density", "correct": false},
+{"answer": "Armature current", "correct": false},
+{"answer": "Number of poles", "correct": false}
+]
+},
+
+{
+"question": "A 4-pole DC generator has 800 armature conductors and a flux per pole of 10 mWb running at 600 rpm. Calculate the EMF generated when the armature is connected as a simplex lap winding.",
+"options": [
+{"answer": "75 V", "correct": false},
+{"answer": "85 V", "correct": false},
+{"answer": "80 V", "correct": true},
+{"answer": "70 V", "correct": false}
+]
+},
+
+{
+"question": "The maximum temperature permitted for class A insulation is",
+"options": [
+{"answer": "180 degree centigrade", "correct": false},
+{"answer": "105 degree centigrade", "correct": true},
+{"answer": "120 degree centigrade", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "Ward-Leonard method of speed control is basically usefully where usually",
+"options": [
+{"answer": "Wide range of sensitive speed control is required", "correct": true},
+{"answer": "Wide range of speed control is required", "correct": false},
+{"answer": "Narrow range of speed control is required", "correct": false},
+{"answer": "None of these", "correct": false}
+]
+},
+
+{
+"question": "In a DC generator, when the magnetic neutral axis coincides with the geometrical neutral axis?",
+"options": [
+{"answer": "There is no load on the generator", "correct": true},
+{"answer": "The generator runs at full load", "correct": false},
+{"answer": "The generator runs on over load", "correct": false},
+{"answer": "The generator runs on designed speed", "correct": false}
+]
+},
+
+{
+"question": "Auto transformer is used",
+"options": [
+{"answer": "When higher efficiency is desired", "correct": false},
+{"answer": "When the transformation ratio is small", "correct": true},
+{"answer": "When copper losses are to reduced", "correct": false},
+{"answer": "When operator is not available", "correct": false}
+]
+},
+
+{
+"question": "The colour of silica gel in dry condition is ___",
+"options": [
+{"answer": "Pink", "correct": false},
+{"answer": "Blue", "correct": true},
+{"answer": "Green", "correct": false},
+{"answer": "Red", "correct": false}
+]
+},
+
+{
+"question": "No load current of a transformer has",
+"options": [
+{"answer": "High magnitude and low power factor", "correct": false},
+{"answer": "High magnitude and high power factor", "correct": false},
+{"answer": "Small magnitude and high power factor", "correct": false},
+{"answer": "Small magnitude and low power factor", "correct": true}
+]
+},
+
+{
+"question": "What is the magnetising component (Im) of no load current (Io) wherein primary voltage is V1?",
+"options": [
+{"answer": "Im = Io sin ϕ lagging V1 by 90°", "correct": true},
+{"answer": "Im = Io sin ϕ leading V1 by 90°", "correct": false},
+{"answer": "Im = Io cos ϕ leading V1 by 90°", "correct": false},
+{"answer": "Im = Io cos ϕ lagging V1 by 90°", "correct": false}
+]
+},
+
+
+{
+"question": "A spring producers a controlling torque of 16 × 10–6 Nm for a deflection of 120°. Suppose its width and length are made two times their original value and the thickness is halved, then value of controlling torque for the same deflection will be",
+"options": [
+{"answer": "16 × 10–6 Nm", "correct": false},
+{"answer": "8 × 10–6 Nm", "correct": false},
+{"answer": "32 × 10–6 Nm", "correct": false},
+{"answer": "2 × 10–6 Nm", "correct": true}
+]
+},
+
+{
+"question": "The internal resistance of a saturated Weston cell is of the order of",
+"options": [
+{"answer": "A few ohm", "correct": false},
+{"answer": "A few kilo ohm", "correct": false},
+{"answer": "A few hundreds of ohm", "correct": true},
+{"answer": "A fraction of ohm", "correct": false}
+]
+},
+
+{
+"question": "When damping of an instrument is adjusted to enable the pointer to rise quickly to its deflected position without overshooting, in that case the instrument is said to be",
+"options": [
+{"answer": "Dead-beat", "correct": true},
+{"answer": "Off-beat", "correct": false},
+{"answer": "Over-damped", "correct": false},
+{"answer": "Under-damped", "correct": false}
+]
+},
+
+{
+"question": "'Creep' in energy meters can be prevented by",
+"options": [
+{"answer": "Using extra turns on the voltage coil", "correct": false},
+{"answer": "Having two holes on opposite sides of the disc", "correct": true},
+{"answer": "Using a stronger brake magnet", "correct": false},
+{"answer": "Using steel laminations of high permeability", "correct": false}
+]
+},
+
+{
+"question": "The constant load current for a 230 V single phase energy meter is 20 A at unity power factor. If the meter disc makes 2300 revolutions for 2 hours the meter constant will be",
+"options": [
+{"answer": "0.25 revolutions / kWh", "correct": false},
+{"answer": "250 revolutions / kWh", "correct": true},
+{"answer": "270 revolutions / kWh", "correct": false},
+{"answer": "0.30 revolutions / kWh", "correct": false}
+]
+},
+
+
+
+{
+"question": "A DC shunt motor runs at 500 rpm at 220 V. A resistance of 9 Ω is added in series with armature for speed control. The armature resistance is 1 Ω. The current to stall the motor will be",
+"options": [
+{"answer": "24.4 A", "correct": true},
+{"answer": "22 A", "correct": false},
+{"answer": "244 A", "correct": false},
+{"answer": "220 A", "correct": false}
+]
+}
+    
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

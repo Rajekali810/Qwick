@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-47 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-47</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+
+  {
+    "question": " Which of the following inductor has minimum eddy current loss?",
+    "options": [
+      { "answer": "Ferrite core inductor", "correct": false },
+      { "answer": "Iron core inductor", "correct": false },
+      { "answer": "Air core inductor", "correct": true },
+      { "answer": "All these", "correct": false }
+    ]
+  },
+  {
+    "question": " An SCR is fabricated from silicon and not germanium due to reason being",
+    "options": [
+      { "answer": "Silicon has small leakage current", "correct": true },
+      { "answer": "Silicon is inexpensive", "correct": false },
+      { "answer": "Silicon is mechanically strong", "correct": false },
+      { "answer": "Silicon is tetravalent", "correct": false }
+    ]
+  },
+  {
+    "question": " Induction relays can be used for:",
+    "options": [
+      { "answer": "AC quantities only", "correct": true },
+      { "answer": "DC quantities only", "correct": false },
+      { "answer": "Both of these", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": " Cogging in an induction motor can be avoided using:",
+    "options": [
+      { "answer": "Number of rotor slots more or less than the number of stator slots (not equal)", "correct": true },
+      { "answer": "Autotransformer starter", "correct": false },
+      { "answer": "Using dol starter", "correct": false },
+      { "answer": "Proper ventilation", "correct": false }
+    ]
+  },
+  {
+    "question": " The angle of conduction in SCR circuit can be varied by",
+    "options": [
+      { "answer": "Changing anode voltage", "correct": false },
+      { "answer": "Changing gate voltage", "correct": true },
+      { "answer": "Reverse biasing the gate", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": " The breaking capacity of the circuit breaker is in _______ and is measured in ________:",
+    "options": [
+      { "answer": "R.M.S, kVA", "correct": false },
+      { "answer": "R.M.S, MVA", "correct": true },
+      { "answer": "Peak, kVA", "correct": false },
+      { "answer": "Peak, MVA", "correct": false }
+    ]
+  },
+  {
+    "question": " Current chopping mainly occurs in:",
+    "options": [
+      { "answer": "Vacuum circuit breaker", "correct": false },
+      { "answer": "Oil circuit breaker", "correct": false },
+      { "answer": "Sf6 circuit breaker", "correct": false },
+      { "answer": "Air-blast circuit breaker", "correct": true }
+    ]
+  },
+  {
+    "question": " Speed control by variation of field flux results in:",
+    "options": [
+      { "answer": "Constant power drive", "correct": true },
+      { "answer": "Variable torque drive", "correct": false },
+      { "answer": "Constant torque drive", "correct": false },
+      { "answer": "Variable power drive", "correct": false }
+    ]
+  },
+  {
+    "question": " Which of the following methods is most economical for finding the no-load losses of a large D.C. shunt motor?",
+    "options": [
+      { "answer": "Retardation test", "correct": false },
+      { "answer": "Swinburne's test", "correct": true },
+      { "answer": "Hopkinson's test", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": " The condition for maximum power in case of D.C. motor is",
+    "options": [
+      { "answer": "Back e.m.f. = 2 x supply voltage", "correct": false },
+      { "answer": "Back e.m.f. = 1/2 x supply voltage", "correct": true },
+      { "answer": "Supply voltage = 1/2 x back e.m.f.", "correct": false },
+      { "answer": "Supply voltage = back e.m.f.", "correct": false }
+    ]
+  },
+  {
+    "question": " In regenerative braking",
+    "options": [
+      { "answer": "Motor energy is dissipated as heat", "correct": false },
+      { "answer": "Motor energy is dissipated in armature heating", "correct": false },
+      { "answer": "Motor energy is dissipated in windage losses", "correct": false },
+      { "answer": "Motor is made to run as a generator", "correct": true }
+    ]
+  },
+  {
+    "question": " Making capacity of Circuit breaker is",
+    "options": [
+      { "answer": "Lesser than the asymmetrical breaking capacity", "correct": false },
+      { "answer": "Greater than the asymmetrical breaking capacity", "correct": true },
+      { "answer": "Equal to the symmetrical breaking capacity", "correct": false },
+      { "answer": "Equal to the asymmetrical breaking capacity", "correct": false }
+    ]
+  },
+
+  {
+    "question": "Which one of the following materials is used for cable insulation?",
+    "options": [
+      { "answer": "Phenol formaldehyde", "correct": false },
+      { "answer": "Polytetrafluoroethylene", "correct": false },
+      { "answer": "Polyvinyl chloride", "correct": true },
+      { "answer": "Acrylonitrile butadiene styrene", "correct": false }
+    ]
+  },
+  {
+    "question": "The capacity of a battery is measured in",
+    "options": [
+      { "answer": "Watts", "correct": false },
+      { "answer": "Watt-hours", "correct": false },
+      { "answer": "Amperes", "correct": false },
+      { "answer": "Ampere-hours", "correct": true }
+    ]
+  },
+  {
+    "question": "The area of the hysteresis loop will be least for one of the following materials. It is:",
+    "options": [
+      { "answer": "Wrought iron", "correct": false },
+      { "answer": "Silicon steel", "correct": true },
+      { "answer": "Hard steel", "correct": false },
+      { "answer": "Soft iron", "correct": false }
+    ]
+  },
+  {
+    "question": "The efficiency of the transformer will be maximum when:",
+    "options": [
+      { "answer": "It carries full load at 0.8 p.f. lagging", "correct": false },
+      { "answer": "It carries full load at unity p.f.", "correct": false },
+      { "answer": "It carries no load", "correct": false },
+      { "answer": "The iron losses of the transformer equal the copper losses of the same", "correct": true }
+    ]
+  },
+  {
+    "question": "In a 50 kVA transformer, the iron loss is 500 W and full-load Cu loss is 800 W. The efficiency of the transformer at full-load at 0.8 p.f. lagging is:",
+    "options": [
+      { "answer": "92%", "correct": false },
+      { "answer": "89.56%", "correct": false },
+      { "answer": "96.85%", "correct": true },
+      { "answer": "79.82%", "correct": false }
+    ]
+  },
+  {
+    "question": "In the transformer, the following winding has got more cross-sectional area:",
+    "options": [
+      { "answer": "Low voltage winding", "correct": true },
+      { "answer": "High voltage winding", "correct": false },
+      { "answer": "Primary winding", "correct": false },
+      { "answer": "Secondary winding", "correct": false }
+    ]
+  },
+  {
+    "question": "The stability of arc in vacuum depends on ________.",
+    "options": [
+      { "answer": "The contact material only", "correct": false },
+      { "answer": "The circuit parameters only", "correct": false },
+      { "answer": "The contact materials and its vapour pressure", "correct": false },
+      { "answer": "Both (B) and (C)", "correct": true }
+    ]
+  },
+  {
+    "question": "It is difficult to interrupt a capacitive circuit. Because:",
+    "options": [
+      { "answer": "The current has a leading power factor", "correct": false },
+      { "answer": "The restriking voltage can be high", "correct": true },
+      { "answer": "Current magnitude is very small", "correct": false },
+      { "answer": "Stored energy in the capacitor is very high", "correct": false }
+    ]
+  },
+  {
+    "question": "RRRV voltage can be measured in:",
+    "options": [
+      { "answer": "RMS value", "correct": false },
+      { "answer": "Peak value", "correct": true },
+      { "answer": "Instantaneous value", "correct": false },
+      { "answer": "Average value", "correct": false }
+    ]
+  },
+  {
+    "question": "What is its average value of RRRV?",
+    "options": [
+      { "answer": "2*10^6 kV/sec", "correct": true },
+      { "answer": "3*10^5 kV/sec", "correct": false },
+      { "answer": "2*10^5 kV/sec", "correct": false },
+      { "answer": "3*10^6 kV/sec", "correct": false }
+    ]
+  },
+  {
+    "question": "For below 400 KV systems, the circuit breaker is designed to withstand ______ above the normal system voltage.",
+    "options": [
+      { "answer": "10%", "correct": true },
+      { "answer": "20%", "correct": false },
+      { "answer": "30%", "correct": false },
+      { "answer": "40%", "correct": false }
+    ]
+  },
+  {
+    "question": "The rating of a circuit breaker is generally determined on the basis of:",
+    "options": [
+      { "answer": "Single line to ground fault current", "correct": false },
+      { "answer": "Line to line fault current", "correct": false },
+      { "answer": "Double line to ground fault current", "correct": false },
+      { "answer": "Symmetrical fault current", "correct": true }
+    ]
+  },
+  {
+    "question": "The voltage rating of the circuit breaker is normally from _________ times more than the normal operating voltage.",
+    "options": [
+      { "answer": "1.05 – 1.10", "correct": true },
+      { "answer": "1.10 – 1.15", "correct": false },
+      { "answer": "1.15 – 1.20", "correct": false },
+      { "answer": "1.20 – 1.50", "correct": false }
+    ]
+  }
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

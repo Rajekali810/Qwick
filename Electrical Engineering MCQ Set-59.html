@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrical Engineering MCQ Set-59 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>Electrical Engineering MCQ Set-59</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+{
+"question": "The distance between two poles is called-",
+"options": [
+{"answer": "Sag", "correct": false},
+{"answer": "Span", "correct": true},
+{"answer": "Strand", "correct": false},
+{"answer": "Armouring", "correct": false}
+]
+},
+
+{
+"question": "The difference between points of supports and lowest point on the conductor is called-",
+"options": [
+{"answer": "Span", "correct": false},
+{"answer": "Sag", "correct": true},
+{"answer": "Strand", "correct": false},
+{"answer": "Armouring", "correct": false}
+]
+},
+
+{
+"question": "The efficiency of a properly designed synchronous motor will usually fall in range",
+"options": [
+{"answer": "60 to 70%", "correct": false},
+{"answer": "75 to 80%", "correct": false},
+{"answer": "85 to 95%", "correct": true},
+{"answer": "99 to 99.5%", "correct": false}
+]
+},
+
+{
+"question": "In a synchronous motor, damper windings are provided on",
+"options": [
+{"answer": "Stator frame", "correct": false},
+{"answer": "Rotor shaft", "correct": false},
+{"answer": "Pole faces", "correct": true},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "In a synchronous motor, damper winding is provided to-",
+"options": [
+{"answer": "Stabilize rotor motion", "correct": true},
+{"answer": "Suppress rotor oscillations", "correct": true},
+{"answer": "Develop necessary starting torque", "correct": true},
+{"answer": "B and C both", "correct": true}
+]
+},
+
+{
+"question": "A 10 mH inductor carries a sinusoidal current of 1A rms at a frequency of 50 Hz. The average power dissipated by the inductor is",
+"options": [
+{"answer": "0 W", "correct": true},
+{"answer": "0.25 W", "correct": false},
+{"answer": "0.5 W", "correct": false},
+{"answer": "1.0 W", "correct": false}
+]
+},
+
+{
+"question": "An inductor with a ferromagnetic core is supplied from a sinusoidal voltage source with frequency 'f'. The current drawn by the inductor will be",
+"options": [
+{"answer": "Sinusoidal with frequency 'f'", "correct": true},
+{"answer": "Sinusoidal with frequency '2f'", "correct": false},
+{"answer": "A sawtooth wave", "correct": false},
+{"answer": "Non-sinusoidal with frequency 'f'", "correct": false}
+]
+},
+
+{
+"question": "A transformer is connected to 2200 V, 40 Hz supply. The core loss is 800 Watts out of which 600 Watts are due to hysteresis and remaining eddy current losses. What is the core loss if the supply voltage and frequency are 3300 V and 60 Hz respectively?",
+"options": [
+{"answer": "135 Watts", "correct": false},
+{"answer": "450 Watts", "correct": false},
+{"answer": "900 Watts", "correct": false},
+{"answer": "1350 Watts", "correct": true}
+]
+},
+
+{
+"question": "The flux in a magnetic core is varying sinusoidally with a frequency of 600 Hz. The eddy current loss is found to be16 W when the maximum flux density in the core is 0.6 wb/m2. What would be the eddy current loss if the flux density is doubled at the same frequency?",
+"options": [
+{"answer": "16 W", "correct": false},
+{"answer": "32 W", "correct": false},
+{"answer": "64 W", "correct": true},
+{"answer": "8 W", "correct": false}
+]
+},
+
+{
+"question": "If the supply frequency to the transformer is increased, the iron loss will (given V/f is constant)",
+"options": [
+{"answer": "Not changes", "correct": false},
+{"answer": "Decrease", "correct": false},
+{"answer": "Increase", "correct": true},
+{"answer": "Cannot be determined", "correct": false}
+]
+},
+
+{
+"question": "In double cage induction motor the inner cage has-",
+"options": [
+{"answer": "High resistance and high leakage reactance", "correct": false},
+{"answer": "High resistance and low leakage reactance", "correct": false},
+{"answer": "Low resistance and high leakage reactance", "correct": true},
+{"answer": "Low resistance and low leakage reactance", "correct": false}
+]
+},
+
+{
+"question": "LVDT is always used as-",
+"options": [
+{"answer": "Secondary transducer", "correct": true},
+{"answer": "Primary transducer", "correct": false},
+{"answer": "Primary signal generator", "correct": false},
+{"answer": "None of these", "correct": false}
+]
+},
+
+{
+"question": "The breakdown voltage of a cable depends on",
+"options": [
+{"answer": "Presence of moisture", "correct": true},
+{"answer": "Working temperature", "correct": true},
+{"answer": "Time of application of the voltage", "correct": true},
+{"answer": "All of the above", "correct": true}
+]
+},
+
+{
+"question": "Capital cost per MWh is highest in case of",
+"options": [
+{"answer": "Hydroelectric power plants", "correct": false},
+{"answer": "Nuclear power plants", "correct": true},
+{"answer": "Diesel engine power plant", "correct": false},
+{"answer": "Steam power plants", "correct": false}
+]
+},
+
+{
+"question": "Baseload plants supply power at",
+"options": [
+{"answer": "Low capital cost and low running cost", "correct": false},
+{"answer": "Low capital cost and high running cost", "correct": false},
+{"answer": "High capital cost and high running cost", "correct": false},
+{"answer": "High capital cost and low running cost", "correct": true}
+]
+},
+
+{
+"question": "Pilot exciter is needed if",
+"options": [
+{"answer": "Induction motor is used", "correct": false},
+{"answer": "Main exciter is self-excited", "correct": false},
+{"answer": "Main exciter is separately excited", "correct": true},
+{"answer": "Main exciter is not working", "correct": false}
+]
+},
+
+{
+"question": "Percentage of U-235 in natural uranium is",
+"options": [
+{"answer": "0.235", "correct": false},
+{"answer": "235", "correct": false},
+{"answer": "2.35", "correct": false},
+{"answer": "0.7", "correct": true}
+]
+},
+
+{
+"question": "Heavy water implies",
+"options": [
+{"answer": "H2O", "correct": false},
+{"answer": "W2O", "correct": false},
+{"answer": "B2O", "correct": false},
+{"answer": "D2O", "correct": true}
+]
+},
+
+{
+"question": "Inter pole winding is connected in-------------------------- ?",
+"options": [
+{"answer": "Series with armature", "correct": true},
+{"answer": "Series with main poles", "correct": false},
+{"answer": "Parallel with armature", "correct": false},
+{"answer": "Parallel with main poles", "correct": false}
+]
+},
+
+
+
+{
+"question": "No load saturation characteristics are plotted between",
+"options": [
+{"answer": "No load voltage and field current", "correct": true},
+{"answer": "No load voltage and armature current", "correct": false},
+{"answer": "Short circuit current and field current", "correct": false},
+{"answer": "Short circuit current and armature current", "correct": false}
+]
+},
+
+
+{
+"question": "Brushes are always placed on--------------- , in order to achieve sparkles commutation?",
+"options": [
+{"answer": "GNA", "correct": false},
+{"answer": "MNA", "correct": true},
+{"answer": "Either GNA or MNA", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+
+
+{
+"question": "Flux density under trailing pole tips in case of generator will",
+"options": [
+{"answer": "Increase", "correct": true},
+{"answer": "Decrease", "correct": false},
+{"answer": "Either increase or decrease", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+{
+"question": "Which of the following devices are required to measure three phase balanced power?",
+"options": [
+{"answer": "One wattmeter method", "correct": true},
+{"answer": "Two wattmeter method", "correct": false},
+{"answer": "Three voltmeter method", "correct": false},
+{"answer": "Three ammeter method", "correct": false}
+]
+},
+
+{
+"question": "The average power of an A.C. circuit is:-",
+"options": [
+{"answer": "Ev IV sin Φ", "correct": false},
+{"answer": "0", "correct": false},
+{"answer": "Ev IV cos Φ", "correct": true},
+{"answer": "Ev IV", "correct": false}
+]
+},
+
+{
+"question": "A wattmeter has a full scale range of 2500 Watts. It has an error of 1.2% of true value. What would be range of reading if true power is 1250 Watts?",
+"options": [
+{"answer": "1235 W to 1265 W", "correct": true},
+{"answer": "Exactly 1250 W", "correct": false},
+{"answer": "1200 W to 1300 W", "correct": false},
+{"answer": "1500 W to 2500 W", "correct": false}
+]
+}
+
+    
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

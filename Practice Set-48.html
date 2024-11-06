@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-48 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-48</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+
+ 
+  {
+    "question": "The maximum value of the restriking voltage in a circuit breaker in terms of system voltage will always be",
+    "options": [
+      { "answer": "2 times the normal peak", "correct": true },
+      { "answer": "2.5 times the normal peak", "correct": false },
+      { "answer": "2 times the voltage available at the time of current zero", "correct": false },
+      { "answer": "1.5 times the normal", "correct": false }
+    ]
+  },
+  {
+    "question": "A circuit breaker is rated as a 1450 A, 1,200 MVA, 33 kV, 3 s, 3-phase oil circuit breaker. Find the breaking capacity.",
+    "options": [
+      { "answer": "1,200 MVA", "correct": true },
+      { "answer": "33 kV", "correct": false },
+      { "answer": "3 s", "correct": false },
+      { "answer": "1,450 A", "correct": false }
+    ]
+  },
+  {
+    "question": "An 11 kV, 500 MVA circuit breaker suddenly closes on to a fault. Find the RMS value of the symmetrical breaking current.",
+    "options": [
+      { "answer": "32.24 kA", "correct": false },
+      { "answer": "45.45 kA", "correct": false },
+      { "answer": "26.24 kA", "correct": true },
+      { "answer": "52.48 kA", "correct": false }
+    ]
+  },
+  {
+    "question": "As compared to air, the relative dielectric strength of Sulphur Hexafluoride is nearly:",
+    "options": [
+      { "answer": "1.5 times", "correct": false },
+      { "answer": "2.5 times", "correct": true },
+      { "answer": "4.0 times", "correct": false },
+      { "answer": "5.0 times", "correct": false }
+    ]
+  },
+  {
+    "question": "In air-blast circuit breakers, the pressure of the air is of the order of:",
+    "options": [
+      { "answer": "100 mm Hg", "correct": false },
+      { "answer": "1 kg / cm²", "correct": false },
+      { "answer": "20 kg / cm² to 30 kg / cm²", "correct": true },
+      { "answer": "200 kg / cm² to 300 kg / cm²", "correct": false }
+    ]
+  },
+  {
+    "question": "In case of circuit breakers, the rate of rise of restriking voltage (RRRV) is expressed in",
+    "options": [
+      { "answer": "kV/μs", "correct": true },
+      { "answer": "μs/kV", "correct": false },
+      { "answer": "kV", "correct": false },
+      { "answer": "kA/μs", "correct": false }
+    ]
+  },
+  {
+    "question": "The phenomenon of current chopping mainly occurs in which type of circuit breaker?",
+    "options": [
+      { "answer": "Vacuum circuit breaker", "correct": false },
+      { "answer": "Oil circuit breaker", "correct": false },
+      { "answer": "Air blast circuit breaker", "correct": true },
+      { "answer": "SF6 circuit breaker", "correct": false }
+    ]
+  },
+  {
+    "question": "To minimize the current chopping tendency, the SF6 gas is used at",
+    "options": [
+      { "answer": "high pressure and low velocity", "correct": false },
+      { "answer": "high pressure and high velocity", "correct": false },
+      { "answer": "low pressure and low velocity", "correct": true },
+      { "answer": "low pressure and high velocity", "correct": false }
+    ]
+  },
+  {
+    "question": "The capacitor switching is easily done with",
+    "options": [
+      { "answer": "air blast circuit breaker", "correct": false },
+      { "answer": "oil circuit breaker", "correct": false },
+      { "answer": "vacuum circuit breaker", "correct": true },
+      { "answer": "any one of these", "correct": false }
+    ]
+  },
+  {
+    "question": "To limit current chopping in vacuum circuit breakers, the contact material used has",
+    "options": [
+      { "answer": "high vapour pressure and low conductivity properties", "correct": false },
+      { "answer": "high vapour pressure and high conductivity properties", "correct": false },
+      { "answer": "low vapour pressure and high conductivity properties", "correct": false },
+      { "answer": "low vapour pressure and low conductivity properties", "correct": true }
+    ]
+  },
+  {
+    "question": "For the same rupturing capacity, the actual current to be interrupted by an HRC fuse is",
+    "options": [
+      { "answer": "much less than any circuit breaker", "correct": true },
+      { "answer": "much more than any circuit breaker", "correct": false },
+      { "answer": "equal to the circuit breaker", "correct": false },
+      { "answer": "none of these", "correct": false }
+    ]
+  },
+
+  {
+    "question": "For protection of parallel feeders fed from one end, the relays required are",
+    "options": [
+      { "answer": "non-directional relays at the source end and directional relays at the load end", "correct": true },
+      { "answer": "non-directional relays at both the ends", "correct": false },
+      { "answer": "directional relays at the source end and non-directional at the load end", "correct": false },
+      { "answer": "directional relays at both the ends", "correct": false }
+    ]
+  },
+  {
+    "question": "A reactance relay is",
+    "options": [
+      { "answer": "voltage restrained directional relay", "correct": false },
+      { "answer": "directional restrained over-current relay", "correct": true },
+      { "answer": "voltage restrained over-current relay", "correct": false },
+      { "answer": "none of these", "correct": false }
+    ]
+  },
+  {
+    "question": "The unit protection scheme provides",
+    "options": [
+      { "answer": "primary protection", "correct": true },
+      { "answer": "back up protection", "correct": false },
+      { "answer": "simultaneous protection", "correct": false },
+      { "answer": "remote protection", "correct": false }
+    ]
+  },
+  {
+    "question": "In the protection of transformers, harmonic restraint is used to guard against",
+    "options": [
+      { "answer": "magnetizing inrush current", "correct": true },
+      { "answer": "unbalanced operation", "correct": false },
+      { "answer": "lightning", "correct": false },
+      { "answer": "switching over voltages", "correct": false }
+    ]
+  },
+  {
+    "question": "The use of high-speed circuit-breakers",
+    "options": [
+      { "answer": "reduces the short circuit current", "correct": false },
+      { "answer": "improves system stability", "correct": true },
+      { "answer": "decreases system stability", "correct": false },
+      { "answer": "increases the short circuit current", "correct": false }
+    ]
+  },
+  {
+    "question": "Reactance relay is normally preferred for protection against",
+    "options": [
+      { "answer": "earth faults", "correct": false },
+      { "answer": "phase faults", "correct": true },
+      { "answer": "open-circuit faults", "correct": false },
+      { "answer": "none of these", "correct": false }
+    ]
+  },
+  {
+    "question": "A Buchholz relay is used for",
+    "options": [
+      { "answer": "protection of a transformer against all internal faults", "correct": true },
+      { "answer": "protection of a transformer against external faults", "correct": false },
+      { "answer": "protection of a transformer against both internal and external faults", "correct": false },
+      { "answer": "protection of induction motors", "correct": false }
+    ]
+  },
+  {
+    "question": "Capacitance Voltage Transformer (CVT) is used to",
+    "options": [
+      { "answer": "improve the power factor of the transmission", "correct": true },
+      { "answer": "reduce losses in a transmission line", "correct": false },
+      { "answer": "connect instruments on the LT side", "correct": false },
+      { "answer": "reduce the incidence of overvoltage surges on transmission lines", "correct": false }
+    ]
+  },
+  {
+    "question": "Zero sequence currents can flow from a line into a transformer bank if the windings are in",
+    "options": [
+      { "answer": "ground star/ delta", "correct": true },
+      { "answer": "delta/ star", "correct": false },
+      { "answer": "star/ grounded star", "correct": false },
+      { "answer": "delta/ delta", "correct": false }
+    ]
+  },
+  {
+    "question": "The positive, negative and zero sequence impedance of a solidly grounded system under steady state condition always follow the relation",
+    "options": [
+      { "answer": "Z1 > Z2 > Z0", "correct": true },
+      { "answer": "Z1 < Z2 < Z0", "correct": false },
+      { "answer": "Z0 < Z1 < Z2", "correct": false },
+      { "answer": "none of these", "correct": false }
+    ]
+  },
+  {
+    "question": "If the excitation of the synchronous generator fails, it acts as a",
+    "options": [
+      { "answer": "synchronous motor", "correct": false },
+      { "answer": "synchronous generator", "correct": false },
+      { "answer": "induction motor", "correct": false },
+      { "answer": "induction generator", "correct": true }
+    ]
+  },
+  {
+    "question": "For a fault at the terminals of a synchronous generator, the fault current is maximum for a",
+    "options": [
+      { "answer": "3-phase fault", "correct": false },
+      { "answer": "3-phase to ground fault", "correct": false },
+      { "answer": "line-to ground fault", "correct": true },
+      { "answer": "line-to-line fault", "correct": false }
+    ]
+  },
+  {
+    "question": "For an unbalanced fault, with paths for zero sequence currents, at the point of fault",
+    "options": [
+      { "answer": "negative and zero sequence voltages are minimum", "correct": false },
+      { "answer": "negative and zero sequence voltages are maximum", "correct": true },
+      { "answer": "negative sequence voltage is minimum and zero sequence voltage is maximum", "correct": false },
+      { "answer": "negative sequence voltage is maximum and zero sequence voltage is minimum", "correct": false }
+    ]
+  },
+  {
+    "question": "In a power station, the cost of generation of power reduces most effectively when",
+    "options": [
+      { "answer": "diversity factor alone increases", "correct": false },
+      { "answer": "both diversity factor and load factor increases", "correct": false },
+      { "answer": "load factor alone increases", "correct": false },
+      { "answer": "both diversity factor and load factor decreases", "correct": true }
+    ]
+  }
+
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

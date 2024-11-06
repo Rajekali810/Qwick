@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-49 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #submit-quiz {
+      background-color: #B22222; /* Deep red color */
+    }
+    #submit-quiz:hover {
+      background-color: #8B0000; /* Darker shade for hover effect */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='practice_series4.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-49</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+
+  {
+    "question": "A 100 kVA transformer has 4% impedance and 50 kVA transformer has 3% impedance when they are operated in parallel, which transformer will reach full load first",
+    "options": [
+      { "answer": "3%", "correct": true },
+      { "answer": "4%", "correct": false },
+      { "answer": "data is insufficient", "correct": false },
+      { "answer": "none of these", "correct": false }
+    ]
+  },
+  {
+    "question": "With the help of a reactive compensator it is possible to have",
+    "options": [
+      { "answer": "constant voltage operation only", "correct": false },
+      { "answer": "unity p.f. operation only", "correct": false },
+      { "answer": "both constant voltage and unity p.f.", "correct": false },
+      { "answer": "either constant voltage or unity p.f.", "correct": true }
+    ]
+  },
+  {
+    "question": "The concept of an electrically short, medium, and long line is primarily based on the",
+    "options": [
+      { "answer": "nominal voltage of the line", "correct": false },
+      { "answer": "physical length of the line", "correct": true },
+      { "answer": "wavelength of the line", "correct": false },
+      { "answer": "power transmitted over the line", "correct": false }
+    ]
+  },
+  {
+    "question": "While measuring power of a three-phase balanced load by the two-wattmeter method, the readings are 100 W and 250 W. The power factor of the load is _________.",
+    "options": [
+      { "answer": "1 to 10", "correct": false },
+      { "answer": "20 to 25", "correct": false },
+      { "answer": "0.78 to 0.82", "correct": true },
+      { "answer": "0.11 to 0.25", "correct": false }
+    ]
+  },
+  {
+    "question": "A sinusoidal waveform, when observed on an oscilloscope, has a peak to peak amplitude of 6 cm. If the vertical sensitivity setting is 5V/ cm, then rms value of the voltage will be ____________V",
+    "options": [
+      { "answer": "10", "correct": false },
+      { "answer": "12.4", "correct": false },
+      { "answer": "10.6", "correct": true },
+      { "answer": "11.6", "correct": false }
+    ]
+  },
+  {
+    "question": "For a single phase, two winding transformer, the supply frequency and voltage are both increased by 10%. The percentage changes in the hysteresis loss and eddy current loss, respectively, are",
+    "options": [
+      { "answer": "10 and 21", "correct": true },
+      { "answer": "-10 and 21", "correct": false },
+      { "answer": "21 and 10", "correct": false },
+      { "answer": "-21 and 10", "correct": false }
+    ]
+  },
+  {
+    "question": "An induction motor having full load torque of 60 Nm when delta-connected develops a starting torque of 120 Nm. For the same supply voltage, if motor is changed to star -connection, then starting torque developed will be _______ Nm .",
+    "options": [
+      { "answer": "40 Nm", "correct": true },
+      { "answer": "80 Nm", "correct": false },
+      { "answer": "150 Nm", "correct": false },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "A 6-pole lap-connected dc generator with 480 conductors has armature resistance of 0.06 ohm. If the conductors are reconnected to form a wave winding, other things remaining unchanged, the value of the armature resistance will be _______ ohm .",
+    "options": [
+      { "answer": "18 ohm", "correct": false },
+      { "answer": "54 ohm", "correct": false },
+      { "answer": "0.54 ohm", "correct": true },
+      { "answer": "5.4 ohm", "correct": false }
+    ]
+  },
+  {
+    "question": "Which type of winding is generally preferred for generating large currents on DC generators?",
+    "options": [
+      { "answer": "Lap winding", "correct": true },
+      { "answer": "Retrogressive wave winding", "correct": false },
+      { "answer": "Current depends on design", "correct": false },
+      { "answer": "Progressive wave winding", "correct": false }
+    ]
+  },
+  {
+    "question": "Wave winding is suitable for a _______-voltage, ______ -current DC generator.",
+    "options": [
+      { "answer": "High, low", "correct": true },
+      { "answer": "High, high", "correct": false },
+      { "answer": "Low, low", "correct": false },
+      { "answer": "Low, high", "correct": false }
+    ]
+  },
+  {
+    "question": "Which type of shape is used for carbon brushes in DC machine?",
+    "options": [
+      { "answer": "Triangular", "correct": false },
+      { "answer": "Square", "correct": true },
+      { "answer": "Cylindrical", "correct": false },
+      { "answer": "Semi-circular", "correct": false }
+    ]
+  },
+  {
+    "question": "The shape of torque/slip curve of an induction motor is:",
+    "options": [
+      { "answer": "Hyperbola", "correct": false },
+      { "answer": "Ellipse", "correct": false },
+      { "answer": "Straight line", "correct": false },
+      { "answer": "Rectangular-hyperbola", "correct": true }
+    ]
+  },
+  {
+    "question": "The length of air gap between stator and rotor of an induction motor is made as small as practicable because otherwise",
+    "options": [
+      { "answer": "The magnetizing current will be more", "correct": true },
+      { "answer": "The ball bearings which can match the respective stator and rotor may not be available", "correct": false },
+      { "answer": "The power factor will be zero", "correct": false },
+      { "answer": "The labour cost during manufacturing increases", "correct": false }
+    ]
+  },
+  {
+    "question": "The maximum torque of a 3-phase induction motor under running conditions is",
+    "options": [
+      { "answer": "Inversely proportional to supply voltage", "correct": false },
+      { "answer": "Inversely proportional to rotor reactance at stand still", "correct": true },
+      { "answer": "Directly proportional to rotor resistance", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Insertion of resistance in the rotor of an induction motor-",
+    "options": [
+      { "answer": "Increases the pull out torque", "correct": false },
+      { "answer": "Increases the starting torque", "correct": true },
+      { "answer": "Increases the load torque", "correct": false },
+      { "answer": "Increases none of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "In star delta starter of an induction motor-",
+    "options": [
+      { "answer": "Reduced voltage is applied to the motor and starter", "correct": false },
+      { "answer": "Applied voltage per phase is 57.8% of line voltage", "correct": true },
+      { "answer": "Resistance is put in the rotor circuit", "correct": false },
+      { "answer": "Resistance is put in the stator circuit", "correct": false }
+    ]
+  },
+
+  {
+    "question": " The speed of DC shunt motor can be increased above its rated speed by:",
+    "options": [
+      { "answer": "increasing the supply voltage within its rated value", "correct": false },
+      { "answer": "increasing the flux per pole", "correct": false },
+      { "answer": "decreasing the flux per pole", "correct": true },
+      { "answer": "connecting additional resistance in series of the armature", "correct": false }
+    ]
+  },
+  {
+    "question": " Which speed control methods offers below normal speed in DC shunt motor?",
+    "options": [
+      { "answer": "Field control method", "correct": false },
+      { "answer": "Voltage control method", "correct": false },
+      { "answer": "Armature control method", "correct": true },
+      { "answer": "Ward Leonard system of speed control", "correct": false }
+    ]
+  },
+  {
+    "question": " The field weakening method of controlling the speed of the DC motor is also called as:",
+    "options": [
+      { "answer": "constant torque control", "correct": false },
+      { "answer": "constant current control", "correct": false },
+      { "answer": "constant power control", "correct": true },
+      { "answer": "constant voltage control", "correct": false }
+    ]
+  },
+  {
+    "question": " Speed control by Ward Leonard method gives uniform speed variation:",
+    "options": [
+      { "answer": "In one direction", "correct": false },
+      { "answer": "in both direction", "correct": true },
+      { "answer": "below normal speed only", "correct": false },
+      { "answer": "above normal speed only", "correct": false }
+    ]
+  },
+  {
+    "question": " Line Current of A 500 V DC shunt motor is 52 A shunt field and armature resistance are 250 Ω and 0.5 Ω respectively. Determine the back e.m.f.:",
+    "options": [
+      { "answer": "475 V", "correct": true },
+      { "answer": "450 V", "correct": false },
+      { "answer": "500 V", "correct": false },
+      { "answer": "448 V", "correct": false }
+    ]
+  },
+  {
+    "question": " In a DC machine, if V = terminal voltage and E = induced EMF in the armature, then which of the following is true for the DC machine to work like a DC motor?",
+    "options": [
+      { "answer": "V < E", "correct": true },
+      { "answer": "V > E", "correct": false },
+      { "answer": "V + E = 0", "correct": false },
+      { "answer": "V = E", "correct": false }
+    ]
+  },
+  {
+    "question": " Iron losses in DC machines are independent of variations in:",
+    "options": [
+      { "answer": "speed", "correct": false },
+      { "answer": "speed and voltage", "correct": false },
+      { "answer": "voltage", "correct": false },
+      { "answer": "load", "correct": true }
+    ]
+  },
+  {
+    "question": " _______ combined together are called stray losses.",
+    "options": [
+      { "answer": "Frictional loss and copper loss", "correct": false },
+      { "answer": "Field copper loss and iron loss", "correct": false },
+      { "answer": "Iron and mechanical losses", "correct": true },
+      { "answer": "Copper and iron losses", "correct": false }
+    ]
+  },
+  {
+    "question": " For a dc motor operating under condition of maximum transfer of power, the efficiency of the motor is:",
+    "options": [
+      { "answer": "100 %", "correct": false },
+      { "answer": "about 90%", "correct": false },
+      { "answer": "75%", "correct": false },
+      { "answer": "50%", "correct": true }
+    ]
+  }
+  
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+
