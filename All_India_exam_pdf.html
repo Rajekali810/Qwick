@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All India PSC JE/AE Question Paper</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Main Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        /* Header */
+        .header {
+            background-color: #003366;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        .home-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #0055b3;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        /* Subheading */
+        .subheading {
+            font-size: 1.2em;
+            color: #0055b3;
+            margin-top: 5px;
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Left, Middle, and Right Sections */
+        .selection {
+            flex: 1;
+            margin: 0 15px;
+        }
+
+        /* Dropdowns and Buttons */
+        .dropdown, .visit-button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        .visit-button {
+            background-color: #0073e6;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .visit-button:hover {
+            background-color: #005bb5;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #003366;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9em;
+        }
+
+        .footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .selection {
+                margin: 10px 0;
+            }
+
+            .dropdown, .visit-button {
+                font-size: 0.95em;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+       <button class="home-btn" onclick="window.location.href='index.html';">
+            <i class="fas fa-home"></i> Home
+        </button>
+
+        <h1>QwickLumen Institute for Engineers</h1>
+        <p class="subheading">All India PSC- JE/AE Question Paper</p>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Left Section: State Selection -->
+        <div class="selection">
+            <label for="state-select"><strong>Select State:</strong></label>
+            <select id="state-select" class="dropdown">
+                <option value="">Select State</option>
+                <option value="AP">Andhra Pradesh</option>
+                <option value="AR">Arunachal Pradesh</option>
+                <option value="AS">Assam</option>
+                <option value="BR">Bihar</option>
+                <option value="CT">Chhattisgarh</option>
+                <option value="GA">Gujarat</option>
+                <option value="HR">Haryana</option>
+                <option value="HP">Himachal Pradesh</option>
+                <option value="JK">Jammu and Kashmir</option>
+                <option value="Go">Goa</option>
+                <option value="JH">Jharkhand</option>
+                <option value="KA">Karnataka</option>
+                <option value="KL">Kerala</option>
+                <option value="MP">Madhya Pradesh</option>
+                <option value="MH">Maharashtra</option>
+                <option value="MN">Manipur</option>
+                <option value="ML">Meghalaya</option>
+                <option value="MZ">Mizoram</option>
+                <option value="NL">Nagaland</option>
+                <option value="OR">Odisha</option>
+                <option value="PB">Punjab</option>
+                <option value="RJ">Rajasthan</option>
+                <option value="SK">Sikkim</option>
+                <option value="TN">Tamil Nadu</option>
+                <option value="TG">Telangana</option>
+                <option value="TR">Tripura</option>
+                <option value="UT">Uttarakhand</option>
+                <option value="UP">Uttar Pradesh</option>
+                <option value="WB">West Bengal</option>
+                <option value="AN">Andaman and Nicobar Islands</option>
+                <option value="CH">Chandigarh</option>
+                <option value="DN">Dadra and Nagar Haveli</option>
+                <option value="DD">Daman and Diu</option>
+                <option value="DL">Delhi</option>
+                <option value="LD">Lakshadweep</option>
+                <option value="PY">Puducherry</option>
+            </select>
+
+        </div>
+
+        <!-- Middle Section: Exam Selection -->
+        <div class="selection">
+            <label for="exam-select"><strong>Select Exam:</strong></label>
+            <select id="exam-select" class="dropdown">
+                <option value="">Select</option>
+                <option value="PSC_JE">PSC JE</option>
+                
+            </select>
+        </div>
+
+        <!-- Right Section: Visit Button -->
+        <div class="selection">
+            <button class="visit-button" onclick="goToVisitPage()">Go to Visit <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        Contact Us: +7908684378 | Email: <a href="mailto:info@examine.com">info@examine.com</a> | Designer: Md Rajek Ali (PWD Engg) <br>
+        © 2024 WebXamina. All rights reserved.
+    </footer>
+
+    <!-- JavaScript Function for Redirection -->
+    <script>
+        function goToVisitPage() {
+            const state = document.getElementById("state-select").value;
+            const exam = document.getElementById("exam-select").value;
+            
+            if(state && exam) {
+                const url = `${state}_PSC_${exam}_pdf.html`; // Removed 'exampdf/' folder path
+                window.location.href = url;
+            } else {
+                alert("Please select both State and Exam.");
+            }
+        }
+    </script>
+
+</body>
+</html>

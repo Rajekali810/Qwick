@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West Bengal PSC - JE/AE Question Papers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Root styling */
+        :root {
+            --primary-color: #004466;
+            --secondary-color: #e0f4f4;
+            --highlight-color: #ffdd00;
+            --hover-bg-color: #004466;
+            --hover-text-color: #ffffff;
+            --light-bg: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --transition-duration: 0.3s;
+        }
+
+        /* Basic styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary-color);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header styling */
+        .header {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: center;
+            position: relative;
+            box-shadow: 0px 4px 8px var(--shadow-color);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .header .sub-heading {
+            font-size: 1.2em;
+            color: var(--highlight-color);
+        }
+
+        .home-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: color var(--transition-duration);
+        }
+
+        .home-btn:hover {
+            color: var(--highlight-color);
+        }
+
+        /* Main content styling */
+        .content {
+            display: flex;
+            width: 80%;
+            margin-top: 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .section {
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            padding: 20px;
+            background-color: var(--light-bg);
+            box-shadow: 0px 4px 8px var(--shadow-color);
+            border-radius: 8px;
+            text-align: center;
+            transition: transform var(--transition-duration), box-shadow var(--transition-duration);
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 16px var(--shadow-color);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section li {
+            margin: 8px 0;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color var(--transition-duration), color var(--transition-duration);
+        }
+
+        .section li:hover, .section li.active {
+            background-color: var(--hover-bg-color);
+            color: var(--hover-text-color);
+        }
+
+        /* Download link styling */
+        .download-link ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .download-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color var(--transition-duration);
+        }
+
+        .download-link a:hover {
+            color: var(--highlight-color);
+        }
+
+        /* Footer styling */
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #888;
+            font-size: 0.9em;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            width: 100%;
+        }
+        
+        .footer a {
+            color: var(--highlight-color);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Institute Name and Subheading -->
+    <div class="header">
+        <button class="home-btn" onclick="window.location.href='All_India_exam_pdf.html'"><i class="fas fa-home"></i> Home</button>
+        <h1>QwickLumen Institute for Engineers</h1>
+        <div class="sub-heading">West Bengal Public Service Commission</div>
+        <div class="sub-heading">Junior Engineer & Assistant Engineer (Electrical) Question Papers</div>
+    </div>
+
+    <!-- Main Content: Year Selection, Exam Type, and Download Links -->
+    <div class="content">
+        <!-- Year of Exam Section -->
+        <div class="section year-selection">
+            <h2>Select Year of Exam</h2>
+            <ul id="year-list">
+                <li onclick="selectYear('2020')">2020</li>
+                <li onclick="selectYear('2021')">2021</li>
+                <li onclick="selectYear('2022')">2022</li>
+                <li onclick="selectYear('2010')">2010</li>
+                <li onclick="selectYear('2014')">2014</li>
+                <li onclick="selectYear('2016')">2016</li>
+                <li onclick="selectYear('2018')">2018</li>
+                <li onclick="selectYear('2029')">2029</li>
+            </ul>
+        </div>
+
+        <!-- Exam Type Section -->
+        <div class="section exam-type">
+            <h2>Exam Type</h2>
+            <ul>
+                <li onclick="selectExamType('PSC-JE Electrical')">PSC-JE Electrical</li>
+                <li onclick="selectExamType('PSC-AE Electrical')">PSC-AE Electrical</li>
+            </ul>
+        </div>
+
+        <!-- Download Link Section -->
+        <div class="section download-link">
+            <h2>Download PDF</h2>
+            <ul id="download-links">
+                <!-- Dynamic links will be inserted here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        Contact Us: +7908684378 | Email: <a href="mailto:info@examine.com">info@examine.com</a> | Designer: Md Rajek Ali (PWD Engg)<br>
+        &copy; 2024 WebXamina. All rights reserved.
+    </div>
+
+    <!-- JavaScript for Dynamic PDF Download Links -->
+    <script>
+        let selectedYear = '';
+        let selectedExamType = 'PSC-JE Electrical'; // Default selection
+
+        function selectYear(year) {
+            selectedYear = year;
+            updateDownloadLinks();
+
+            document.querySelectorAll("#year-list li").forEach(li => li.classList.remove("active"));
+            document.querySelector(`#year-list li[onclick="selectYear('${year}')"]`).classList.add("active");
+        }
+
+        function selectExamType(examType) {
+            selectedExamType = examType;
+            updateDownloadLinks();
+
+            document.querySelectorAll(".exam-type li").forEach(li => li.classList.remove("active"));
+            document.querySelector(`.exam-type li[onclick="selectExamType('${examType}')"]`).classList.add("active");
+        }
+
+        function updateDownloadLinks() {
+            const downloadLinks = document.getElementById("download-links");
+            downloadLinks.innerHTML = ""; // Clear current links
+
+            if (selectedYear) {
+                // Construct file name based on the selection
+                const examTypePrefix = selectedExamType === "PSC-JE Electrical" ? "WB_PSC_JE_" : "WB_PSC_AE_";
+                const fileName = `${examTypePrefix}${selectedYear}.pdf`;
+
+                // Create a new download link
+                const linkItem = document.createElement("li");
+                const link = document.createElement("a");
+                link.href = fileName; // Directly reference the file name
+                link.download = fileName;
+                link.textContent = `${selectedExamType} ${selectedYear}`;
+                
+                linkItem.appendChild(link);
+                downloadLinks.appendChild(linkItem);
+            }
+        }
+    </script>
+</body>
+</html>
