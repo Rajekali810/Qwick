@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subject-Verb Agreement - QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='English.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Subject-Verb Agreement</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+    // Sample question data in JSON format
+    const questions = [
+
+
+  {
+    "question": "Which of the following sentences has correct subject-verb agreement?",
+    "options": [
+      { "answer": "The team are playing well this season.", "correct": false },
+      { "answer": "The team is playing well this season.", "correct": true },
+      { "answer": "The team were playing well this season.", "correct": false },
+      { "answer": "The team have been playing well this season.", "correct": false }
+    ]
+  },
+  {
+    "question": "Choose the sentence with correct subject-verb agreement:",
+    "options": [
+      { "answer": "Each of the students were given a prize.", "correct": false },
+      { "answer": "Each of the students was given a prize.", "correct": true },
+      { "answer": "Each of the students is given prizes.", "correct": false },
+      { "answer": "Each of the students are given a prize.", "correct": false }
+    ]
+  },
+  {
+    "question": "In which sentence is the subject-verb agreement correct?",
+    "options": [
+      { "answer": "Neither the boys nor the girls wants to leave early.", "correct": false },
+      { "answer": "Neither the boys nor the girls want to leave early.", "correct": true },
+      { "answer": "Neither the boys nor the girls wanting to leave early.", "correct": false },
+      { "answer": "Neither the boys nor the girls are wanting to leave early.", "correct": false }
+    ]
+  },
+  {
+    "question": "Which sentence uses the correct subject-verb agreement?",
+    "options": [
+      { "answer": "One of the dogs have a collar.", "correct": false },
+      { "answer": "One of the dogs has a collar.", "correct": true },
+      { "answer": "One of the dog have collars.", "correct": false },
+      { "answer": "One of the dog has a collar.", "correct": false }
+    ]
+  },
+  {
+    "question": "Choose the correct sentence with subject-verb agreement:",
+    "options": [
+      { "answer": "Either the manager or his assistant are present at the meeting.", "correct": false },
+      { "answer": "Either the manager or his assistant is present at the meeting.", "correct": true },
+      { "answer": "Either the manager or his assistant have been present at the meeting.", "correct": false },
+      { "answer": "Either the manager or his assistant are being present at the meeting.", "correct": false }
+    ]
+  },
+
+  {
+    "question": "Rahul and his friends ___________ also invited to the party.",
+    "options": [
+      { "answer": "is", "correct": false },
+      { "answer": "was", "correct": false },
+      { "answer": "had", "correct": false },
+      { "answer": "were", "correct": true }
+    ]
+  },
+  {
+    "question": "______either of the two candidates who had come for the interview been selected?",
+    "options": [
+      { "answer": "Have", "correct": false },
+      { "answer": "Is", "correct": false },
+      { "answer": "Has", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Every man, woman and child in the hall ______ given a pair of glasses with coloured lens to watch the 3D movie.",
+    "options": [
+      { "answer": "have", "correct": false },
+      { "answer": "are", "correct": false },
+      { "answer": "was", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "A yellow and a blue toy _______ desired by a kid who was all alone.",
+    "options": [
+      { "answer": "were", "correct": true },
+      { "answer": "are", "correct": false },
+      { "answer": "was", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Throughout the seminar, she kept quiet and did not _________ a word.",
+    "options": [
+      { "answer": "speaking", "correct": false },
+      { "answer": "spoken", "correct": false },
+      { "answer": "speak", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "One of the students _____absent yesterday.",
+    "options": [
+      { "answer": "Were", "correct": false },
+      { "answer": "Was", "correct": true },
+      { "answer": "Are", "correct": false },
+      { "answer": "Have", "correct": false }
+    ]
+  },
+  {
+    "question": "A number of students __________ absent yesterday.",
+    "options": [
+      { "answer": "Were", "correct": true },
+      { "answer": "Was", "correct": false },
+      { "answer": "Are", "correct": false },
+      { "answer": "Have", "correct": false }
+    ]
+  },
+  {
+    "question": "Ram as well as his brothers _________coming today.",
+    "options": [
+      { "answer": "are", "correct": false },
+      { "answer": "were", "correct": false },
+      { "answer": "is", "correct": true },
+      { "answer": "have been", "correct": false }
+    ]
+  },
+  {
+    "question": "This is one of the matters that ______ me the most.",
+    "options": [
+      { "answer": "has disturb", "correct": false },
+      { "answer": "are disturbing", "correct": false },
+      { "answer": "disturb", "correct": true },
+      { "answer": "is disturbed", "correct": false }
+    ]
+  },
+  {
+    "question": "Fifty miles ________ a long distance.",
+    "options": [
+      { "answer": "are", "correct": false },
+      { "answer": "is", "correct": true },
+      { "answer": "were", "correct": false },
+      { "answer": "quite", "correct": false }
+    ]
+  },
+
+  {
+    "question": "Everyone in the family ______ been questioned about the theft.",
+    "options": [
+      { "answer": "has", "correct": true },
+      { "answer": "have", "correct": false },
+      { "answer": "are", "correct": false },
+      { "answer": "is", "correct": false }
+    ]
+  },
+  {
+    "question": "The President of the United States, accompanied by his advisors, _______ en route to Europe.",
+    "options": [
+      { "answer": "were", "correct": false },
+      { "answer": "are", "correct": false },
+      { "answer": "was", "correct": true },
+      { "answer": "both (A) and (C)", "correct": false }
+    ]
+  },
+  {
+    "question": "My friend, a philosopher and guide ______ going abroad.",
+    "options": [
+      { "answer": "are", "correct": false },
+      { "answer": "is", "correct": true },
+      { "answer": "am", "correct": false },
+      { "answer": "being", "correct": false }
+    ]
+  },
+  {
+    "question": "The mother, along with her daughter, ______ tennis on Sundays.",
+    "options": [
+      { "answer": "has played", "correct": false },
+      { "answer": "have playing", "correct": false },
+      { "answer": "play", "correct": false },
+      { "answer": "plays", "correct": true }
+    ]
+  },
+  {
+    "question": "Each of the six boys in the class ____________ his task.",
+    "options": [
+      { "answer": "was completed", "correct": false },
+      { "answer": "were completed", "correct": false },
+      { "answer": "has completed", "correct": true },
+      { "answer": "have completed", "correct": false }
+    ]
+  },
+  {
+    "question": "Neither the Headmaster nor the teachers _________ present at the meeting.",
+    "options": [
+      { "answer": "was", "correct": false },
+      { "answer": "have", "correct": false },
+      { "answer": "were", "correct": true },
+      { "answer": "has", "correct": false }
+    ]
+  },
+  {
+    "question": "The Engineer and Scientist _________",
+    "options": [
+      { "answer": "has arrived", "correct": true },
+      { "answer": "have arrived", "correct": false },
+      { "answer": "were arrived", "correct": false },
+      { "answer": "is arrived", "correct": false }
+    ]
+  },
+  {
+    "question": "Even five minutes ______ a long time when you are hungry and waiting for food.",
+    "options": [
+      { "answer": "was", "correct": false },
+      { "answer": "is", "correct": true },
+      { "answer": "are", "correct": false },
+      { "answer": "were", "correct": false }
+    ]
+  },
+  {
+    "question": "English, as well as German, _______ taught here in the academy.",
+    "options": [
+      { "answer": "was", "correct": true },
+      { "answer": "are", "correct": false },
+      { "answer": "had been", "correct": false },
+      { "answer": "are being", "correct": false }
+    ]
+  },
+  {
+    "question": "The jury _________ divided in their opinion.",
+    "options": [
+      { "answer": "were", "correct": true },
+      { "answer": "was", "correct": false },
+      { "answer": "has been", "correct": false },
+      { "answer": "have", "correct": false }
+    ]
+  },
+
+  {
+    "question": "I am sure I —— him before.",
+    "options": [
+      { "answer": "have met", "correct": true },
+      { "answer": "met", "correct": false },
+      { "answer": "had met", "correct": false },
+      { "answer": "will meet", "correct": false }
+    ]
+  },
+  {
+    "question": "I —— him for a long time.",
+    "options": [
+      { "answer": "have known", "correct": true },
+      { "answer": "knew", "correct": false },
+      { "answer": "had known", "correct": false },
+      { "answer": "should have known", "correct": false }
+    ]
+  },
+  {
+    "question": "While I —— in the library, someone threw a ball through the window.",
+    "options": [
+      { "answer": "was sitting", "correct": true },
+      { "answer": "was seated", "correct": false },
+      { "answer": "had been sitting", "correct": false },
+      { "answer": "am sitting", "correct": false }
+    ]
+  },
+  {
+    "question": "The ship, with its crew, —— lost.",
+    "options": [
+      { "answer": "were", "correct": false },
+      { "answer": "was", "correct": true },
+      { "answer": "were getting", "correct": false },
+      { "answer": "was being", "correct": false }
+    ]
+  },
+  {
+    "question": "It is nine o'clock in Darjeeling in the morning and ——",
+    "options": [
+      { "answer": "there is snow", "correct": false },
+      { "answer": "It is snowing", "correct": true },
+      { "answer": "It snows", "correct": false },
+      { "answer": "It snowed", "correct": false }
+    ]
+  },
+  {
+    "question": "I —— the patient will die.",
+    "options": [
+      { "answer": "hope", "correct": false },
+      { "answer": "think", "correct": false },
+      { "answer": "see", "correct": false },
+      { "answer": "am afraid", "correct": true }
+    ]
+  },
+  {
+    "question": "I was sure I —— meet him.",
+    "options": [
+      { "answer": "would", "correct": true },
+      { "answer": "will", "correct": false },
+      { "answer": "shall", "correct": false },
+      { "answer": "should", "correct": false }
+    ]
+  },
+  {
+    "question": "Babies ____ when they are hungry.",
+    "options": [
+      { "answer": "cries", "correct": false },
+      { "answer": "cried", "correct": false },
+      { "answer": "are crying", "correct": false },
+      { "answer": "cry", "correct": true }
+    ]
+  },
+  {
+    "question": "In all probability it ____ rain tonight.",
+    "options": [
+      { "answer": "will", "correct": true },
+      { "answer": "can", "correct": false },
+      { "answer": "may", "correct": false },
+      { "answer": "ought", "correct": false }
+    ]
+  },
+  {
+    "question": "You _____ catch the train at once.",
+    "options": [
+      { "answer": "will", "correct": false },
+      { "answer": "can", "correct": false },
+      { "answer": "shall", "correct": false },
+      { "answer": "must", "correct": true }
+    ]
+  },
+
+  {
+    "question": "The mother with her children ____ expected.",
+    "options": [
+      { "answer": "was", "correct": true },
+      { "answer": "will", "correct": false },
+      { "answer": "have", "correct": false },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "Many a man have died of cancer.",
+    "options": [
+      { "answer": "have died from cancer", "correct": false },
+      { "answer": "has died of cancer", "correct": true },
+      { "answer": "have been dying of cancer", "correct": false },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "Neither I nor my friend live here.",
+    "options": [
+      { "answer": "neither I do nor does my friend", "correct": false },
+      { "answer": "neither do I nor does my friend", "correct": true },
+      { "answer": "neither I live nor does my friend", "correct": false },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "He was so afraid that his knees knocked one another.",
+    "options": [
+      { "answer": "one against", "correct": false },
+      { "answer": "each other", "correct": true },
+      { "answer": "both", "correct": false },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "Neither of them went to the cinema.",
+    "options": [
+      { "answer": "Both of them did not go", "correct": false },
+      { "answer": "Both did not go", "correct": false },
+      { "answer": "Neither went", "correct": false },
+      { "answer": "No improvement", "correct": true }
+    ]
+  },
+  {
+    "question": "A pair of shoes have been purchased by me.",
+    "options": [
+      { "answer": "has been", "correct": true },
+      { "answer": "has being", "correct": false },
+      { "answer": "would been", "correct": false },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "You can’t get good marks unless you don’t work hard.",
+    "options": [
+      { "answer": "till you don’t", "correct": false },
+      { "answer": "unless you", "correct": true },
+      { "answer": "until you don’t", "correct": false },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "One of my teacher has received the Sahitya Akademi award.",
+    "options": [
+      { "answer": "the teacher", "correct": false },
+      { "answer": "my teachers", "correct": true },
+      { "answer": "teacher", "correct": false },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "An increase in crimes against women have been reported in the newspapers recently.",
+    "options": [
+      { "answer": "are being reported", "correct": false },
+      { "answer": "has been reported", "correct": true },
+      { "answer": "has been written", "correct": false },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "A thousand rupees are all that he wants.",
+    "options": [
+      { "answer": "are", "correct": false },
+      { "answer": "was", "correct": false },
+      { "answer": "is", "correct": true },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+
+  {
+    "question": "The terrorist as well as his accomplices was killed in the encounter.",
+    "options": [
+      { "answer": "was being killed", "correct": false },
+      { "answer": "were killed", "correct": false },
+      { "answer": "No improvement", "correct": true },
+      { "answer": "have been killed", "correct": false }
+    ]
+  },
+  {
+    "question": "There was a few drop of rain.",
+    "options": [
+      { "answer": "were a few drop", "correct": false },
+      { "answer": "were a few drops", "correct": true },
+      { "answer": "was a few drops", "correct": false },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "My interest in Physics has decreased.",
+    "options": [
+      { "answer": "has been deceased", "correct": false },
+      { "answer": "has shortened", "correct": false },
+      { "answer": "has diminished", "correct": true },
+      { "answer": "No improvement", "correct": false }
+    ]
+  },
+  {
+    "question": "Your friend talks/talk too much.",
+    "options": [
+      { "answer": "talk", "correct": false },
+      { "answer": "talked", "correct": false },
+      { "answer": "talking", "correct": false },
+      { "answer": "Talks", "correct": true }
+    ]
+  },
+  {
+    "question": "Either the executive or the assistant _____ been here.",
+    "options": [
+      { "answer": "have", "correct": false },
+      { "answer": "has", "correct": true },
+      { "answer": "was", "correct": false },
+      { "answer": "are", "correct": false }
+    ]
+  }
+
+
+
+
+
+
+
+
+
+
+  ];
+
+    
+    let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
