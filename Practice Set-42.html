@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-42 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-42</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+
+ 
+  {
+    "question": "In an induction motor, percentage slip depends on:",
+    "options": [
+      { "answer": "Supply frequency", "correct": false },
+      { "answer": "Supply voltage", "correct": false },
+      { "answer": "Copper losses in motor", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "In a 3-phase induction motor, a deep bar rotor is used for obtaining:",
+    "options": [
+      { "answer": "More starting torque", "correct": true },
+      { "answer": "Reduced rotor loss", "correct": false },
+      { "answer": "Motor pull out torque", "correct": false },
+      { "answer": "Less starting torque", "correct": false }
+    ]
+  },
+  {
+    "question": "If a 3-phase supply is given to the stator and rotor is short circuited, rotor will move:",
+    "options": [
+      { "answer": "In the opposite direction as the direction of the rotating field", "correct": false },
+      { "answer": "In the same direction as the direction of the field", "correct": true },
+      { "answer": "In any direction depending upon phase sequence of supply", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "When 3-phase supply is given to the stator of the motor, a:",
+    "options": [
+      { "answer": "rotating field is set up", "correct": false },
+      { "answer": "pulsating field is set up", "correct": false },
+      { "answer": "revolving field at synchronous speed is set up", "correct": true },
+      { "answer": "rotating field at the rotor speed is set up", "correct": false }
+    ]
+  },
+  {
+    "question": "The speed of a squirrel-cage induction motor can be controlled by all of the following except:",
+    "options": [
+      { "answer": "Changing supply frequency", "correct": false },
+      { "answer": "Changing number of poles", "correct": false },
+      { "answer": "Changing winding resistance", "correct": true },
+      { "answer": "Reducing supply voltage", "correct": false }
+    ]
+  },
+  {
+    "question": "If Ns is the synchronous speed and s the slip, then actual running speed of an induction motor will be:",
+    "options": [
+      { "answer": "NS", "correct": false },
+      { "answer": "s.N", "correct": false },
+      { "answer": "(1-s) Ns", "correct": true },
+      { "answer": "(Ns-1) s", "correct": false }
+    ]
+  },
+  {
+    "question": "When the equivalent circuit diagram of double squirrel-cage induction motor is constructed, the two cages can be considered:",
+    "options": [
+      { "answer": "In series", "correct": false },
+      { "answer": "In parallel", "correct": true },
+      { "answer": "In series-parallel", "correct": false },
+      { "answer": "In parallel with stator", "correct": false }
+    ]
+  },
+  {
+    "question": "In a double squirrel cage motor, the outer cage is made of high resistance metal bars primarily for the purpose of increasing its:",
+    "options": [
+      { "answer": "Starting torque", "correct": true },
+      { "answer": "Speed regulation", "correct": false },
+      { "answer": "Efficiency", "correct": false },
+      { "answer": "Starting current", "correct": false }
+    ]
+  },
+  {
+    "question": "In double cage induction motor, the inner cage has:",
+    "options": [
+      { "answer": "high resistance and high leakage reactance", "correct": false },
+      { "answer": "high resistance and low leakage reactance", "correct": false },
+      { "answer": "low resistance and high leakage reactance", "correct": true },
+      { "answer": "low resistance and low leakage reactance", "correct": false }
+    ]
+  },
+  {
+    "question": "In an induction motor, no-load slip is generally:",
+    "options": [
+      { "answer": "Less than 1%", "correct": true },
+      { "answer": "1.5%", "correct": false },
+      { "answer": "2%", "correct": false },
+      { "answer": "4%", "correct": false }
+    ]
+  },
+  {
+    "question": "An induction motor with 1000 r.p.m. speed will have:",
+    "options": [
+      { "answer": "8 poles", "correct": false },
+      { "answer": "6 poles", "correct": true },
+      { "answer": "4 poles", "correct": false },
+      { "answer": "2 poles", "correct": false }
+    ]
+  },
+  {
+    "question": "The torque of a rotor in an induction motor under running condition is maximum:",
+    "options": [
+      { "answer": "At the unit value of slip", "correct": false },
+      { "answer": "At the zero value of slip", "correct": false },
+      { "answer": "At the value of the slip which makes rotor reactance per phase equal to the resistance per phase", "correct": true },
+      { "answer": "At the value of the slip which makes the rotor reactance half of the rotor", "correct": false }
+    ]
+  },
+  {
+    "question": "Less maintenance troubles are experienced in case of:",
+    "options": [
+      { "answer": "Slip ring induction motor", "correct": false },
+      { "answer": "Squirrel cage induction motor", "correct": true },
+      { "answer": "Both (A) and (B)", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "In a three-phase induction motor:",
+    "options": [
+      { "answer": "Iron losses in stator will be negligible as compared to that in rotor", "correct": false },
+      { "answer": "Iron losses in motor will be negligible as compared to that in rotor", "correct": false },
+      { "answer": "Iron losses in stator will be less than that in rotor", "correct": false },
+      { "answer": "Iron losses in stator will be more than that in rotor", "correct": true }
+    ]
+  },
+  {
+    "question": "A squirrel cage induction motor is not selected when:",
+    "options": [
+      { "answer": "Initial cost is the main consideration", "correct": false },
+      { "answer": "Maintenance cost is to be kept low", "correct": false },
+      { "answer": "Higher starting torque is the main consideration", "correct": true },
+      { "answer": "All above considerations are involved", "correct": false }
+    ]
+  },
+
+  {
+    "question": "A fuse protects an electric circuit by which of the following?",
+    "options": [
+      { "answer": "Overloading", "correct": true },
+      { "answer": "Transforming one form of energy into another", "correct": false },
+      { "answer": "Current sport", "correct": false },
+      { "answer": "Current uptake", "correct": false }
+    ]
+  },
+  {
+    "question": "Which is not defining the unit of electric current?",
+    "options": [
+      { "answer": "coulomb/sec", "correct": false },
+      { "answer": "Farad-coulomb/sec", "correct": true },
+      { "answer": "Volt/Ω", "correct": false },
+      { "answer": "ampere", "correct": false }
+    ]
+  },
+  {
+    "question": "The capacitance of a capacitor is NOT influenced by:",
+    "options": [
+      { "answer": "Plate thickness", "correct": true },
+      { "answer": "Plate area", "correct": false },
+      { "answer": "Plate separation", "correct": false },
+      { "answer": "Nature of the dielectric", "correct": false }
+    ]
+  },
+  {
+    "question": "If two capacitors, each of 2μF, are connected in series, then what will be the total capacitance?",
+    "options": [
+      { "answer": "2Μf", "correct": false },
+      { "answer": "1/2μF", "correct": false },
+      { "answer": "1μF", "correct": true },
+      { "answer": "2.5Μf", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the unit of specific resistance?",
+    "options": [
+      { "answer": "Ohm × Meter", "correct": true },
+      { "answer": "Milli Ohm × Meter", "correct": false },
+      { "answer": "Mega Ohm × Meter", "correct": false },
+      { "answer": "Kilo ohm × meter", "correct": false }
+    ]
+  },
+  {
+    "question": "What type of capacitor can be made to have higher capacitance with small size to work for AC supply?",
+    "options": [
+      { "answer": "Electrolytic Capacitor", "correct": false },
+      { "answer": "Film type Capacitor", "correct": false },
+      { "answer": "Ceramic Capacitor", "correct": true },
+      { "answer": "Dielectric Capacitor", "correct": false }
+    ]
+  },
+  {
+    "question": "The operation of zero-beat frequency meter is based upon_______",
+    "options": [
+      { "answer": "Ohm's law", "correct": false },
+      { "answer": "Heterodyne principle", "correct": true },
+      { "answer": "Faraday's law", "correct": false },
+      { "answer": "Plank's law", "correct": false }
+    ]
+  },
+  {
+    "question": "The average power consumed by a purely inductive load is always _______.",
+    "options": [
+      { "answer": "infinite", "correct": false },
+      { "answer": "Greater than zero", "correct": false },
+      { "answer": "Zero", "correct": true },
+      { "answer": "Less than infinite but greater than zero", "correct": false }
+    ]
+  },
+  {
+    "question": "An instrument which detects electric current is known as",
+    "options": [
+      { "answer": "Voltmeter", "correct": false },
+      { "answer": "Rheostat", "correct": false },
+      { "answer": "Watt-meter", "correct": false },
+      { "answer": "Galvanometer", "correct": true }
+    ]
+  },
+  {
+    "question": "Varistors are:",
+    "options": [
+      { "answer": "Insulators", "correct": false },
+      { "answer": "Nonlinear resistors", "correct": true },
+      { "answer": "Carbon resistors", "correct": false },
+      { "answer": "Resistors with zero temperature coefficients", "correct": false }
+    ]
+  }
+
+
+
+
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

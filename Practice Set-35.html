@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-35 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-35</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+
+ {
+    "question": "Which among the following methods are generally used for the calculation of symmetrical faults?",
+    "options": [
+      { "answer": "Norton theorem", "correct": false },
+      { "answer": "Thevenin’s theorem", "correct": false },
+      { "answer": "Kirchhoff’s laws", "correct": false },
+      { "answer": "Only (b) and (c)", "correct": true }
+    ]
+  },
+
+  {
+    "question": "Symmetrical fault currents are restricted by:",
+    "options": [
+      { "answer": "System impedance", "correct": true },
+      { "answer": "System voltage profile", "correct": false },
+      { "answer": "System power rating", "correct": false },
+      { "answer": "D.C. component of fault current", "correct": false }
+    ]
+  },
+  {
+    "question": "Single line diagram does not represent:",
+    "options": [
+      { "answer": "Ratings of machines", "correct": false },
+      { "answer": "Neutral wire of transmission lines", "correct": true },
+      { "answer": "Delta connection of transformer winding", "correct": false },
+      { "answer": "Star connection of transformer winding", "correct": false }
+    ]
+  },
+  {
+    "question": "If all the sequence voltages at the fault point in a power system are equal, then the fault is:",
+    "options": [
+      { "answer": "LLG fault", "correct": true },
+      { "answer": "Line to Line fault", "correct": false },
+      { "answer": "Three phase to ground fault", "correct": false },
+      { "answer": "LG fault", "correct": false }
+    ]
+  },
+  {
+    "question": "Voltage regulation in the power system is:",
+    "options": [
+      { "answer": "Dip in voltage at sending end", "correct": false },
+      { "answer": "Rise in voltage at sending end", "correct": false },
+      { "answer": "Rise in voltage at receiving end", "correct": true },
+      { "answer": "Dip in voltage at receiving end", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following elements of a hydroelectric power plant prevents the penstock from water hammer phenomenon?",
+    "options": [
+      { "answer": "Surge Tank", "correct": true },
+      { "answer": "Draft tubes", "correct": false },
+      { "answer": "Spillway", "correct": false },
+      { "answer": "Valves and Gates", "correct": false }
+    ]
+  },
+  {
+    "question": "What is a head in a micro hydro power plant?",
+    "options": [
+      { "answer": "The head is the horizontal distance that water raises.", "correct": false },
+      { "answer": "The head is the vertical distance that water raises.", "correct": false },
+      { "answer": "The head is the horizontal distance that water falls.", "correct": false },
+      { "answer": "The head is the vertical distance that water falls.", "correct": true }
+    ]
+  },
+  {
+    "question": "Which of the following power plants has minimum running cost?",
+    "options": [
+      { "answer": "Nuclear", "correct": false },
+      { "answer": "Hydro", "correct": true },
+      { "answer": "Thermal", "correct": false },
+      { "answer": "Diesel", "correct": false }
+    ]
+  },
+  {
+    "question": "The output of a solar cell is of the order of:",
+    "options": [
+      { "answer": "0.5 W", "correct": true },
+      { "answer": "1.0 W", "correct": false },
+      { "answer": "5.0 W", "correct": false },
+      { "answer": "10.25 W", "correct": false }
+    ]
+  },
+  {
+    "question": "The operating temperature of a central receiver power tower in a solar plant is:",
+    "options": [
+      { "answer": "500-1000°C", "correct": true },
+      { "answer": "100-200°C", "correct": false },
+      { "answer": "5000-10,000°C", "correct": false },
+      { "answer": "1000-5000°C", "correct": false }
+    ]
+  },
+  {
+    "question": "Which is NOT a correct option for thermo-electric solar power systems?",
+    "options": [
+      { "answer": "Tower type solar plant", "correct": false },
+      { "answer": "Concentrator collector solar plant", "correct": false },
+      { "answer": "Flat plate collector solar plant", "correct": false },
+      { "answer": "Photo-voltaic solar plant", "correct": true }
+    ]
+  },
+  {
+    "question": "The breaking capacity of a three-phase circuit breaker is given by:",
+    "options": [
+      { "answer": "Service line voltage * rated symmetrical current in amperes * 10^6 MVA", "correct": false },
+      { "answer": "√3 * Service line voltage * rated symmetrical current in amperes * 10^6 MVA", "correct": true },
+      { "answer": "1.1 * Service line voltage * rated symmetrical current in amperes * 10^6 MVA", "correct": false },
+      { "answer": "√2 * Service line voltage * rated symmetrical current in amperes * 10^6 MVA", "correct": false }
+    ]
+  },
+  {
+    "question": "A three-phase circuit breaker is rated 2000 MVA, 33 kV. What will be its making current?",
+    "options": [
+      { "answer": "35 kA", "correct": false },
+      { "answer": "49 kA", "correct": false },
+      { "answer": "70 kA", "correct": false },
+      { "answer": "89 kA", "correct": true }
+    ]
+  },
+  {
+    "question": "What is the making capacity of the circuit breaker?",
+    "options": [
+      { "answer": "Less than the asymmetrical breaking capacity of the breaker", "correct": false },
+      { "answer": "Greater than the asymmetrical breaking capacity of the breaker", "correct": true },
+      { "answer": "Equal to the asymmetrical breaking capacity of the breaker", "correct": false },
+      { "answer": "Equal to the symmetrical breaking capacity of the breaker", "correct": false }
+    ]
+  },
+  {
+    "question": "To limit current chopping in Vacuum Circuit Breakers (VCB), the contact material used has:",
+    "options": [
+      { "answer": "Low vapour pressure and high conductivity properties", "correct": false },
+      { "answer": "High vapour pressure and high conductivity properties", "correct": false },
+      { "answer": "High vapour pressure and low conductivity properties", "correct": true },
+      { "answer": "The inductance and capacitance of the system only", "correct": false }
+    ]
+  },
+  {
+    "question": "Oil switches are employed for:",
+    "options": [
+      { "answer": "Low current circuits", "correct": false },
+      { "answer": "Low voltage circuits", "correct": false },
+      { "answer": "High voltage and large current circuits", "correct": true },
+      { "answer": "All circuits", "correct": false }
+    ]
+  },
+  {
+    "question": "A shunt resistor is connected across the contacts of a circuit breaker to:",
+    "options": [
+      { "answer": "Damp out the restriking transients", "correct": true },
+      { "answer": "Bypass the arc current", "correct": false },
+      { "answer": "Limit the short circuit current", "correct": false },
+      { "answer": "Reduce the damage to contacts due to arcing", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the making to breaking current ratio for an extra high voltage circuit breaker?",
+    "options": [
+      { "answer": "More than 1", "correct": true },
+      { "answer": "Equal to 1", "correct": false },
+      { "answer": "Less than 1", "correct": false },
+      { "answer": "A negative value", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following are the most widely used condensers in modern thermal power plants?",
+    "options": [
+      { "answer": "Low level counter flow type jet condenser", "correct": false },
+      { "answer": "Parallel flow type jet condenser", "correct": false },
+      { "answer": "High level counter flow type jet condenser", "correct": false },
+      { "answer": "Surface condensers", "correct": true }
+    ]
+  },
+  {
+    "question": "In a synchronous machine, if the axis of the field flux is in line with the armature flux, the machine is working:",
+    "options": [
+      { "answer": "As a synchronous motor", "correct": false },
+      { "answer": "As a synchronous generator", "correct": false },
+      { "answer": "As a floating machine", "correct": true },
+      { "answer": "The machine will not work", "correct": false }
+    ]
+  },
+
+  {
+    "question": "Find the flux given out by a lamp in the hemisphere containing the source of light, with zero flux above the horizontal and a luminous intensity of 400 Cp.",
+    "options": [
+      { "answer": "800π", "correct": true },
+      { "answer": "800", "correct": false },
+      { "answer": "400π", "correct": false },
+      { "answer": "400", "correct": false }
+    ]
+  },
+  {
+    "question": "The magnitude of lightning discharge current is in the range of:",
+    "options": [
+      { "answer": "1 A to 10 A", "correct": false },
+      { "answer": "1 kA to 2 kA", "correct": false },
+      { "answer": "100 A to 250 A", "correct": false },
+      { "answer": "10 kA to 90 kA", "correct": true }
+    ]
+  },
+  {
+    "question": "The energy in a lightning stroke may be of the order of:",
+    "options": [
+      { "answer": "50 kWhr", "correct": false },
+      { "answer": "175 kWhr", "correct": false },
+      { "answer": "250 kWhr", "correct": true },
+      { "answer": "10 kWhr", "correct": false }
+    ]
+  },
+  {
+    "question": "The field in the case of rod gaps and sphere gaps is:",
+    "options": [
+      { "answer": "Uniform, uniform", "correct": false },
+      { "answer": "Uniform, non-uniform", "correct": false },
+      { "answer": "Non-uniform, uniform", "correct": true },
+      { "answer": "Non-uniform, non-uniform", "correct": false }
+    ]
+  },
+  {
+    "question": "For high-voltage conductors at high pressures, if the voltage is positive, the corona appears as:",
+    "options": [
+      { "answer": "Uniform bluish white sheath", "correct": true },
+      { "answer": "Reddish glowing spots", "correct": false },
+      { "answer": "Uniform greenish spots", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  }
+
+
+
+
+
+  ];
+
+   
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

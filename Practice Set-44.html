@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-44 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-44</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+  {
+    "question": "Two transformers operating in parallel will share the load subject to their _____.",
+    "options": [
+      { "answer": "Ratings", "correct": false },
+      { "answer": "Leakage Reactance", "correct": false },
+      { "answer": "Per unit Impedance", "correct": true },
+      { "answer": "Efficiency", "correct": false }
+    ]
+  },
+  {
+    "question": "The essential condition for parallel operation of two 3-phase transformers is",
+    "options": [
+      { "answer": "Same voltage ratio and same voltage referring to the primary", "correct": false },
+      { "answer": "The phase displacement between primary and secondary must be the same", "correct": false },
+      { "answer": "The phase sequence must be the same", "correct": false },
+      { "answer": "All of the above", "correct": true }
+    ]
+  },
+  {
+    "question": "For the parallel operation of two single-phase transformers it is necessary that they should have ________",
+    "options": [
+      { "answer": "Same efficiency", "correct": false },
+      { "answer": "Same polarity", "correct": true },
+      { "answer": "Same kVA rating", "correct": false },
+      { "answer": "Same number of turns on the secondary side", "correct": false }
+    ]
+  },
+  {
+    "question": "The capacitance of a capacitor is NOT influenced by",
+    "options": [
+      { "answer": "Plate thickness", "correct": true },
+      { "answer": "Plate area", "correct": false },
+      { "answer": "Plate separation", "correct": false },
+      { "answer": "Nature of the dielectric", "correct": false }
+    ]
+  },
+  {
+    "question": "\"The total electric flux through any closed surface surrounding charges is equal to the amount of charge enclosed\" is the statement of:",
+    "options": [
+      { "answer": "Coulomb's law", "correct": false },
+      { "answer": "Gauss's law", "correct": true },
+      { "answer": "Maxwell's first law", "correct": false },
+      { "answer": "Maxwell's second law", "correct": false }
+    ]
+  },
+  {
+    "question": "A hollow metallic sphere of radius r is kept at a potential of 1 Volt. The total electric flux coming out of a concentric spherical surface of radius R (> r) is",
+    "options": [
+      { "answer": "4πε₀r", "correct": true },
+      { "answer": "4πε₀r²", "correct": false },
+      { "answer": "4πε₀R", "correct": false },
+      { "answer": "4πε₀R²", "correct": false }
+    ]
+  },
+  {
+    "question": "Gauss law cannot be used to find which of the following quantity?",
+    "options": [
+      { "answer": "Electric field intensity", "correct": false },
+      { "answer": "Electric flux density", "correct": false },
+      { "answer": "Charge", "correct": false },
+      { "answer": "Permittivity", "correct": true }
+    ]
+  },
+  {
+    "question": "Gauss law for magnetic fields is given by",
+    "options": [
+      { "answer": "Div(E) = 0", "correct": false },
+      { "answer": "Div(B) = 0", "correct": true },
+      { "answer": "Div(H) = 0", "correct": false },
+      { "answer": "Div(D) = 0", "correct": false }
+    ]
+  },
+  {
+    "question": "Superconductors exhibit which of the following properties?",
+    "options": [
+      { "answer": "Ferromagnetism", "correct": false },
+      { "answer": "Polarisation", "correct": false },
+      { "answer": "Diamagnetism", "correct": true },
+      { "answer": "Ferrimagnetism", "correct": false }
+    ]
+  },
+  {
+    "question": "The electric permittivity of free space 'ε₀' is",
+    "options": [
+      { "answer": "8.85 × 10⁻¹² F/m", "correct": true },
+      { "answer": "8.85 × 10⁻¹² ρF/m", "correct": false },
+      { "answer": "8.85 × 10⁻¹² μF/m", "correct": false },
+      { "answer": "8.85 × 10⁻¹² fF/m", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following motor has constant speed?",
+    "options": [
+      { "answer": "Series motor", "correct": false },
+      { "answer": "Shunt motor", "correct": true },
+      { "answer": "Cumulatively compound motor", "correct": false },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "A DC shunt motor is driving a constant torque load. On inserting an additional resistance in the armature circuit, the speed of the motor will:",
+    "options": [
+      { "answer": "Remains unchanged", "correct": false },
+      { "answer": "Increases", "correct": false },
+      { "answer": "Decreases", "correct": true },
+      { "answer": "Be zero", "correct": false }
+    ]
+  },
+  {
+    "question": "A megger is used to measure ___________.",
+    "options": [
+      { "answer": "Medium resistance", "correct": false },
+      { "answer": "Very low value of resistance", "correct": false },
+      { "answer": "High value of resistance, particularly insulation resistance", "correct": true },
+      { "answer": "Low value of resistance", "correct": false }
+    ]
+  },
+  {
+    "question": "The critical resistance of the D.C. generator is the resistance of",
+    "options": [
+      { "answer": "Field", "correct": true },
+      { "answer": "Brushes", "correct": false },
+      { "answer": "Armature", "correct": false },
+      { "answer": "Load", "correct": false }
+    ]
+  },
+
+  {
+    "question": "Which relay is also known as Gas actuated Relay?",
+    "options": [
+      { "answer": "Thermal Relay", "correct": false },
+      { "answer": "Buchholz Relay", "correct": true },
+      { "answer": "Induction Relay", "correct": false },
+      { "answer": "Solenoid Type Relay", "correct": false }
+    ]
+  },
+  {
+    "question": "A 3-phase squirrel cage induction motor is started by",
+    "options": [
+      { "answer": "Inserting resistance in the rotor circuit", "correct": false },
+      { "answer": "Y-Δ Starter", "correct": false },
+      { "answer": "Applying full voltage to the motor at the starting", "correct": true },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "In AC locomotives, squirrel cage induction motors are used. The method of speed control is:",
+    "options": [
+      { "answer": "Pole changing method of speed control", "correct": false },
+      { "answer": "Frequency control method of speed control", "correct": false },
+      { "answer": "Cascade control method of speed control", "correct": true },
+      { "answer": "Slip control method of speed control", "correct": false }
+    ]
+  },
+  {
+    "question": "In a 3-phase induction motor, the maximum torque",
+    "options": [
+      { "answer": "is independent of rotor circuit resistance.", "correct": true },
+      { "answer": "varies as rotor resistance.", "correct": false },
+      { "answer": "varies as the square of rotor resistance.", "correct": false },
+      { "answer": "varies inversely as rotor circuit resistance.", "correct": false }
+    ]
+  },
+  {
+    "question": "A relay used on short transmission lines is",
+    "options": [
+      { "answer": "Reactance relay", "correct": true },
+      { "answer": "Mho relay", "correct": false },
+      { "answer": "Impedance relay", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "A relay with inherent directional characteristic is:",
+    "options": [
+      { "answer": "Mho relay", "correct": true },
+      { "answer": "Impedance relay", "correct": false },
+      { "answer": "Reactance relay", "correct": false },
+      { "answer": "Differential relay", "correct": false }
+    ]
+  },
+  {
+    "question": "In medium transmission lines, capacitive current is",
+    "options": [
+      { "answer": "Less than short transmission lines", "correct": false },
+      { "answer": "Equal to short transmission lines", "correct": false },
+      { "answer": "More than short transmission lines", "correct": true },
+      { "answer": "More than long transmission lines", "correct": false }
+    ]
+  },
+  {
+    "question": "Which relay is suitable for long transmission line for protection of high power surges?",
+    "options": [
+      { "answer": "Impedance relay", "correct": false },
+      { "answer": "Reactance relay", "correct": false },
+      { "answer": "MHO relay", "correct": true },
+      { "answer": "Volts current relay", "correct": false }
+    ]
+  },
+  {
+    "question": "Which relay is suitable for medium transmission line for protection of high power surges?",
+    "options": [
+      { "answer": "Impedance relay", "correct": true },
+      { "answer": "Reactance relay", "correct": false },
+      { "answer": "MHO relay", "correct": false },
+      { "answer": "Volts current relay", "correct": false }
+    ]
+  },
+  {
+    "question": "Plug Setting Multiplier (P.S.M) of a relay is the ratio:",
+    "options": [
+      { "answer": "Pick up current to normal current", "correct": false },
+      { "answer": "Rated secondary current of CT to rated current of CT", "correct": false },
+      { "answer": "Fault current in circuit breaker to normal current", "correct": false },
+      { "answer": "Fault current in relay coil to pick up", "correct": true }
+    ]
+  },
+  {
+    "question": "What is the maximum current up to which fuses can be used?",
+    "options": [
+      { "answer": "25 A", "correct": false },
+      { "answer": "50 A", "correct": false },
+      { "answer": "75 A", "correct": false },
+      { "answer": "100 A", "correct": true }
+    ]
+  }
+
+
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-34 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-34</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+
+  {
+    "question": "A synchronous generator connected to an infinite bus delivers power at lagging power factor. If its field excitation is increased, what is the effect?",
+    "options": [
+      { "answer": "Terminal voltage increases", "correct": false },
+      { "answer": "Voltage angle increases", "correct": false },
+      { "answer": "Current delivered increases", "correct": true },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the coil pitch to eliminate the 5th harmonic in the induced e.m.f. of a synchronous generator?",
+    "options": [
+      { "answer": "36°", "correct": true },
+      { "answer": "180°", "correct": false },
+      { "answer": "144°", "correct": false },
+      { "answer": "160°", "correct": false }
+    ]
+  },
+  {
+    "question": "In a 3-phase, 4-pole, 50 Hz synchronous motor, if the frequency, pole number, and load torque all are halved, the motor speed will be:",
+    "options": [
+      { "answer": "3000 r.p.m.", "correct": false },
+      { "answer": "1500 r.p.m.", "correct": true },
+      { "answer": "750 r.p.m.", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Exciters of synchronous machines are:",
+    "options": [
+      { "answer": "D.C. shunt machines", "correct": true },
+      { "answer": "D.C. series machines", "correct": false },
+      { "answer": "D.C. compound machines", "correct": false },
+      { "answer": "Any of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "A synchronous motor is running on a load with normal excitation. If the load on the motor is increased, the:",
+    "options": [
+      { "answer": "Power factor as well as armature current will decrease", "correct": false },
+      { "answer": "Power factor as well as armature current will increase", "correct": false },
+      { "answer": "Power factor will increase but armature current will decrease", "correct": false },
+      { "answer": "Power factor will decrease and armature current will increase", "correct": true }
+    ]
+  },
+  {
+    "question": "A synchronous motor is operating with normal excitation. With the increase in load, the armature current drawn from the supply mains increases due to:",
+    "options": [
+      { "answer": "Increase in resultant voltage across the armature", "correct": true },
+      { "answer": "Increase in power factor", "correct": false },
+      { "answer": "Increase in back emf", "correct": false },
+      { "answer": "Fall in motor speed", "correct": false }
+    ]
+  },
+  {
+    "question": "The speed regulation of a synchronous motor is always:",
+    "options": [
+      { "answer": "1%", "correct": false },
+      { "answer": "0.5%", "correct": false },
+      { "answer": "Positive", "correct": false },
+      { "answer": "Zero", "correct": true }
+    ]
+  },
+  {
+    "question": "The efficiency of a properly designed synchronous motor will usually fall in the range:",
+    "options": [
+      { "answer": "60 to 70%", "correct": false },
+      { "answer": "75 to 80%", "correct": false },
+      { "answer": "85 to 95%", "correct": true },
+      { "answer": "99 to 99.5%", "correct": false }
+    ]
+  },
+  {
+    "question": "In a synchronous motor, damper winding is provided to:",
+    "options": [
+      { "answer": "Stabilize rotor motion", "correct": false },
+      { "answer": "Suppress rotor oscillations", "correct": false },
+      { "answer": "Develop necessary starting torque", "correct": false },
+      { "answer": "Both (B) and (C)", "correct": true }
+    ]
+  },
+  {
+    "question": "In a synchronous motor, damper windings are provided on:",
+    "options": [
+      { "answer": "Stator frame", "correct": false },
+      { "answer": "Rotor shaft", "correct": false },
+      { "answer": "Pole faces", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "In a synchronous motor, if the back e.m.f. generated in the armature at no-load is approximately equal to the applied voltage, then:",
+    "options": [
+      { "answer": "The motor is said to be fully loaded", "correct": false },
+      { "answer": "The torque generated is maximum", "correct": false },
+      { "answer": "The excitation is said to be zero percent", "correct": false },
+      { "answer": "The excitation is said to be hundred percent", "correct": true }
+    ]
+  },
+  {
+    "question": "An overexcited synchronous motor is used for:",
+    "options": [
+      { "answer": "Fluctuating loads", "correct": false },
+      { "answer": "Variable speed loads", "correct": false },
+      { "answer": "Low torque loads", "correct": false },
+      { "answer": "Power factor corrections", "correct": true }
+    ]
+  },
+  {
+    "question": "In a synchronous motor running with fixed excitation, when the load is increased three times, its torque angle becomes approximately:",
+    "options": [
+      { "answer": "One-third", "correct": false },
+      { "answer": "Twice", "correct": false },
+      { "answer": "Thrice", "correct": true },
+      { "answer": "Six times", "correct": false }
+    ]
+  },
+  {
+    "question": "Change of D.C. excitation of a synchronous motor changes:",
+    "options": [
+      { "answer": "Applied voltage of the motor", "correct": false },
+      { "answer": "Motor speed", "correct": false },
+      { "answer": "Power factor of power drawn by the motor", "correct": true },
+      { "answer": "Any of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "A synchronous motor is running with normal excitation. When the load is increased, the armature current drawn by it increases because:",
+    "options": [
+      { "answer": "Speed of the motor is reduced", "correct": false },
+      { "answer": "Power factor is decreased", "correct": false },
+      { "answer": "Eb (back e.m.f.) becomes less than V (applied voltage)", "correct": false },
+      { "answer": "Er (net resultant voltage) in armature is increased", "correct": true }
+    ]
+  },
+  {
+    "question": "Due to which of the following reasons a synchronous motor fails to pull into synchronism after applying D.C. field current?",
+    "options": [
+      { "answer": "High field current", "correct": false },
+      { "answer": "Low short circuit ratio", "correct": false },
+      { "answer": "High core losses", "correct": false },
+      { "answer": "Low field current", "correct": true }
+    ]
+  },
+  {
+    "question": "The net armature voltage of a synchronous motor is equal to the:",
+    "options": [
+      { "answer": "Vector sum of Eb and V", "correct": false },
+      { "answer": "Arithmetic sum of Eb and V", "correct": false },
+      { "answer": "Arithmetic difference of Eb and V", "correct": false },
+      { "answer": "Vector difference of Eb and V", "correct": true }
+    ]
+  },
+  {
+    "question": "By which of the following methods can the constant speed of a synchronous motor be changed to a new fixed value?",
+    "options": [
+      { "answer": "By changing the supply frequency", "correct": true },
+      { "answer": "By interchanging any two phases", "correct": false },
+      { "answer": "By changing the applied voltage", "correct": false },
+      { "answer": "By changing the load", "correct": false }
+    ]
+  },
+  {
+    "question": "The maximum constant load torque under which a synchronous motor will pull into synchronism at rated rotor supply voltage and frequency is known as:",
+    "options": [
+      { "answer": "Pull-up torque", "correct": false },
+      { "answer": "Pull-in torque", "correct": true },
+      { "answer": "Pullout torque", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "In a synchronous motor, the maximum torque developed by the motor without losing synchronization is called:",
+    "options": [
+      { "answer": "Pull-out torque", "correct": true },
+      { "answer": "Running torque", "correct": false },
+      { "answer": "Starting torque", "correct": false },
+      { "answer": "Pull-in torque", "correct": false }
+    ]
+  },
+{
+    "question": "In any case, where the height of a transmission tower is increased:",
+    "options": [
+      { "answer": "The line capacitance and inductance will not change", "correct": false },
+      { "answer": "The line capacitance and line inductance will decrease", "correct": false },
+      { "answer": "The line capacitance will decrease and line inductance will increase", "correct": false },
+      { "answer": "The line capacitance will decrease but line inductance remains unchanged", "correct": true }
+    ]
+  },
+  {
+    "question": "Four identical alternators each rated for 20 MVA, 11 KV with a subtransient reactance of 16% are working in parallel. The short circuit level at the busbar is:",
+    "options": [
+      { "answer": "500 MVA", "correct": true },
+      { "answer": "400 MVA", "correct": false },
+      { "answer": "200 MVA", "correct": false },
+      { "answer": "125 MVA", "correct": false }
+    ]
+  },
+  {
+    "question": "What should be the minimum depth (in meters) of a cable trench to be dug for laying a 1.1 kV cable?",
+    "options": [
+      { "answer": "0.75", "correct": true },
+      { "answer": "0.90", "correct": false },
+      { "answer": "1.05", "correct": false },
+      { "answer": "1.20", "correct": false }
+    ]
+  },
+  {
+    "question": "If the fault current is 2000 A, the relay setting is 50% and CT ratio is 400 : 5, then the plug setting multiplier will be:",
+    "options": [
+      { "answer": "10", "correct": true },
+      { "answer": "15", "correct": false },
+      { "answer": "25", "correct": false },
+      { "answer": "50", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following statements is true for a solid state relay (SSR)?",
+    "options": [
+      { "answer": "SSR consists of a step-down transformer, diode, and RC charging circuit.", "correct": false },
+      { "answer": "SSR consists of a coil connected in series with the motor.", "correct": false },
+      { "answer": "SSR has no moving parts.", "correct": true },
+      { "answer": "The solenoid valve of SSR has two distinct parts.", "correct": false }
+    ]
+  }
+
+
+  ];
+
+   
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

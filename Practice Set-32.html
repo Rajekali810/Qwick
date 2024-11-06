@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-32 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-32</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+
+  {
+    "question": "The function of a commutator in a D.C. machine is to",
+    "options": [
+      {"answer": "Convert AC to DC", "correct": true},
+      {"answer": "Increase the voltage", "correct": false},
+      {"answer": "Reduce the current", "correct": false},
+      {"answer": "Reverse the polarity", "correct": false}
+    ]
+  },
+  {
+    "question": "If a D.C. generator fails to build up, the probable cause could not be",
+    "options": [
+      {"answer": "Imperfect brush contact", "correct": false},
+      {"answer": "Field resistance less than the critical resistance", "correct": true},
+      {"answer": "No residual magnetism in the generator", "correct": false},
+      {"answer": "Faulty shunt connections tending to reduce the residual magnetism", "correct": false}
+    ]
+  },
+  {
+    "question": "An exciter for a turbo generator is a",
+    "options": [
+      {"answer": "Separately excited generator", "correct": false},
+      {"answer": "Shunt generator", "correct": true},
+      {"answer": "Series generator", "correct": false},
+      {"answer": "Compound generator", "correct": false}
+    ]
+  },
+  {
+    "question": "With a D.C. generator, which of the following regulation is preferred?",
+    "options": [
+      {"answer": "100% regulation", "correct": false},
+      {"answer": "Infinite regulation", "correct": false},
+      {"answer": "50% regulation", "correct": false},
+      {"answer": "1% regulation", "correct": true}
+    ]
+  },
+  {
+    "question": "In a D.C. machine, stray loss is the sum of",
+    "options": [
+      {"answer": "Total copper loss and mechanical loss", "correct": false},
+      {"answer": "Armature copper loss and iron loss", "correct": false},
+      {"answer": "Shunt field copper loss and mechanical loss", "correct": false},
+      {"answer": "Iron loss and mechanical loss", "correct": true}
+    ]
+  },
+  {
+    "question": "Which of the following generators will have negligible terminal voltage while running on no-load?",
+    "options": [
+      {"answer": "Series generator", "correct": true},
+      {"answer": "Shunt generator", "correct": false},
+      {"answer": "Compound generator", "correct": false},
+      {"answer": "Separately excited generator", "correct": false}
+    ]
+  },
+  {
+    "question": "When two D.C. series generators are running in parallel, an equalizer bar is used",
+    "options": [
+      {"answer": "To increase the speed and hence generated e.m.f.", "correct": false},
+      {"answer": "To increase the series flux", "correct": false},
+      {"answer": "So that two similar machines will pass approximately equal currents to the load", "correct": true},
+      {"answer": "To reduce the combined effect of armature reaction of both machines", "correct": false}
+    ]
+  },
+  {
+    "question": "For both lap and wave windings, there are as many commutator bars as the number of",
+    "options": [
+      {"answer": "Slots", "correct": false},
+      {"answer": "Armature conductors", "correct": true},
+      {"answer": "Winding elements", "correct": false},
+      {"answer": "Poles", "correct": false}
+    ]
+  },
+  {
+    "question": "In case of D.C. machine winding, the number of commutator segments is equal to",
+    "options": [
+      {"answer": "Number of armature coils", "correct": true},
+      {"answer": "Number of armature coil sides", "correct": false},
+      {"answer": "Number of armature conductors", "correct": false},
+      {"answer": "Number of armature turns", "correct": false}
+    ]
+  },
+  {
+    "question": "A D.C. welding generator has",
+    "options": [
+      {"answer": "Lap winding", "correct": true},
+      {"answer": "Wave winding", "correct": false},
+      {"answer": "Duplex winding", "correct": false},
+      {"answer": "Any of the above", "correct": false}
+    ]
+  },
+
+  {
+    "question": "In a D.C. generator, the magnetic neutral axis coincides with the geometrical neutral axis, when:",
+    "options": [
+      { "answer": "There is no load on the generator", "correct": true },
+      { "answer": "The generator runs on full load", "correct": false },
+      { "answer": "The generator runs on overload", "correct": false },
+      { "answer": "The generator runs on designed speed", "correct": false }
+    ]
+  },
+  {
+    "question": "The sparking at the brushes of a DC generator is due to:",
+    "options": [
+      { "answer": "Reactance voltage", "correct": true },
+      { "answer": "Armature reaction", "correct": false },
+      { "answer": "Light load", "correct": false },
+      { "answer": "High resistance of the brushes", "correct": false }
+    ]
+  },
+  {
+    "question": "Armature reaction of an unsaturated DC machine results in _______ effect.",
+    "options": [
+      { "answer": "Cross-Magnetising", "correct": true },
+      { "answer": "Demagnetising", "correct": false },
+      { "answer": "Axial Magnetising", "correct": false },
+      { "answer": "Two-Pole Magnetising", "correct": false }
+    ]
+  },
+  {
+    "question": "Lap winding is composed of:",
+    "options": [
+      { "answer": "Any even number of conductors", "correct": true },
+      { "answer": "Any odd number of conductors", "correct": false },
+      { "answer": "That even number which is exact multiple of poles + 2", "correct": false },
+      { "answer": "That even number which is exact multiple of poles", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following generators will be preferred if they are required to be run in parallel?",
+    "options": [
+      { "answer": "Shunt generators", "correct": true },
+      { "answer": "Series generators", "correct": false },
+      { "answer": "Compound generators", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "In case of a 4-pole D.C. generator provided with a two-layer lap winding with sixteen coils, the pole pitch will be:",
+    "options": [
+      { "answer": "4", "correct": false },
+      { "answer": "8", "correct": true },
+      { "answer": "16", "correct": false },
+      { "answer": "32", "correct": false }
+    ]
+  },
+  {
+    "question": "Wave winding is composed of:",
+    "options": [
+      { "answer": "Any even number of conductors", "correct": false },
+      { "answer": "Any odd number of conductors", "correct": false },
+      { "answer": "That even number which is exact multiple of poles + 2", "correct": true },
+      { "answer": "That even number which is exact multiple of poles", "correct": false }
+    ]
+  },
+  {
+    "question": "The number of armature parallel paths in a two-pole D.C. generator having duplex lap winding is:",
+    "options": [
+      { "answer": "2", "correct": false },
+      { "answer": "4", "correct": true },
+      { "answer": "6", "correct": false },
+      { "answer": "8", "correct": false }
+    ]
+  },
+  {
+    "question": "The field coils of D.C. generator are usually made of:",
+    "options": [
+      { "answer": "Mica", "correct": false },
+      { "answer": "Copper", "correct": true },
+      { "answer": "Cast iron", "correct": false },
+      { "answer": "Carbon", "correct": false }
+    ]
+  },
+  {
+    "question": "The purpose of providing dummy coils in a generator is:",
+    "options": [
+      { "answer": "To reduce eddy current losses", "correct": false },
+      { "answer": "To enhance flux density", "correct": false },
+      { "answer": "To amplify voltage", "correct": false },
+      { "answer": "To provide mechanical balance for the rotor", "correct": true }
+    ]
+  },
+
+  {
+    "question": "The reason for voltage drop in an alternator is:",
+    "options": [
+      { "answer": "Armature resistance", "correct": false },
+      { "answer": "Synchronous reactance", "correct": false },
+      { "answer": "Armature leakage reactance", "correct": false },
+      { "answer": "All of the above", "correct": true }
+    ]
+  },
+  {
+    "question": "The frequency of voltage generated by an alternator having 4 poles and rotating at 750 rpm is:",
+    "options": [
+      { "answer": "16 2/3 Hz", "correct": false },
+      { "answer": "25 Hz", "correct": true },
+      { "answer": "60 Hz", "correct": false },
+      { "answer": "50 Hz", "correct": false }
+    ]
+  },
+  {
+    "question": "High speed alternators are generally termed as turbo-generators. They are characterized by:",
+    "options": [
+      { "answer": "Large diameters and small axial lengths", "correct": false },
+      { "answer": "Short diameters and small axial lengths", "correct": false },
+      { "answer": "Short diameters and long axial lengths", "correct": true },
+      { "answer": "Large diameters and long axial lengths", "correct": false }
+    ]
+  },
+  {
+    "question": "A Damper Winding consists of heavy copper bars inserted in the slots of:",
+    "options": [
+      { "answer": "Armature faces of stator", "correct": false },
+      { "answer": "Armature faces of the rotor", "correct": false },
+      { "answer": "Pole faces of the rotor", "correct": true },
+      { "answer": "Pole faces of the stator", "correct": false }
+    ]
+  },
+  {
+    "question": "Determine the pitch factor for winding: 36 stator slots, 4-poles, coil spans 1 to 8.",
+    "options": [
+      { "answer": "cos 20°", "correct": true },
+      { "answer": "cos 40°", "correct": false },
+      { "answer": "cos 30°", "correct": false },
+      { "answer": "cos 80°", "correct": false }
+    ]
+  }
+
+
+
+
+
+
+  ];
+
+   
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

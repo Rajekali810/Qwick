@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-38 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-38</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+ 
+  {
+    "question": "Air blast circuit breakers for 400 kV power system are designed to operate in:",
+    "options": [
+      { "answer": "100 microsecond", "correct": false },
+      { "answer": "50 millisecond", "correct": true },
+      { "answer": "0.5 sec", "correct": false },
+      { "answer": "0.1 sec", "correct": false }
+    ]
+  },
+  {
+    "question": "On which of the following effects of electric current does a fuse operate?",
+    "options": [
+      { "answer": "Photoelectric effect", "correct": false },
+      { "answer": "Electrostatic effect", "correct": false },
+      { "answer": "Heating effect", "correct": true },
+      { "answer": "Magnetic effect", "correct": false }
+    ]
+  },
+  {
+    "question": "A fuse in a motor circuit provides protection against:",
+    "options": [
+      { "answer": "Overload", "correct": false },
+      { "answer": "Short-circuit and overload", "correct": true },
+      { "answer": "Open circuit, short-circuit and overload", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The time of closing the cycle in modern circuit breakers is:",
+    "options": [
+      { "answer": "0.003 sec", "correct": true },
+      { "answer": "0.001 sec", "correct": false },
+      { "answer": "0.01 sec", "correct": false },
+      { "answer": "0.10 sec", "correct": false }
+    ]
+  },
+  {
+    "question": "Ionization in a circuit breaker is facilitated by:",
+    "options": [
+      { "answer": "High temperature", "correct": false },
+      { "answer": "Increase of mean free path", "correct": false },
+      { "answer": "Increasing field strength", "correct": false },
+      { "answer": "All of the above", "correct": true }
+    ]
+  },
+  {
+    "question": "The relay with inverse time characteristic will operate within:",
+    "options": [
+      { "answer": "1.5 sec", "correct": false },
+      { "answer": "5 to 10 sec", "correct": true },
+      { "answer": "5 to 20 sec", "correct": false },
+      { "answer": "20 to 30 sec", "correct": false }
+    ]
+  },
+  {
+    "question": "A balanced 3-phase system consists of:",
+    "options": [
+      { "answer": "Zero sequence currents only", "correct": false },
+      { "answer": "Positive sequence currents only", "correct": true },
+      { "answer": "Negative and zero sequence currents", "correct": false },
+      { "answer": "Zero, negative and positive sequence currents", "correct": false }
+    ]
+  },
+  {
+    "question": "The burden of a protective relay is the power:",
+    "options": [
+      { "answer": "Required to operate the circuit breaker", "correct": false },
+      { "answer": "Absorbed by the circuit of relay", "correct": true },
+      { "answer": "Developed by the relay circuit", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The under-voltage relay can be used for:",
+    "options": [
+      { "answer": "Generators", "correct": false },
+      { "answer": "Bus-bars", "correct": false },
+      { "answer": "Transformers", "correct": false },
+      { "answer": "All of the above", "correct": true }
+    ]
+  },
+  {
+    "question": "Over-fluxing protection is recommended for:",
+    "options": [
+      { "answer": "Distribution transformer", "correct": false },
+      { "answer": "Generator transformer of the power plant", "correct": true },
+      { "answer": "Autotransformer of the power plant", "correct": false },
+      { "answer": "Station transformer of the power plant", "correct": false }
+    ]
+  },
+  {
+    "question": "The fuse rating is expressed in terms of:",
+    "options": [
+      { "answer": "Current", "correct": true },
+      { "answer": "Voltage", "correct": false },
+      { "answer": "VAR", "correct": false },
+      { "answer": "kVA", "correct": false }
+    ]
+  },
+  {
+    "question": "Thermal overload relays are used to protect the motor against over current due to:",
+    "options": [
+      { "answer": "Short-circuits", "correct": false },
+      { "answer": "Heavy loads", "correct": true },
+      { "answer": "Grounds", "correct": false },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Large internal faults are protected by:",
+    "options": [
+      { "answer": "Merz-price percentage differential protection", "correct": true },
+      { "answer": "Mho and ohm relays", "correct": false },
+      { "answer": "Horn gaps and temperature relays", "correct": false },
+      { "answer": "Earth fault and positive sequence relays", "correct": false }
+    ]
+  },
+  {
+    "question": "Wave trap is used to trap waves of:",
+    "options": [
+      { "answer": "Power frequencies", "correct": false },
+      { "answer": "Higher frequencies entering generator or transformer units", "correct": true },
+      { "answer": "Either of the above", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "A switchgear is a device used for:",
+    "options": [
+      { "answer": "Interrupting an electrical circuit", "correct": false },
+      { "answer": "Switching an electrical circuit", "correct": false },
+      { "answer": "Switching and controlling an electrical circuit", "correct": false },
+      { "answer": "Switching, controlling and protecting the electrical circuit and equipment", "correct": true }
+    ]
+  },
+
+  {
+    "question": "Maxwell's equations involve:",
+    "options": [
+      { "answer": "Charge density", "correct": false },
+      { "answer": "Current density", "correct": false },
+      { "answer": "Magnetic intensity", "correct": false },
+      { "answer": "All of these", "correct": true }
+    ]
+  },
+  {
+    "question": "Hall effect may be used for which of the following:",
+    "options": [
+      { "answer": "Determining whether the semiconductor is p or n type", "correct": false },
+      { "answer": "Determining the carrier concentration", "correct": false },
+      { "answer": "Calculating the mobility", "correct": false },
+      { "answer": "All of the above", "correct": true }
+    ]
+  },
+  {
+    "question": "Gold and silver are:",
+    "options": [
+      { "answer": "Dielectric materials", "correct": false },
+      { "answer": "Low resistivity conducting materials", "correct": true },
+      { "answer": "Magnetic materials", "correct": false },
+      { "answer": "Insulating materials", "correct": false }
+    ]
+  },
+  {
+    "question": "The property due to which the resistance of some metal or compound vanishes under certain conditions is known as:",
+    "options": [
+      { "answer": "Semi conductivity", "correct": false },
+      { "answer": "Magnetostriction", "correct": false },
+      { "answer": "Curie point", "correct": false },
+      { "answer": "Super conductivity", "correct": true }
+    ]
+  },
+  {
+    "question": "The fastest switching logic family is:",
+    "options": [
+      { "answer": "CMOS", "correct": false },
+      { "answer": "TTL", "correct": false },
+      { "answer": "DTL", "correct": false },
+      { "answer": "ECL", "correct": true }
+    ]
+  },
+  {
+    "question": "A DC power supply has no-load voltage of 30 V and a full-load voltage of 25 V at a full-load current of 1 A. Its output resistance and load regulation, respectively, are:",
+    "options": [
+      { "answer": "5 Ω and 20%", "correct": false },
+      { "answer": "25 Ω and 20%", "correct": true },
+      { "answer": "5 Ω and 16.7%", "correct": false },
+      { "answer": "25 Ω and 16.7%", "correct": false }
+    ]
+  },
+  {
+    "question": "Compared to a bipolar transistor, a JFET has:",
+    "options": [
+      { "answer": "Lower input impedance", "correct": false },
+      { "answer": "Higher voltage gain", "correct": false },
+      { "answer": "Higher input impedance and high voltage gain", "correct": false },
+      { "answer": "Higher input impedance and low voltage gain", "correct": true }
+    ]
+  },
+  {
+    "question": "Input impedance of MOSFET is:",
+    "options": [
+      { "answer": "Less than that of FET but more than BJT", "correct": false },
+      { "answer": "More than that of FET and BJT", "correct": true },
+      { "answer": "More than that of FET but less than BJT", "correct": false },
+      { "answer": "Less than that of FET and BJT", "correct": false }
+    ]
+  },
+  {
+    "question": "For attenuation of high frequencies, we should use:",
+    "options": [
+      { "answer": "Shunt Capacitance", "correct": true },
+      { "answer": "Series Capacitance", "correct": false },
+      { "answer": "Inductance", "correct": false },
+      { "answer": "Resistance", "correct": false }
+    ]
+  },
+  {
+    "question": "Push-pull amplifier is:",
+    "options": [
+      { "answer": "Voltage amplifier", "correct": false },
+      { "answer": "Current amplifier", "correct": false },
+      { "answer": "Power amplifier", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  }
+
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

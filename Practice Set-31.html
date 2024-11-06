@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-31 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-31</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+{
+"question": "The purpose of retardation test on D.C. shunt machines is to find out",
+"options": [
+{"answer": "Stray losses", "correct": true},
+{"answer": "Eddy current losses", "correct": false},
+{"answer": "Field copper losses", "correct": false},
+{"answer": "Windage losses", "correct": false}
+]
+},
+
+{
+"question": "Regenerative method of braking is based on that",
+"options": [
+{"answer": "Back e.m.f. is less than the applied voltage", "correct": false},
+{"answer": "Back e.m.f. is equal to the applied voltage", "correct": false},
+{"answer": "Back e.m.f. of rotor is more than the applied voltage", "correct": true},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "Which of the following method of speed control of D.C. machine will offer minimum efficiency?",
+"options": [
+{"answer": "Voltage control method", "correct": false},
+{"answer": "Field control method", "correct": false},
+{"answer": "Armature control method", "correct": true},
+{"answer": "All above methods", "correct": false}
+]
+},
+
+{
+"question": "For constant load and supply voltage, two DC series motors will develop maximum torque when both are connected in",
+"options": [
+{"answer": "series", "correct": true},
+{"answer": "parallel", "correct": false},
+{"answer": "series or parallel", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "A direct on line starter is used: for starting motors",
+"options": [
+{"answer": "Up to 5 H.P.", "correct": true},
+{"answer": "Up to 10 H.P.", "correct": false},
+{"answer": "Up to 15 H.P.", "correct": false},
+{"answer": "Up to 20 H.P.", "correct": false}
+]
+},
+{
+"question": "Why interpoles are used in dc machines?",
+"options": [
+{"answer": "To counteract the reactance voltage", "correct": true},
+{"answer": "To counteract the demagnetizing effect of armature mmf in the commutating zone", "correct": false},
+{"answer": "To counteract the magnetizing effect of armature mmf in the commutating zone", "correct": false},
+{"answer": "To convert dc e.m.f to ac e.m.f", "correct": false}
+]
+},
+
+{
+"question": "A shunt generator has an induced e.m.f. of 224 V. When supplying a load, the terminal voltage falls to 204 V. ...",
+"options": [
+{"answer": "376.0 A", "correct": false},
+{"answer": "389.8 A", "correct": true},
+{"answer": "400.0 A", "correct": false},
+{"answer": "410.2 A", "correct": false}
+]
+},
+
+{
+"question": "A cumulatively compounded long shunt generator when operating as a motor would be",
+"options": [
+{"answer": "Cumulatively compounded long shunt", "correct": false},
+{"answer": "Differentially compounded long shunt", "correct": true},
+{"answer": "Cumulatively compounded short shunt", "correct": false},
+{"answer": "Differentially compounded short shunt", "correct": false}
+]
+},
+
+{
+"question": "In case of DC generators, the critical resistance is equal to the resistance of the:",
+"options": [
+{"answer": "load", "correct": false},
+{"answer": "armature", "correct": false},
+{"answer": "field", "correct": true},
+{"answer": "brushes", "correct": false}
+]
+},
+
+{
+"question": "A dc shunt generator has a critical field resistance of 400 Ω at 1200 rpm. ...",
+"options": [
+{"answer": "Increases to 900 Ω", "correct": false},
+{"answer": "Remains the same", "correct": false},
+{"answer": "Increases to 600 Ω", "correct": true},
+{"answer": "Decreases to 267 Ω", "correct": false}
+]
+},
+
+{
+"question": "In a D. C. generator the critical resistance can be increased by ____",
+"options": [
+{"answer": "increasing its field resistance", "correct": false},
+{"answer": "decreasing its field resistance", "correct": false},
+{"answer": "increasing its speed", "correct": true},
+{"answer": "decreasing its speed", "correct": false}
+]
+},
+
+{
+"question": "Which of the following statement is correct for lap winding compared to wave winding?",
+"options": [
+{"answer": "The e.m.f. of the lap winding is more", "correct": false},
+{"answer": "The winding cost of the lap winding is low", "correct": false},
+{"answer": "The efficiency of the lap winding is less", "correct": true},
+{"answer": "The additional coil used is dummy coil", "correct": false}
+]
+},
+
+{
+"question": "In a DC machine, the _____ serves as a return path for the pole flux.",
+"options": [
+{"answer": "pole shoe", "correct": false},
+{"answer": "yoke", "correct": true},
+{"answer": "pigtail", "correct": false},
+{"answer": "pole face", "correct": false}
+]
+},
+
+{
+"question": "In lap winding, the number of parallel paths are always:",
+"options": [
+{"answer": "Same as the number of poles", "correct": true},
+{"answer": "Half the number of poles", "correct": false},
+{"answer": "Double the number of poles", "correct": false},
+{"answer": "Two", "correct": false}
+]
+},
+
+{
+"question": "The winding where dummy coils are used is sometimes called as-",
+"options": [
+{"answer": "Duplex winding", "correct": false},
+{"answer": "Triplex winding", "correct": false},
+{"answer": "Forced winding", "correct": true},
+{"answer": "None of these", "correct": false}
+]
+},
+
+{
+"question": "In DC machines, the magnetisation curve is the relationship between:",
+"options": [
+{"answer": "torque and speed", "correct": false},
+{"answer": "armature voltage and speed", "correct": false},
+{"answer": "air gap flux and field winding current", "correct": true},
+{"answer": "air gap flux and armature voltage", "correct": false}
+]
+},
+{
+"question": "A DC shunt machine develops an AC EMF of 250 V at 1500 rpm. Find the torque developed for an armature current of 50 A.",
+"options": [
+{"answer": "59.6 N-m", "correct": false},
+{"answer": "79.6 N-m", "correct": true},
+{"answer": "69.6 N-m", "correct": false},
+{"answer": "49.6 N-m", "correct": false}
+]
+},
+
+{
+"question": "The function of interpoles in DC machine is to:",
+"options": [
+{"answer": "reduce field winding heating", "correct": false},
+{"answer": "reduce losses", "correct": false},
+{"answer": "compensate for airgap variation", "correct": false},
+{"answer": "improve commutation", "correct": true}
+]
+},
+
+{
+"question": "In D.C. generators, lap winding is used for",
+"options": [
+{"answer": "High voltage, high current", "correct": false},
+{"answer": "Low voltage, high current", "correct": true},
+{"answer": "High voltage, low current", "correct": false},
+{"answer": "Low voltage, low current", "correct": false}
+]
+},
+{
+"question": "If 72 number of coils are used in a DC machine, then the required number of commutator segments is ____.",
+"options": [
+{"answer": "18", "correct": false},
+{"answer": "36", "correct": false},
+{"answer": "72", "correct": true},
+{"answer": "90", "correct": false}
+]
+},
+
+{
+"question": "The type of dc generator used for arc welding purposes is a",
+"options": [
+{"answer": "series generator", "correct": false},
+{"answer": "shunt generator", "correct": false},
+{"answer": "cumulatively compounded generator", "correct": false},
+{"answer": "differentially compounded generator", "correct": true}
+]
+},
+
+{
+"question": "Armature reaction in a generator results in",
+"options": [
+{"answer": "Demagnetization of leading pole tip and magnetization of trailing pole tip", "correct": true},
+{"answer": "Demagnetization of trailing pole tip and magnetization of leading pole tip", "correct": false},
+{"answer": "Demagnetizing the center of all poles", "correct": false},
+{"answer": "Magnetizing the center of all poles", "correct": false}
+]
+},
+
+{
+"question": "The essential condition for parallel operation of two D.C. generators is that they have",
+"options": [
+{"answer": "kW rating", "correct": false},
+{"answer": "Terminal voltage", "correct": true},
+{"answer": "Operating speed", "correct": false},
+{"answer": "All of these", "correct": false}
+]
+},
+
+{
+"question": "The commutator segments are connected to the armature conductors by means of",
+"options": [
+{"answer": "Copper lugs", "correct": true},
+{"answer": "Resistance wires", "correct": false},
+{"answer": "Insulation pads", "correct": false},
+{"answer": "Brazing", "correct": false}
+]
+},
+
+{
+"question": "Armature reaction of an unsaturated D.C. machine is",
+"options": [
+{"answer": "Cross-magnetizing", "correct": true},
+{"answer": "Demagnetizing", "correct": false},
+{"answer": "Magnetizing", "correct": false},
+{"answer": "None of above", "correct": false}
+]
+}
+
+
+  ];
+
+   
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

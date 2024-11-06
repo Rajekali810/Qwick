@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-36 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-36</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+
+  {
+    "question": "The coefficient of coupling between two air core coils depends on:",
+    "options": [
+      { "answer": "Self-inductance of two coils only", "correct": false },
+      { "answer": "Mutual inductance between two coils only", "correct": false },
+      { "answer": "Mutual inductance and self inductance of two coils", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Which one of the following is considered as a controller in an atomic toaster system?",
+    "options": [
+      { "answer": "Relay", "correct": true },
+      { "answer": "Heating component", "correct": false },
+      { "answer": "Desired time", "correct": false },
+      { "answer": "Power input", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following wiring systems is the most common method of wiring in the residential building, the safest and ensures a beautiful appearance?",
+    "options": [
+      { "answer": "Batten wiring system", "correct": false },
+      { "answer": "Cleat wiring system", "correct": false },
+      { "answer": "Concealed Conduit wiring systems", "correct": true },
+      { "answer": "Casing and capping wiring system", "correct": false }
+    ]
+  },
+  {
+    "question": "Which type of wiring is hidden inside wall slots with the help of plastering?",
+    "options": [
+      { "answer": "Non Conduit wiring", "correct": false },
+      { "answer": "Surface conduit wiring", "correct": false },
+      { "answer": "Direct conduit wiring", "correct": false },
+      { "answer": "Concealed conduit wiring", "correct": true }
+    ]
+  },
+  {
+    "question": "When the speed of an alternator is changed from 3600 rpm to 1800 rpm, the generated emf will be:",
+    "options": [
+      { "answer": "one-half", "correct": true },
+      { "answer": "twice", "correct": false },
+      { "answer": "one-fourth", "correct": false },
+      { "answer": "four times", "correct": false }
+    ]
+  },
+  {
+    "question": "In which of the following devices, the eddy current effect is not used?",
+    "options": [
+      { "answer": "Induced furnace", "correct": false },
+      { "answer": "Magnetic braking in train", "correct": false },
+      { "answer": "Electromagnet", "correct": true },
+      { "answer": "Electric heater", "correct": false }
+    ]
+  },
+  {
+    "question": "Heat is generated in the induction furnace by:",
+    "options": [
+      { "answer": "Eddy current", "correct": true },
+      { "answer": "Self induction", "correct": false },
+      { "answer": "Mutual induction", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "Eddy currents are produced when:",
+    "options": [
+      { "answer": "A metal is kept in varying magnetic field.", "correct": true },
+      { "answer": "A metal is kept in a steady magnetic field.", "correct": false },
+      { "answer": "A circular coil is placed in a magnetic field.", "correct": false },
+      { "answer": "When current is passed through a circular coil.", "correct": false }
+    ]
+  },
+  {
+    "question": "Fuse should be connected to the _____ wire of the circuit:",
+    "options": [
+      { "answer": "Earth", "correct": false },
+      { "answer": "Neutral", "correct": false },
+      { "answer": "Phase", "correct": true },
+      { "answer": "Any of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Melting of a fuse or conductor in one or more phases causes:",
+    "options": [
+      { "answer": "Series Fault", "correct": true },
+      { "answer": "Line to line fault", "correct": false },
+      { "answer": "Single line to ground fault", "correct": false },
+      { "answer": "Double line to ground fault", "correct": false }
+    ]
+  },
+  {
+    "question": "The delta-delta connections are used in applications of:",
+    "options": [
+      { "answer": "Large l.v. transformers", "correct": true },
+      { "answer": "Small h.v. transformers", "correct": false },
+      { "answer": "Large h.v. transformers", "correct": false },
+      { "answer": "Small l.v. transformers", "correct": false }
+    ]
+  },
+  {
+    "question": "A 400 V, 10 KVA transformer at 50 Hz, is operated at a frequency of 40 Hz, then the humming ______:",
+    "options": [
+      { "answer": "increases", "correct": true },
+      { "answer": "decreases", "correct": false },
+      { "answer": "remains same", "correct": false },
+      { "answer": "increases to very high", "correct": false }
+    ]
+  },
+  {
+    "question": "Which one of the following connections in a three-phase transformer is also called v-v connection?",
+    "options": [
+      { "answer": "Delta-Delta Connection", "correct": false },
+      { "answer": "Open Delta Connection", "correct": true },
+      { "answer": "Delta Star connection", "correct": false },
+      { "answer": "Star Star Connection", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following cannot be a possible way of connecting three phases in a 3-phase transformer?",
+    "options": [
+      { "answer": "Star", "correct": false },
+      { "answer": "Delta", "correct": false },
+      { "answer": "Asymmetrical (zig-zag) star", "correct": false },
+      { "answer": "Hexagonal", "correct": true }
+    ]
+  },
+  {
+    "question": "Which of the following is a characteristic of a salient pole synchronous machine?",
+    "options": [
+      { "answer": "Uniform air gap", "correct": false },
+      { "answer": "Flux produced by armature wave is independent of spatial orientation of the wave with respect to field poles", "correct": false },
+      { "answer": "Constant reluctance", "correct": false },
+      { "answer": "Reluctance along the direct axis is smaller than that along the quadrature axis", "correct": true }
+    ]
+  },
+
+
+  {
+    "question": "The size of a synchronous motor decreases with the increase in:",
+    "options": [
+      { "answer": "Flux density", "correct": true },
+      { "answer": "Horse power rating", "correct": false },
+      { "answer": "Speed", "correct": false },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "If the area, current and number of turns of an AC circuit are doubled, then the new inductance will be:",
+    "options": [
+      { "answer": "Twice the former", "correct": false },
+      { "answer": "Four times the former", "correct": true },
+      { "answer": "Same", "correct": false },
+      { "answer": "Half the former", "correct": false }
+    ]
+  },
+  {
+    "question": "If the total number of slots in a D.C machine is 25 and the total number of poles is 5, then what is the coil span of the machine?",
+    "options": [
+      { "answer": "5", "correct": true },
+      { "answer": "30", "correct": false },
+      { "answer": "20", "correct": false },
+      { "answer": "125", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following outlines the features of D.C welding over A.C welding?",
+    "options": [
+      { "answer": "1. The cost of equipment is higher\n2. It is less safe as no-load voltage is high\n3. The efficiency is higher due to the absence of rotating parts", "correct": false },
+      { "answer": "1. The cost of equipment is higher\n2. It is safer\n3. The efficiency is higher due to the absence of rotating parts", "correct": true },
+      { "answer": "1. The cost of equipment is cheaper\n2. It is less safe as the no-load voltage is high\n3. The efficiency is higher due to the absence of rotating parts", "correct": false },
+      { "answer": "1. The cost of equipment is cheaper\n2. It is less safe as the no-load voltage is high\n3. The efficiency is lower due to the presence of rotating parts", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following will happen if the thickness of refractory wall of furnace is increased?",
+    "options": [
+      { "answer": "Energy consumption will decrease", "correct": false },
+      { "answer": "Temperature inside the furnace will fall", "correct": false },
+      { "answer": "Temperature on the outer surface of furnace walls will drop", "correct": true },
+      { "answer": "Heat loss through furnace wall will increase", "correct": false }
+    ]
+  },
+  {
+    "question": "Calculate the energy efficiency when the input energy is 3000J and output energy is 1000J.",
+    "options": [
+      { "answer": "0.5", "correct": false },
+      { "answer": "0.03", "correct": false },
+      { "answer": "0.3", "correct": false },
+      { "answer": "0.333", "correct": true }
+    ]
+  },
+  {
+    "question": "A circuit breaker must be equipped for remote operation with which of the following?",
+    "options": [
+      { "answer": "Inverse time trip", "correct": false },
+      { "answer": "Time delay trip", "correct": false },
+      { "answer": "Shunt trip", "correct": true },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The _____________ region has the highest area in the transistor.",
+    "options": [
+      { "answer": "Emitter", "correct": false },
+      { "answer": "Collector", "correct": true },
+      { "answer": "Base emitter", "correct": false },
+      { "answer": "Base", "correct": false }
+    ]
+  },
+  {
+    "question": "For Modern alternator, what will be the specific value of SCR?",
+    "options": [
+      { "answer": "3/2", "correct": false },
+      { "answer": "1/6", "correct": false },
+      { "answer": "1/2", "correct": true },
+      { "answer": "3/5", "correct": false }
+    ]
+  },
+  {
+    "question": "To save energy during braking, which type of braking is used?",
+    "options": [
+      { "answer": "Dynamic or Plugging", "correct": false },
+      { "answer": "Dynamic", "correct": false },
+      { "answer": "Plugging", "correct": false },
+      { "answer": "Regenerative", "correct": true }
+    ]
+  }
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

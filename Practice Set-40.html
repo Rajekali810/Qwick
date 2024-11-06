@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-40 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-40</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+ 
+  {
+    "question": "In an induction motor, if the rotor is locked, then the rotor frequency of induction motor will be:",
+    "options": [
+      { "answer": "Equal to the supply frequency", "correct": true },
+      { "answer": "Less than the supply frequency", "correct": false },
+      { "answer": "More than the supply frequency", "correct": false },
+      { "answer": "Zero", "correct": false }
+    ]
+  },
+  {
+    "question": "When 3-phase supply is given to the stator of the motor, a:",
+    "options": [
+      { "answer": "rotating field is set up", "correct": false },
+      { "answer": "pulsating field is set up", "correct": false },
+      { "answer": "revolving field at synchronous speed is set up", "correct": true },
+      { "answer": "rotating field at the rotor speed is set up", "correct": false }
+    ]
+  },
+  {
+    "question": "What will happen if any two phases of an induction motor are interchanged?",
+    "options": [
+      { "answer": "The motor will run at reduced speed", "correct": false },
+      { "answer": "The motor will burn", "correct": false },
+      { "answer": "The motor will not run", "correct": false },
+      { "answer": "The motor will run in reverse direction", "correct": true }
+    ]
+  },
+  {
+    "question": "In order to ______ semi-closed slots or totally closed slots are used in induction motors.",
+    "options": [
+      { "answer": "improve starting torque", "correct": false },
+      { "answer": "improve power factor", "correct": true },
+      { "answer": "increase efficiency", "correct": false },
+      { "answer": "increase pull-one torque", "correct": false }
+    ]
+  },
+  {
+    "question": "When a 3-phase induction motor is supplied with balanced 3-phase supply, it produces a rotating magnetic field of magnitude:",
+    "options": [
+      { "answer": "Twice the peak value of the flux due to any individual phase", "correct": false },
+      { "answer": "0.5 times the peak value of the flux due to any individual phase", "correct": false },
+      { "answer": "1.5 times the peak value of the flux due to any individual phase", "correct": true },
+      { "answer": "Equal to the peak value of the flux due to any individual phase", "correct": false }
+    ]
+  },
+  {
+    "question": "The magnetic field produced in the stator of a three phase induction motor travels at _______.",
+    "options": [
+      { "answer": "Rotating speed", "correct": false },
+      { "answer": "Asynchronous speed", "correct": false },
+      { "answer": "Synchronous speed", "correct": true },
+      { "answer": "Slip speed", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following methods is easily applicable to control the speed of the squirrel-cage induction motor?",
+    "options": [
+      { "answer": "By changing the number of stator poles", "correct": true },
+      { "answer": "Rotor rheostat control", "correct": false },
+      { "answer": "By operating two motors in cascade", "correct": false },
+      { "answer": "By injecting e.m.f. in the rotor circuit", "correct": false }
+    ]
+  },
+  {
+    "question": "During plugging of a three-phase induction motor:",
+    "options": [
+      { "answer": "Rotor circuit is opened", "correct": false },
+      { "answer": "Phase sequence of the stator voltage is reversed", "correct": true },
+      { "answer": "One phase of stator is short circuited", "correct": false },
+      { "answer": "Dc source is connected to stator", "correct": false }
+    ]
+  },
+  {
+    "question": "In a three-phase induction motor, the number of poles in the rotor winding is always:",
+    "options": [
+      { "answer": "Zero", "correct": false },
+      { "answer": "More than the number of poles in stator", "correct": false },
+      { "answer": "Less than number of poles in stator", "correct": false },
+      { "answer": "Equal to number of poles in stator", "correct": true }
+    ]
+  },
+  {
+    "question": "In a 3-phase induction motor, if the slip is negative, it means ______.",
+    "options": [
+      { "answer": "Motor is at rest", "correct": false },
+      { "answer": "The machine is acting like a generator", "correct": true },
+      { "answer": "Speed is less than synchronous speed", "correct": false },
+      { "answer": "The machine is acting as an electric brake", "correct": false }
+    ]
+  },
+  {
+    "question": "Slip of an induction motor is negative when:",
+    "options": [
+      { "answer": "Magnetic field and rotor rotate in opposite direction", "correct": false },
+      { "answer": "Rotor speed is less than the synchronous speed of the field and are in the same direction", "correct": false },
+      { "answer": "Rotor speed is more than the synchronous speed of the field and are in the same direction", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "What happens if load goes on increasing of an Induction Motor?",
+    "options": [
+      { "answer": "Power factor remains constant", "correct": false },
+      { "answer": "Power factor goes on decreasing", "correct": false },
+      { "answer": "Power factor goes on increasing till full load", "correct": true },
+      { "answer": "Power factor goes on increasing up to full load and then it falls again", "correct": false }
+    ]
+  },
+  {
+    "question": "A 3-phase slip ring motor has:",
+    "options": [
+      { "answer": "Double cage rotor", "correct": false },
+      { "answer": "Wound rotor", "correct": true },
+      { "answer": "Short-circuited rotor", "correct": false },
+      { "answer": "Any of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The complete circle diagram of induction motor can be drawn with the help of data found from:",
+    "options": [
+      { "answer": "No-load test", "correct": false },
+      { "answer": "Blocked rotor test", "correct": true },
+      { "answer": "Stator resistance test", "correct": false },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "In order to run an induction motor at synchronous speed ________",
+    "options": [
+      { "answer": "load must be reduced", "correct": false },
+      { "answer": "friction at bearing must be reduced", "correct": false },
+      { "answer": "e.m.f must be injected in the rotor in a phase with rotor e.m.f", "correct": true },
+      { "answer": "e.m.f must be injected in the rotor in a phase opposite to the rotor e.m.f", "correct": false }
+    ]
+  },
+
+  {
+    "question": "By adding resistance in the rotor circuit of a slip ring induction motor, the starting current:",
+    "options": [
+      { "answer": "as well as torque reduce", "correct": false },
+      { "answer": "as well as torque increase", "correct": false },
+      { "answer": "reduces but the starting torque increases", "correct": true },
+      { "answer": "increases but the starting torque decreases", "correct": false }
+    ]
+  },
+  {
+    "question": "Which starting method is not used in squirrel cage induction motors?",
+    "options": [
+      { "answer": "Star delta starting", "correct": false },
+      { "answer": "Resistance in stator circuit", "correct": false },
+      { "answer": "Auto transformer starting", "correct": false },
+      { "answer": "Resistance in rotor circuit", "correct": true }
+    ]
+  },
+  {
+    "question": "Frequency of rotor current in an induction motor is given by:",
+    "options": [
+      { "answer": "1 / fs", "correct": false },
+      { "answer": "f / s", "correct": false },
+      { "answer": "fs", "correct": true },
+      { "answer": "s / f", "correct": false }
+    ]
+  },
+  {
+    "question": "The injected e.m.f. in the rotor of induction motor must have:",
+    "options": [
+      { "answer": "Zero frequency", "correct": false },
+      { "answer": "The same frequency as the slip frequency", "correct": true },
+      { "answer": "The same phase as the rotor e.m.f.", "correct": false },
+      { "answer": "High value for the satisfactory speed control", "correct": false }
+    ]
+  },
+  {
+    "question": "Star-delta starting of motors is not possible in case of:",
+    "options": [
+      { "answer": "Single phase motors", "correct": true },
+      { "answer": "Variable speed motors", "correct": false },
+      { "answer": "Low horse power motors", "correct": false },
+      { "answer": "High speed motors", "correct": false }
+    ]
+  },
+  {
+    "question": "In three-phase squirrel-cage induction motors:",
+    "options": [
+      { "answer": "Rotor conductor ends are short-circuited through slip rings", "correct": false },
+      { "answer": "Rotor conductors are short-circuited through end rings", "correct": true },
+      { "answer": "Rotor conductors are kept open", "correct": false },
+      { "answer": "Rotor conductors are connected to insulation", "correct": false }
+    ]
+  },
+  {
+    "question": "In an induction motor, number of stator slots should never be equal to number of rotor slots in order to prevent:",
+    "options": [
+      { "answer": "Crawling", "correct": false },
+      { "answer": "Cogging", "correct": true },
+      { "answer": "Over heating", "correct": false },
+      { "answer": "Humming", "correct": false }
+    ]
+  },
+  {
+    "question": "The starting torque of a 3 phase squirrel cage induction motor is:",
+    "options": [
+      { "answer": "Twice the full load torque", "correct": false },
+      { "answer": "1.5 times the full load torque", "correct": true },
+      { "answer": "Equal to full load torque", "correct": false },
+      { "answer": "Any of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The purpose of using short-circuit gear is:",
+    "options": [
+      { "answer": "To short circuit the rotor at slip rings", "correct": false },
+      { "answer": "To short circuit the starting resistances in the starter", "correct": true },
+      { "answer": "To short circuit the stator phase of motor to form star", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of following statements is true for a slip ring induction motor?",
+    "options": [
+      { "answer": "Efficiency is less.", "correct": true },
+      { "answer": "Construction is very simple.", "correct": false },
+      { "answer": "Frequent maintenance is not required.", "correct": false },
+      { "answer": "Starting torque is very low and cannot be improved.", "correct": false }
+    ]
+  }
+
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-45 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' practice_series3.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-45</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    const questions = [
+
+  
+  {
+    "question": "Rewireable fuse has:",
+    "options": [
+      { "answer": "Inverse time current characteristic", "correct": true },
+      { "answer": "Linear time current characteristic", "correct": false },
+      { "answer": "Square law time current characteristic", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Breaking capacity of a circuit breaker is usually expressed in:",
+    "options": [
+      { "answer": "Volts", "correct": false },
+      { "answer": "Amperes", "correct": false },
+      { "answer": "MVA", "correct": true },
+      { "answer": "MW", "correct": false }
+    ]
+  },
+  {
+    "question": "In a 3-phase power measurement by two wattmeter method, both the wattmeters had identical readings. The power factor of the load was:",
+    "options": [
+      { "answer": "Unity", "correct": true },
+      { "answer": "0.8 lagging", "correct": false },
+      { "answer": "0.8 leading", "correct": false },
+      { "answer": "Zero", "correct": false }
+    ]
+  },
+  {
+    "question": "Two wattmeters are used to measure the power in a 3-phase balanced system. What is the power factor of the load when one wattmeter reads twice the other?",
+    "options": [
+      { "answer": "0", "correct": false },
+      { "answer": "0.5", "correct": false },
+      { "answer": "0.866", "correct": true },
+      { "answer": "1", "correct": false }
+    ]
+  },
+  {
+    "question": "Burden of a protective relay is the power:",
+    "options": [
+      { "answer": "Required to operate the circuit breaker", "correct": false },
+      { "answer": "Absorbed by the circuit of relay", "correct": true },
+      { "answer": "Developed by the relay circuit", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Plug setting of an electromagnetic relay can be altered by varying:",
+    "options": [
+      { "answer": "Number of ampere turns", "correct": true },
+      { "answer": "Air gap of magnetic path", "correct": false },
+      { "answer": "Adjustable back stop", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "To prevent transformer fault and accidents, under normal operating conditions, the secondary winding is kept nearly short-circuited in:",
+    "options": [
+      { "answer": "Power transformer", "correct": false },
+      { "answer": "Current Transformer", "correct": true },
+      { "answer": "Distribution transformer", "correct": false },
+      { "answer": "Potential Transformer", "correct": false }
+    ]
+  },
+  {
+    "question": "The ratio error in current transformer is attributed to:",
+    "options": [
+      { "answer": "Leakage flux", "correct": false },
+      { "answer": "Magnetising component of no-load current", "correct": true },
+      { "answer": "Power factor of the primary", "correct": false },
+      { "answer": "Energy component of excitation current", "correct": false }
+    ]
+  },
+  {
+    "question": "Burden of a current transformer is usually expressed in:",
+    "options": [
+      { "answer": "Amperes", "correct": false },
+      { "answer": "Volts", "correct": false },
+      { "answer": "Volt amperes", "correct": true },
+      { "answer": "Kilowatt", "correct": false }
+    ]
+  },
+  {
+    "question": "Scott connections are used to convert:",
+    "options": [
+      { "answer": "Three-phase supply to D.C. supply", "correct": false },
+      { "answer": "Three-phase supply to three-phase supply", "correct": false },
+      { "answer": "Three-phase supply to two-phase supply", "correct": true },
+      { "answer": "Three-phase supply to single-phase supply", "correct": false }
+    ]
+  },
+  {
+    "question": "Natural oil cooling is used for transformers up to a rating of:",
+    "options": [
+      { "answer": "3000 kVA", "correct": true },
+      { "answer": "1000 kVA", "correct": false },
+      { "answer": "500 kVA", "correct": false },
+      { "answer": "250 kVA", "correct": false }
+    ]
+  },
+  {
+    "question": "Natural air cooling is used for transformers of rating up to:",
+    "options": [
+      { "answer": "100 kVA", "correct": false },
+      { "answer": "500 kVA", "correct": false },
+      { "answer": "5-10 kVA", "correct": true },
+      { "answer": "10 MVA", "correct": false }
+    ]
+  },
+{
+  "question": "When the applied voltage per phase is reduced to one-half, the starting torque of a three-phase squirrel cage induction motor becomes:",
+  "options": [
+    { "answer": "1/2 of the initial value", "correct": false },
+    { "answer": "1/4 of the initial value", "correct": true },
+    { "answer": "Twice of the initial value", "correct": false },
+    { "answer": "Four times of the initial value", "correct": false }
+  ]
+},
+
+  {
+    "question": "The leakage flux in a transformer depends upon:",
+    "options": [
+      { "answer": "Load current", "correct": true },
+      { "answer": "Load current and voltage", "correct": false },
+      { "answer": "Load current, voltage, and frequency", "correct": false },
+      { "answer": "Load current, voltage, frequency, and power factor", "correct": false }
+    ]
+  },
+  {
+    "question": "The peak value of a sine wave is 200 V. Its average value is:",
+    "options": [
+      { "answer": "127.4 V", "correct": true },
+      { "answer": "141.4 V", "correct": false },
+      { "answer": "282.8 V", "correct": false },
+      { "answer": "200 V", "correct": false }
+    ]
+  },
+  {
+    "question": "The transient currents are associated with the:",
+    "options": [
+      { "answer": "Changes in the stored energy in the inductors and capacitors", "correct": true },
+      { "answer": "Impedance of the circuit", "correct": false },
+      { "answer": "Applied voltage to the circuit", "correct": false },
+      { "answer": "Resistance of the circuit", "correct": false }
+    ]
+  },
+  {
+    "question": "Which among the following condition is true at resonance?",
+    "options": [
+      { "answer": "Xc > XL", "correct": false },
+      { "answer": "Xc = XL", "correct": true },
+      { "answer": "Xc < XL", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following is a secondary cell?",
+    "options": [
+      { "answer": "Dry cell", "correct": false },
+      { "answer": "Leclanche cell", "correct": false },
+      { "answer": "Voltaic cell", "correct": false },
+      { "answer": "Lead acid cell", "correct": true }
+    ]
+  },
+  {
+    "question": "Of the following capacitors, which one has the highest dielectric constant?",
+    "options": [
+      { "answer": "Air", "correct": false },
+      { "answer": "Mica", "correct": false },
+      { "answer": "Glass", "correct": true },
+      { "answer": "Paper", "correct": false }
+    ]
+  },
+  {
+    "question": "Slip of an induction motor increases with:",
+    "options": [
+      { "answer": "Increase in current and decrease in torque", "correct": false },
+      { "answer": "Increase in current and torque", "correct": true },
+      { "answer": "Decrease in current and torque", "correct": false },
+      { "answer": "Decrease in current and increase in torque", "correct": false }
+    ]
+  },
+  {
+    "question": "In eddy current damping systems, the disc employed should be of:",
+    "options": [
+      { "answer": "Conducting and magnetic material", "correct": false },
+      { "answer": "Conducting but non-magnetic material", "correct": true },
+      { "answer": "Magnetic but non-conducting material", "correct": false },
+      { "answer": "Non-conducting and non-magnetic material", "correct": false }
+    ]
+  },
+  {
+    "question": "At a steady deflected position of an indicating instrument, the moving system is subjected to:",
+    "options": [
+      { "answer": "Deflecting and controlling torque", "correct": true },
+      { "answer": "Deflecting torque only", "correct": false },
+      { "answer": "Damping and controlling torque", "correct": false },
+      { "answer": "Deflecting, controlling, and damping torque", "correct": false }
+    ]
+  },
+  {
+    "question": "In Scott connection, the voltage across the teaser leads the mains by:",
+    "options": [
+      { "answer": "30 degrees", "correct": false },
+      { "answer": "60 degrees", "correct": false },
+      { "answer": "90 degrees", "correct": true },
+      { "answer": "120 degrees", "correct": false }
+    ]
+  },
+  {
+    "question": "In T-T connection, the percentage tapping of main transformer and teaser transformer are:",
+    "options": [
+      { "answer": "50%, 86.6%", "correct": true },
+      { "answer": "50%, 50%", "correct": false },
+      { "answer": "86.6%, 86.6%", "correct": false },
+      { "answer": "86.6%, 50%", "correct": false }
+    ]
+  },
+  {
+    "question": "In T-T connection, the ratio of actual capacity to the available capacity is:",
+    "options": [
+      { "answer": "1", "correct": false },
+      { "answer": "0.928", "correct": true },
+      { "answer": "1.928", "correct": false },
+      { "answer": "0.5", "correct": false }
+    ]
+  }
+  
+
+
+
+
+
+
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
+
