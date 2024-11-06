@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-27 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-27</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+{
+"question": "A capacitor consists of",
+"options": [
+{"answer": "Ceramic plates and one mica disc", "correct": false},
+{"answer": "Insulators separated by a dielectric", "correct": false},
+{"answer": "Silver-coated insulators", "correct": false},
+{"answer": "Conductors separated by an insulator", "correct": true}
+]
+},
+
+{
+"question": "Which of the following capacitors have the least breakdown voltage?",
+"options": [
+{"answer": "Ceramic", "correct": false},
+{"answer": "Paper", "correct": false},
+{"answer": "Mica", "correct": false},
+{"answer": "Electrolytic", "correct": true}
+]
+},
+
+{
+"question": "The capacitance between two plates increases with",
+"options": [
+{"answer": "Shorter plate area and higher applied voltage", "correct": false},
+{"answer": "Shorter plate area and shorter distance between them", "correct": false},
+{"answer": "Larger plate area, longer distance between plates and higher applied voltage", "correct": false},
+{"answer": "Larger plate area and shorter distance between plates", "correct": true}
+]
+},
+
+{
+"question": "Which one of the following capacitors are usable only for DC?",
+"options": [
+{"answer": "Aluminium foil capacitor", "correct": false},
+{"answer": "Metallic paper capacitor", "correct": false},
+{"answer": "Poled Aluminium-electrolyte capacitor", "correct": true},
+{"answer": "Ceramic capacitor", "correct": false}
+]
+},
+
+{
+"question": "The electric field at a point situated at a distance d from straight charged conductor is",
+"options": [
+{"answer": "Proportional to d", "correct": false},
+{"answer": "Inversely proportional to d", "correct": true},
+{"answer": "Inversely proportional to d2", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "A 60-Hz voltage with an effective value of 230 V is applied to an inductor of 0.265 H. Find the inductive reactance",
+"options": [
+{"answer": "100 Ω", "correct": true},
+{"answer": "265 Ω", "correct": false},
+{"answer": "2.5 Ω", "correct": false},
+{"answer": "377 Ω", "correct": false}
+]
+},
+
+{
+"question": "In a series RLC circuit that is operating above the resonant frequency, the current",
+"options": [
+{"answer": "Lags the applied voltage", "correct": true},
+{"answer": "Leads the applied voltage", "correct": false},
+{"answer": "Is in phase with the applied voltage", "correct": false},
+{"answer": "Is zero", "correct": false}
+]
+},
+
+{
+"question": "The magnitude of the induced e.m.f. in a conductor depends on the",
+"options": [
+{"answer": "Flux density of the magnetic field", "correct": false},
+{"answer": "Amount of flux cut", "correct": false},
+{"answer": "Amount of flux linkages", "correct": false},
+{"answer": "Rate of change of flux-linkages", "correct": true}
+]
+},
+
+{
+"question": "Weber is the unit of ___.",
+"options": [
+{"answer": "electric conductance", "correct": false},
+{"answer": "magnetic flux", "correct": true},
+{"answer": "magnetic flux density", "correct": false},
+{"answer": "capacitance", "correct": false}
+]
+},
+
+{
+"question": "If the number of turns per unit length of a solenoid is doubled, its self-inductance will",
+"options": [
+{"answer": "be halved", "correct": false},
+{"answer": "be doubled", "correct": false},
+{"answer": "remain constant", "correct": false},
+{"answer": "become four times", "correct": true}
+]
+},
+{
+"question": "The unit of self-inductance is:",
+"options": [
+{"answer": "Wb/A2", "correct": false},
+{"answer": "H/m", "correct": false},
+{"answer": "Wb/m2", "correct": false},
+{"answer": "Wb/A", "correct": false},
+{"answer": "H", "correct": true}
+]
+},
+
+{
+"question": "Fleming’s left-hand rule used to find the direction of force acting on the winding of",
+"options": [
+{"answer": "Motor", "correct": true},
+{"answer": "Generator", "correct": false},
+{"answer": "Both", "correct": false},
+{"answer": "None", "correct": false}
+]
+},
+
+{
+"question": "The electric field intensity at a point situated 4 meters from a point charge is 200 N/C. If the distance is reduced to 2 meters, the field intensity will be",
+"options": [
+{"answer": "400 N/C", "correct": false},
+{"answer": "600 N/C", "correct": false},
+{"answer": "800 N/C", "correct": true},
+{"answer": "1200 N/C", "correct": false}
+]
+},
+
+{
+"question": "Electric field inside a hollow metallic charged sphere is",
+"options": [
+{"answer": "increasing towards centre", "correct": false},
+{"answer": "decreasing towards centre", "correct": false},
+{"answer": "zero", "correct": true},
+{"answer": "none of the above", "correct": false}
+]
+},
+
+{
+"question": "The capacitance of a capacitor is not affected by",
+"options": [
+{"answer": "distance between plates", "correct": false},
+{"answer": "area of plates", "correct": false},
+{"answer": "thickness of plates", "correct": true},
+{"answer": "all of the above", "correct": false}
+]
+},
+
+{
+"question": "If the frequency of AC supply is increased then the resistance of the circuit will",
+"options": [
+{"answer": "first increases then decreases", "correct": false},
+{"answer": "Increase", "correct": false},
+{"answer": "Decrease", "correct": false},
+{"answer": "unaffected", "correct": true}
+]
+},
+
+{
+"question": "Electric field intensity is a",
+"options": [
+{"answer": "dimensionless quantity", "correct": false},
+{"answer": "vector quantity", "correct": true},
+{"answer": "scalar quantity", "correct": false},
+{"answer": "all of the above", "correct": false}
+]
+},
+
+{
+"question": "What is the value of dielectric constant of vacuum?",
+"options": [
+{"answer": "infinity", "correct": false},
+{"answer": "unity", "correct": true},
+{"answer": "zero", "correct": false},
+{"answer": "less than unity", "correct": false}
+]
+},
+
+{
+"question": "Which of the following capacitors is marked for polarity?",
+"options": [
+{"answer": "Air", "correct": false},
+{"answer": "Paper", "correct": false},
+{"answer": "Mica", "correct": false},
+{"answer": "Electrolytic", "correct": true}
+]
+},
+
+{
+"question": "The unit of dielectric strength is given by",
+"options": [
+{"answer": "V/m", "correct": true},
+{"answer": "V2/m", "correct": false},
+{"answer": "m/V", "correct": false},
+{"answer": "m/V2", "correct": false}
+]
+},
+{
+"question": "1 volt/meter is same as",
+"options": [
+{"answer": "1 meter/coulomb", "correct": false},
+{"answer": "1 newton/meter", "correct": false},
+{"answer": "1 newton/coulomb", "correct": true},
+{"answer": "1 joule/coulomb", "correct": false}
+]
+},
+
+{
+"question": "A dielectric is placed in an electric field.",
+"options": [
+{"answer": "The direction of the induced electric field is the same as that of the direction of the external electric field", "correct": false},
+{"answer": "The magnitude of the induced electric field is the same as that of the direction of the external electric field", "correct": false},
+{"answer": "The direction of the net electric field is the same as that of the direction of the external electric field", "correct": true},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "Paramagnetic materials have relative permeability",
+"options": [
+{"answer": "slightly less than unity", "correct": false},
+{"answer": "equal to unity", "correct": false},
+{"answer": "slightly more than unity", "correct": true},
+{"answer": "equal to that ferromagnetic materials", "correct": false}
+]
+},
+
+{
+"question": "Ferrites are particularly suited for high frequency application because of their",
+"options": [
+{"answer": "low distortion", "correct": false},
+{"answer": "low eddy current loss", "correct": true},
+{"answer": "high conductivity", "correct": false},
+{"answer": "high mobility", "correct": false}
+]
+},
+
+{
+"question": "Gilbert is a unit of",
+"options": [
+{"answer": "Electromotive force", "correct": false},
+{"answer": "Magnetomotive force", "correct": true},
+{"answer": "Conductance", "correct": false},
+{"answer": "Permittivity", "correct": false}
+]
+}
+
+
+  ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

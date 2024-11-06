@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-22 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-22</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+{
+"question": "Transformer cores are laminated with",
+"options": [
+{"answer": "Low carbon steel", "correct": false},
+{"answer": "Silicon sheet steel", "correct": true},
+{"answer": "Nickel alloy steel", "correct": false},
+{"answer": "Chromium sheet steel", "correct": false}
+]
+},
+
+{
+"question": "The efficiency of the transformer will be maximum when",
+"options": [
+{"answer": "Iron losses is equal to the twice of the copper losses", "correct": false},
+{"answer": "Copper losses is equal to the twice of the iron losses", "correct": false},
+{"answer": "Iron losses is equal to the copper losses", "correct": true},
+{"answer": "Iron losses is equal to the half of the copper losses", "correct": false}
+]
+},
+
+{
+"question": "In the transformer following winding has got more cross-sectional area:",
+"options": [
+{"answer": "Low voltage winding", "correct": true},
+{"answer": "High voltage winding", "correct": false},
+{"answer": "Primary winding", "correct": false},
+{"answer": "Secondary winding", "correct": false}
+]
+},
+
+{
+"question": "Which winding of the transformer has less cross-sectional area?",
+"options": [
+{"answer": "Primary winding", "correct": false},
+{"answer": "Secondary winding", "correct": false},
+{"answer": "Low voltage winding", "correct": false},
+{"answer": "High voltage winding", "correct": true}
+]
+},
+
+{
+"question": "Which is to be short circuited on performing short circuit test on a transformer?",
+"options": [
+{"answer": "Low Voltage Side", "correct": true},
+{"answer": "High Voltage Side", "correct": false},
+{"answer": "Primary side", "correct": false},
+{"answer": "Secondary side", "correct": false}
+]
+},
+
+{
+"question": "Eddy currents are induced by changing magnetic fields. Where do they flow with respect to the magnetic field?",
+"options": [
+{"answer": "Closed loops perpendicular to magnetic field", "correct": true},
+{"answer": "Closed loops parallel to magnetic field", "correct": false},
+{"answer": "Open loops parallel to magnetic field", "correct": false},
+{"answer": "Open loops perpendicular to magnetic field", "correct": false}
+]
+},
+{
+"question": "Generally the no-load losses of an electrical machine is represented in its equivalent circuit by a",
+"options": [
+{"answer": "Parallel resistance with a low value", "correct": false},
+{"answer": "Series resistance with a low value", "correct": false},
+{"answer": "Parallel resistance with a high value", "correct": true},
+{"answer": "Series resistance with a high value", "correct": false}
+]
+},
+
+{
+"question": "A 5 kVA, 50 V/100 V, single-phase transformer has a secondary terminal voltage of 95 V when loaded. The regulation of the transformer is",
+"options": [
+{"answer": "4.5%", "correct": false},
+{"answer": "9%", "correct": false},
+{"answer": "5%", "correct": true},
+{"answer": "1%", "correct": false}
+]
+},
+
+{
+"question": "The maximum flux density in the core of a 250/3000 Volts, 50 Hz, 1 = ph transformer is 1.2 wb/m2. Determine the LV and HV turns of the transformer if the emf per turn is 8 V.",
+"options": [
+{"answer": "NLV = 64, NHV 750", "correct": false},
+{"answer": "NLV = 375, NHV = 32", "correct": false},
+{"answer": "NLV = 750, NHV = 64", "correct": false},
+{"answer": "NLV = 32, NHV = 375", "correct": true}
+]
+},
+
+{
+"question": "Which of the following statements about the core type transformer compared to shell type transformer is INCORRECT?",
+"options": [
+{"answer": "The core surrounds a considerable portion of the windings.", "correct": false},
+{"answer": "It is more suitable for high voltage transformers.", "correct": true},
+{"answer": "The windings are form-wound, and are of cylindrical type.", "correct": true},
+{"answer": "The mean length of coil is shorter.", "correct": true}
+]
+},
+
+{
+"question": "If the iron core of a transformer is replaced by an air core, then the hysteresis losses in the transformer will",
+"options": [
+{"answer": "Increase", "correct": false},
+{"answer": "Decrease", "correct": false},
+{"answer": "Remains unchanged", "correct": false},
+{"answer": "Become zero", "correct": true}
+]
+},
+
+{
+"question": "As the load on the transformer is increased, the core losses:",
+"options": [
+{"answer": "may decrease or increase slightly depending upon the nature of the load", "correct": false},
+{"answer": "remain constant", "correct": true},
+{"answer": "increase slightly", "correct": false},
+{"answer": "decrease slightly", "correct": false}
+]
+},
+
+{
+"question": "The purpose of conservator in transformers is:-",
+"options": [
+{"answer": "to cool the windings", "correct": false},
+{"answer": "to prevent moisture from entering into transformer", "correct": false},
+{"answer": "to take up contraction and expansion of oil", "correct": true},
+{"answer": "to provide tap changing", "correct": false}
+]
+},
+
+{
+"question": "The Buchholz relay protects a transformer from",
+"options": [
+{"answer": "turn-to-turn fault", "correct": false},
+{"answer": "all types of internal faults", "correct": true},
+{"answer": "winding-to-winding fault", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "In a transformer, Buchholz relay is located in the:",
+"options": [
+{"answer": "transformer tank", "correct": false},
+{"answer": "pipe connecting the transformer tank and the conservator tank", "correct": true},
+{"answer": "circuit breaker", "correct": false},
+{"answer": "conservator tank", "correct": false}
+]
+},
+
+{
+"question": "The purpose of providing iron core in a step- up transformer is",
+"options": [
+{"answer": "To provide coupling between primary and secondary", "correct": true},
+{"answer": "To increase the magnitude of mutual flux", "correct": true},
+{"answer": "To decrease the magnitude of magnetizing current", "correct": true},
+{"answer": "To provide all above features", "correct": true}
+]
+},
+{
+"question": "A transformer has a 1:6 turns ratio and a secondary coil load resistance of 470 Ω. The load resistance as seen by the source is",
+"options": [
+{"answer": "1.3 Ω", "correct": false},
+{"answer": "7.8 Ω", "correct": false},
+{"answer": "78 Ω", "correct": false},
+{"answer": "13 Ω", "correct": true}
+]
+},
+
+{
+"question": "Distribution transformers are generally designed for maximum efficiency around",
+"options": [
+{"answer": "90% load", "correct": false},
+{"answer": "Zero load", "correct": false},
+{"answer": "25% load", "correct": false},
+{"answer": "50% load", "correct": true}
+]
+},
+
+{
+"question": "What kVA rating is required for a transformer that must handle a maximum load current of 8 A with a secondary voltage of 2 kV?",
+"options": [
+{"answer": "4 kVA", "correct": false},
+{"answer": "0.25 kVA", "correct": false},
+{"answer": "16 kVA", "correct": true},
+{"answer": "8 Kva", "correct": false}
+]
+},
+{
+"question": "A transformer oil must be free from",
+"options": [
+{"answer": "Sludge", "correct": false},
+{"answer": "Odour", "correct": false},
+{"answer": "Gases", "correct": false},
+{"answer": "Moisture", "correct": true}
+]
+},
+
+{
+"question": "Which of the following is the main advantage of an autotransformer over a two winding transformer?",
+"options": [
+{"answer": "Hysteresis losses are reduced", "correct": false},
+{"answer": "Saving in winding material", "correct": true},
+{"answer": "Copper losses are negligible", "correct": false},
+{"answer": "Eddy losses are totally eliminated", "correct": false}
+]
+},
+
+{
+"question": "Helical coils can be used on",
+"options": [
+{"answer": "Low voltage side of high kVA transformers", "correct": true},
+{"answer": "High frequency transformers", "correct": false},
+{"answer": "High voltage side of small capacity transformers", "correct": false},
+{"answer": "High voltage side of high kVA rating transformers", "correct": false}
+]
+},
+
+{
+"question": "A transformer with a 110 V primary has a 15:1 turns ratio. The load resistance, RL, is 120 Ω. What is the approximate voltage across the load?",
+"options": [
+{"answer": "7.3 V", "correct": true},
+{"answer": "73 V", "correct": false},
+{"answer": "88 V", "correct": false},
+{"answer": "880 V", "correct": false}
+]
+},
+
+{
+"question": "If the supply frequency to the transformer is increased, the iron loss will",
+"options": [
+{"answer": "Not changes", "correct": false},
+{"answer": "Decrease", "correct": false},
+{"answer": "Increase", "correct": true},
+{"answer": "Cannot be determined", "correct": false}
+]
+},
+
+{
+"question": "The short circuit test in a Transformer is used to determine ___.",
+"options": [
+{"answer": "Iron loss at any load", "correct": false},
+{"answer": "Copper loss at any load", "correct": true},
+{"answer": "Hysteresis loss", "correct": false},
+{"answer": "Eddy current loss", "correct": false}
+]
+},
+
+{
+"question": "Which transformer test is called Sumpner’s Test?",
+"options": [
+{"answer": "Short circuit test", "correct": false},
+{"answer": "Open circuit test", "correct": false},
+{"answer": "Back-to-Back test", "correct": true},
+{"answer": "No load test", "correct": false}
+]
+},
+
+{
+"question": "Open circuit test of a transformer gives",
+"options": [
+{"answer": "Hysteresis loss only", "correct": false},
+{"answer": "Eddy current loss only", "correct": false},
+{"answer": "Hysteresis and Eddy current losses both", "correct": true},
+{"answer": "Copper loss", "correct": false}
+]
+},
+
+{
+"question": "For short circuit test and open circuit test of transformers the instruments are connected on:",
+"options": [
+{"answer": "LV side and HV side respectively", "correct": false},
+{"answer": "HV side and LV side respectively", "correct": true},
+{"answer": "HV side only", "correct": false},
+{"answer": "LV side only", "correct": false}
+]
+},
+
+{
+"question": "The heat run test of a transformer without its loading is performed by means of",
+"options": [
+{"answer": "Short circuit test", "correct": false},
+{"answer": "Open circuit test", "correct": false},
+{"answer": "Half time short circuit test and half time open circuit test", "correct": false},
+{"answer": "Sumpner’s test", "correct": true}
+]
+},
+
+{
+"question": "The short circuit test is an economical method for determining ___.",
+"options": [
+{"answer": "Core loss at no load", "correct": false},
+{"answer": "Core loss at full load", "correct": false},
+{"answer": "The load current", "correct": false},
+{"answer": "Copper loss at full load", "correct": true}
+]
+},
+
+{
+"question": "Which of the following is not a part of transformer installation?",
+"options": [
+{"answer": "Breather", "correct": false},
+{"answer": "Conservator", "correct": false},
+{"answer": "Exciter", "correct": true},
+{"answer": "Buchholz relay", "correct": false}
+]
+},
+{
+"question": "The function of the tap changer in a transformer is to increase and decrease ___.",
+"options": [
+{"answer": "Voltage", "correct": true},
+{"answer": "Current", "correct": false},
+{"answer": "Kilo-Watt hours", "correct": false},
+{"answer": "Frequency", "correct": false}
+]
+},
+
+
+
+{
+"question": "The maximum flux density in the core of a 250/2000-volts, 50-Hz single-phase transformer is 1.2 Wb/m2. If the EMF per turn is 8 volts, then determine the area of the core.",
+"options": [
+{"answer": "0.03 m2", "correct": true},
+{"answer": "0.25 m2", "correct": false},
+{"answer": "0.05 m2", "correct": false},
+{"answer": "0.5 m2", "correct": false}
+]
+},
+
+{
+"question": "What type of coil is used for high voltage in small transformers?",
+"options": [
+{"answer": "Cross-over coil", "correct": true},
+{"answer": "Spiral coil", "correct": false},
+{"answer": "Cylindrical coil", "correct": false},
+{"answer": "Disc spiral coil", "correct": false}
+]
+},
+
+{
+"question": "What is the purpose of the inner lamination of the transformer coil?",
+"options": [
+{"answer": "To reduce the corrosion resistance", "correct": true},
+{"answer": "To increase in voltage gradient", "correct": false},
+{"answer": "To reduce the current gradient", "correct": false},
+{"answer": "To increase corrosion resistance", "correct": false}
+]
+},
+
+{
+"question": "The transformer which has no loss is called ___.",
+"options": [
+{"answer": "Potential transformer", "correct": false},
+{"answer": "Ideal transformer", "correct": true},
+{"answer": "Shell type transformer", "correct": false},
+{"answer": "Current transformer", "correct": false}
+]
+},
+
+{
+"question": "In order to reduce ____, special silicon steel/alloy steel is used for iron-core in power transformers.",
+"options": [
+{"answer": "Friction loss", "correct": false},
+{"answer": "Copper loss", "correct": false},
+{"answer": "Eddy current loss", "correct": false},
+{"answer": "Hysteresis loss", "correct": true}
+]
+},
+
+{
+"question": "What is the thickness of laminations used in a transformer?",
+"options": [
+{"answer": "14 mm to 15 mm", "correct": false},
+{"answer": "25 mm to 40 mm", "correct": false},
+{"answer": "0.1 mm to 0.5 mm", "correct": true},
+{"answer": "4 mm to 5 mm", "correct": false}
+]
+},
+
+{
+"question": "Which of the following transformer, Buchholz’s relay can be fixed on?",
+"options": [
+{"answer": "Welding transformers", "correct": false},
+{"answer": "Oil cooled transformers", "correct": true},
+{"answer": "Auto-transformers", "correct": false},
+{"answer": "Air-cooled transformers", "correct": false}
+]
+},
+
+{
+"question": "How can a three-phase supply be converted into a two-phase?",
+"options": [
+{"answer": "Scott Connect or T-T Connection", "correct": true},
+{"answer": "Star-delta connection", "correct": false},
+{"answer": "Delta-delta connection", "correct": false},
+{"answer": "Star-star connection", "correct": false}
+]
+},
+
+{
+"question": "Silica gel is used to absorb moisture from the air entering the transformer. Where is silica gel placed?",
+"options": [
+{"answer": "Inside the tank", "correct": false},
+{"answer": "In the conservator", "correct": false},
+{"answer": "In the breather", "correct": true},
+{"answer": "In the winding", "correct": false}
+]
+},
+
+{
+"question": "Which is the most common, famous and adopted method of cooling of a power transformer?",
+"options": [
+{"answer": "Air blast cooling", "correct": false},
+{"answer": "Natural air cooling", "correct": true},
+{"answer": "Oil cooling", "correct": false},
+{"answer": "Any of the above method can be used", "correct": false}
+]
+},
+
+{
+"question": "If an 800 KVA, 400 Hz transformer operates at 50 Hz, So its KVA rating would be:",
+"options": [
+{"answer": "20 KVA", "correct": false},
+{"answer": "1000 KVA", "correct": false},
+{"answer": "100 KVA", "correct": true},
+{"answer": "225 KVA", "correct": false}
+]
+},
+
+{
+"question": "If the copper loss of a full-load transformer is 400 watts, calculate the loss at half-load.",
+"options": [
+{"answer": "400 W", "correct": false},
+{"answer": "600 W", "correct": false},
+{"answer": "800 W", "correct": false},
+{"answer": "100 W", "correct": true}
+]
+},
+{
+"question": "If the supply frequency of a transformer increases, the secondary output voltage of the transformer",
+"options": [
+{"answer": "Increases", "correct": true},
+{"answer": "decreases", "correct": false},
+{"answer": "remains unchanged", "correct": false},
+{"answer": "any of the above", "correct": false}
+]
+},
+
+{
+"question": "With the increase in supply frequency of transformer, there is ___ in rating.",
+"options": [
+{"answer": "Decrease", "correct": false},
+{"answer": "Increase", "correct": true},
+{"answer": "No change", "correct": false},
+{"answer": "None of these", "correct": false}
+]
+},
+
+{
+"question": "Power transformers are designed to have maximum efficiency at",
+"options": [
+{"answer": "nearly full load", "correct": true},
+{"answer": "70% full load", "correct": false},
+{"answer": "50% full load", "correct": false},
+{"answer": "no load", "correct": false}
+]
+},
+
+{
+"question": "In which of the following transformers, the secondary winding is always kept closed?",
+"options": [
+{"answer": "Current transformer", "correct": true},
+{"answer": "Potential transformer", "correct": false},
+{"answer": "Power transformer", "correct": false},
+{"answer": "Distribution transformer", "correct": false}
+]
+},
+
+{
+"question": "No-load current of a transformer _____",
+"options": [
+{"answer": "has high magnitude and low power factor", "correct": false},
+{"answer": "has high magnitude and high power factor", "correct": false},
+{"answer": "has small magnitude and high power factor", "correct": false},
+{"answer": "has small magnitude and low power factor", "correct": true}
+]
+},
+
+{
+"question": "The no load current in transformer lags applied voltage by –",
+"options": [
+{"answer": "90°", "correct": false},
+{"answer": "75°", "correct": true},
+{"answer": "0°", "correct": false},
+{"answer": "110°", "correct": false}
+]
+}
+
+
+  ];
+
+    
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-19 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-19</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+  {
+    "question": "The value of reheat factor normally varies from",
+    "options": [
+      { "answer": "0.5 to 0.6", "correct": false },
+      { "answer": "0.9 to 0.95", "correct": false },
+      { "answer": "1.02 to 1.06", "correct": true },
+      { "answer": "1.2 to 1.6", "correct": false }
+    ]
+  },
+  {
+    "question": "Steam turbines commonly used in steam power stations are",
+    "options": [
+      { "answer": "Condensing type", "correct": true },
+      { "answer": "Non-condensing type", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "In a steam power plant, the condensate from the condenser is used",
+    "options": [
+      { "answer": "To cool the generator", "correct": false },
+      { "answer": "As feed water to the boiler", "correct": true },
+      { "answer": "To cool the turbine", "correct": false },
+      { "answer": "To cool the boiler", "correct": false }
+    ]
+  },
+  {
+    "question": "Belt conveyer can be used to transport coal at inclinations up to",
+    "options": [
+      { "answer": "30°", "correct": true },
+      { "answer": "60°", "correct": false },
+      { "answer": "80°", "correct": false },
+      { "answer": "90°", "correct": false }
+    ]
+  },
+  {
+    "question": "The average ash content in Indian coals is about",
+    "options": [
+      { "answer": "5%", "correct": false },
+      { "answer": "10%", "correct": false },
+      { "answer": "15%", "correct": false },
+      { "answer": "20%", "correct": true }
+    ]
+  },
+  {
+    "question": "Steam pressure in a steam power station, which is usually kept nowadays, is of the order of",
+    "options": [
+      { "answer": "20 kgf/cm²", "correct": false },
+      { "answer": "50 kgf/cm²", "correct": false },
+      { "answer": "100 kgf/cm²", "correct": false },
+      { "answer": "150 kgf/cm²", "correct": true }
+    ]
+  },
+  {
+    "question": "Load center in a power station is",
+    "options": [
+      { "answer": "Center of coal fields", "correct": false },
+      { "answer": "Center of maximum load of equipment", "correct": false },
+      { "answer": "Center of gravity of the electrical system", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the safety factor of an insulator?",
+    "options": [
+      { "answer": "Puncture strength * Flash over voltage", "correct": false },
+      { "answer": "Puncture strength / Flash over voltage", "correct": true },
+      { "answer": "Flash over voltage / Puncture strength", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "String efficiency of 100% in string insulators means",
+    "options": [
+      { "answer": "Self capacitance is zero", "correct": false },
+      { "answer": "Shunt capacitance is maximum", "correct": false },
+      { "answer": "Self capacitance is maximum", "correct": false },
+      { "answer": "Shunt capacitance is zero", "correct": true }
+    ]
+  },
+  {
+    "question": "Which of the following is NOT one of the methods to improve string efficiency of insulators?",
+    "options": [
+      { "answer": "Selection of k", "correct": false },
+      { "answer": "Disc porosity", "correct": true },
+      { "answer": "Guard ring", "correct": false },
+      { "answer": "Grading of insulators", "correct": false }
+    ]
+  },
+  {
+    "question": "Why are boosters inserted in the circuit?",
+    "options": [
+      { "answer": "Reduce current", "correct": false },
+      { "answer": "Increase current", "correct": false },
+      { "answer": "Reduce voltage drop", "correct": false },
+      { "answer": "Compensate for voltage drop", "correct": true }
+    ]
+  },
+  {
+    "question": "The maximum demand of a consumer is 2 kW and his daily energy consumption is 20 units. The load factor is",
+    "options": [
+      { "answer": "21%", "correct": false },
+      { "answer": "10.15%", "correct": false },
+      { "answer": "41.6%", "correct": true },
+      { "answer": "50%", "correct": false }
+    ]
+  },
+  {
+    "question": "Load duration curve is the plot between",
+    "options": [
+      { "answer": "Load and time", "correct": true },
+      { "answer": "Load and frequency", "correct": false },
+      { "answer": "Load and temperature", "correct": false },
+      { "answer": "Load and voltage", "correct": false }
+    ]
+  },
+  {
+    "question": "A generating station has a maximum demand of 30 MW and a load factor of 60 percent. If the plant capacity factor is 45 percent, find the reserve capacity.",
+    "options": [
+      { "answer": "12 MW", "correct": false },
+      { "answer": "10 MW", "correct": true },
+      { "answer": "5 MW", "correct": false },
+      { "answer": "15 MW", "correct": false }
+    ]
+  },
+  {
+    "question": "The worst type of load on a supply system is",
+    "options": [
+      { "answer": "Arc furnace load", "correct": true },
+      { "answer": "Motors in a paper mill", "correct": false },
+      { "answer": "Rolling mill load", "correct": false },
+      { "answer": "Pumping load", "correct": false }
+    ]
+  },
+
+  {
+    "question": "Which type of coal has the highest calorific value?",
+    "options": [
+      { "answer": "Anthracite", "correct": true },
+      { "answer": "Lignite", "correct": false },
+      { "answer": "Peat", "correct": false },
+      { "answer": "Bituminous", "correct": false }
+    ]
+  },
+  {
+    "question": "A pulverized coal boiler generates approximately _______ fly ash and _______ bottom ash, respectively.",
+    "options": [
+      { "answer": "20 Percent, 80 Percent", "correct": false },
+      { "answer": "50 Percent, 50 Percent", "correct": false },
+      { "answer": "80 Percent, 20 Percent", "correct": true },
+      { "answer": "40 Percent, 60 Percent", "correct": false }
+    ]
+  },
+  {
+    "question": "The pipes carrying the steam are made of _________.",
+    "options": [
+      { "answer": "Steel", "correct": true },
+      { "answer": "Cast iron", "correct": false },
+      { "answer": "Aluminium", "correct": false },
+      { "answer": "Cobalt", "correct": false }
+    ]
+  },
+  {
+    "question": "The function of condenser in a Thermal power plant is:",
+    "options": [
+      { "answer": "Purify water", "correct": false },
+      { "answer": "Purify steam", "correct": false },
+      { "answer": "Condense used steam into water", "correct": true },
+      { "answer": "Condense water", "correct": false }
+    ]
+  },
+  {
+    "question": "A steam power station requires space",
+    "options": [
+      { "answer": "Equal to diesel power station", "correct": false },
+      { "answer": "More than diesel power station", "correct": true },
+      { "answer": "Less than diesel power station", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "'Binary' vapour cycles are used to",
+    "options": [
+      { "answer": "Increase the performance of the condenser", "correct": false },
+      { "answer": "Increase the efficiency of the plant", "correct": true },
+      { "answer": "Increase efficiency of the turbine", "correct": false },
+      { "answer": "All above", "correct": false }
+    ]
+  },
+  {
+    "question": "Curtis turbine is",
+    "options": [
+      { "answer": "Reaction steam turbine", "correct": false },
+      { "answer": "Pressure-velocity compounded steam turbine", "correct": true },
+      { "answer": "Pressure-compounded impulse steam turbine", "correct": false },
+      { "answer": "Velocity-compounded impulse steam turbine", "correct": false }
+    ]
+  },
+  {
+    "question": "In case of impulse steam turbine",
+    "options": [
+      { "answer": "There is enthalpy drop in fixed and moving blades", "correct": false },
+      { "answer": "There is enthalpy drop only in moving blades", "correct": false },
+      { "answer": "There is enthalpy drop in nozzles", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "If the enthalpy drop in the moving blades and fixed blades of a steam turbine is 10 kJ/kg and 15 kJ/kg respectively, then what is the degree of reaction?",
+    "options": [
+      { "answer": "67%", "correct": false },
+      { "answer": "60%", "correct": false },
+      { "answer": "40%", "correct": true },
+      { "answer": "33%", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the major cause of the failure of the circuit breaker?",
+    "options": [
+      { "answer": "Trip circuit open", "correct": false },
+      { "answer": "Trip latch defective", "correct": false },
+      { "answer": "Spring defective", "correct": false },
+      { "answer": "All of these", "correct": true }
+    ]
+  },
+  {
+    "question": "Back-up protection is used to protect:",
+    "options": [
+      { "answer": "Over voltage", "correct": false },
+      { "answer": "Over current", "correct": false },
+      { "answer": "Transient current", "correct": false },
+      { "answer": "Short circuit", "correct": true }
+    ]
+  },
+  {
+    "question": "In a circuit breaker, the contact space is ionized by what?",
+    "options": [
+      { "answer": "Field emission from the contact surface", "correct": false },
+      { "answer": "Thermal emission from the contact surface", "correct": false },
+      { "answer": "Thermal ionization of gas", "correct": true },
+      { "answer": "All of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the advantage of HRC fuses over Rewirable fuses?",
+    "options": [
+      { "answer": "High speed operation", "correct": false },
+      { "answer": "High rupturing capacity", "correct": false },
+      { "answer": "No ageing effect", "correct": false },
+      { "answer": "All of the above", "correct": true }
+    ]
+  },
+  {
+    "question": "What is the actuating quantity for the relays?",
+    "options": [
+      { "answer": "Magnitude", "correct": false },
+      { "answer": "Frequency", "correct": false },
+      { "answer": "Phase angle", "correct": false },
+      { "answer": "All of these", "correct": true }
+    ]
+  },
+  {
+    "question": "Plug setting of an electromagnetic relay can be altered by varying",
+    "options": [
+      { "answer": "Number of ampere turns", "correct": true },
+      { "answer": "Air gap of magnetic path", "correct": false },
+      { "answer": "Adjustable back stop", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "For which of the following, the current ratings are not required?",
+    "options": [
+      { "answer": "Circuit breakers", "correct": false },
+      { "answer": "Relays", "correct": false },
+      { "answer": "Isolators", "correct": true },
+      { "answer": "Load break switch", "correct": false }
+    ]
+  },
+  {
+    "question": "To limit current chopping in vacuum circuit breakers, the contact material employed should have the properties of",
+    "options": [
+      { "answer": "Low conductivity and high vapour pressure", "correct": true },
+      { "answer": "Low conductivity and low vapour pressure", "correct": false },
+      { "answer": "High conductivity and high vapour pressure", "correct": false },
+      { "answer": "High conductivity and low vapour pressure", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the normal pressure at which the SF6 gas is maintained in the closed position of the breaker?",
+    "options": [
+      { "answer": "2 kg / cm²", "correct": false },
+      { "answer": "2.5 kg / cm²", "correct": false },
+      { "answer": "2.8 kg / cm²", "correct": true },
+      { "answer": "3 kg / cm²", "correct": false }
+    ]
+  },
+  {
+    "question": "Which type of air is used in air blast circuit breaker?",
+    "options": [
+      { "answer": "Ionised air", "correct": false },
+      { "answer": "Air free from moisture", "correct": true },
+      { "answer": "Air should have least CO₂", "correct": false },
+      { "answer": "Air must have oil mist", "correct": false }
+    ]
+  },
+  {
+    "question": "Rate of rise of restriking voltage depends on?",
+    "options": [
+      { "answer": "Type of circuit breaker", "correct": false },
+      { "answer": "Capacitance of the system", "correct": false },
+      { "answer": "Inductance of the system", "correct": false },
+      { "answer": "Both (b) and (c)", "correct": true }
+    ]
+  },
+
+  {
+    "question": "Which part of the circuit breaker is helpful in breaking the current?",
+    "options": [
+      { "answer": "Trip coil", "correct": false },
+      { "answer": "Contacts", "correct": true },
+      { "answer": "Medium", "correct": false },
+      { "answer": "Handle", "correct": false }
+    ]
+  },
+  {
+    "question": "The charging current drawn by the cable _____________.",
+    "options": [
+      { "answer": "Lags behind the voltage by 90°", "correct": false },
+      { "answer": "Leads the voltage by 90°", "correct": true },
+      { "answer": "Are in phase with each other", "correct": false },
+      { "answer": "Leads the voltage by 60°", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the gas pressure of SF6 for a compressed gas insulated cable?",
+    "options": [
+      { "answer": "10 – 20 mm Hg", "correct": false },
+      { "answer": "80 – 100 mm Hg", "correct": false },
+      { "answer": "3 – 5 kg / cm²", "correct": true },
+      { "answer": "40 – 50 kg / cm²", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the dielectric strength of impregnated paper?",
+    "options": [
+      { "answer": "30 kV/mm", "correct": true },
+      { "answer": "20 kV/mm", "correct": false },
+      { "answer": "15 kV/mm", "correct": false },
+      { "answer": "5 kV/mm", "correct": false }
+    ]
+  },
+  {
+    "question": "The inductance of the line is minimum when:",
+    "options": [
+      { "answer": "GMD and GMR are high", "correct": false },
+      { "answer": "GMD is low and GMR is high", "correct": true },
+      { "answer": "GMR is low", "correct": false },
+      { "answer": "GMD is high", "correct": false }
+    ]
+  },
+  {
+    "question": "A pure inductive circuit:",
+    "options": [
+      { "answer": "Consumes some power on average", "correct": false },
+      { "answer": "Does not take power at all from a line", "correct": false },
+      { "answer": "Takes power from the line during some part of the cycle and then returns back to it during other part of the cycle", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "In a series resonant circuit, the impedance of the circuit is:",
+    "options": [
+      { "answer": "Minimum", "correct": true },
+      { "answer": "Maximum", "correct": false },
+      { "answer": "Zero", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The time constant of a capacitive circuit:",
+    "options": [
+      { "answer": "Increases with the decrease of capacitance and decrease of resistance", "correct": false },
+      { "answer": "Increases with the decrease of capacitance and increase of resistance", "correct": false },
+      { "answer": "Increases with the increase of capacitance and decrease of resistance", "correct": false },
+      { "answer": "Increases with the increase of capacitance and increase of resistance", "correct": true }
+    ]
+  },
+  {
+    "question": "In a pure inductive circuit if the supply frequency is reduced to 1/2, the current will:",
+    "options": [
+      { "answer": "Be reduced by half", "correct": false },
+      { "answer": "Be doubled", "correct": true },
+      { "answer": "Be four times as high", "correct": false },
+      { "answer": "Be reduced to one fourth", "correct": false }
+    ]
+  },
+  {
+    "question": "A sine wave has a frequency of 50 Hz. Its angular frequency is _______ radian/second.",
+    "options": [
+      { "answer": "100 π", "correct": true },
+      { "answer": "50 π", "correct": false },
+      { "answer": "25 π", "correct": false },
+      { "answer": "5 π", "correct": false }
+    ]
+  },
+  {
+    "question": "The time constant of a series R-C circuit is given by:",
+    "options": [
+      { "answer": "R/C", "correct": false },
+      { "answer": "RC²", "correct": false },
+      { "answer": "RC", "correct": true },
+      { "answer": "R²C", "correct": false }
+    ]
+  },
+  {
+    "question": "The RMS value of a pure cosine function is:",
+    "options": [
+      { "answer": "0.5 of peak value", "correct": false },
+      { "answer": "0.707 of peak value", "correct": true },
+      { "answer": "Same as peak value", "correct": false },
+      { "answer": "Zero", "correct": false }
+    ]
+  },
+  {
+    "question": "In a pure capacitive circuit, if the supply frequency is reduced to 1/2, the current will:",
+    "options": [
+      { "answer": "Be reduced by half", "correct": true },
+      { "answer": "Be doubled", "correct": false },
+      { "answer": "Be four times as high", "correct": false },
+      { "answer": "Be reduced to one fourth", "correct": false }
+    ]
+  },
+  {
+    "question": "For the same peak value, which of the following waves will have the highest RMS value?",
+    "options": [
+      { "answer": "Square wave", "correct": true },
+      { "answer": "Half wave rectified sine wave", "correct": false },
+      { "answer": "Triangular wave", "correct": false },
+      { "answer": "Sine wave", "correct": false }
+    ]
+  },
+  {
+    "question": "The time constant of the capacitance circuit is defined as the time during which voltage:",
+    "options": [
+      { "answer": "Falls to 36.8% of its final steady value", "correct": false },
+      { "answer": "Rises to 38.6% of its final steady value", "correct": false },
+      { "answer": "Rises to 63.2% of its final steady value", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  }
+
+
+
+    ];
+
+   
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

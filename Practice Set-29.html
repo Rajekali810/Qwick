@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-29 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-29</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+
+{
+"question": "Ward Leonard speed control belongs to ___",
+"options": [
+{"answer": "Voltage control method", "correct": true},
+{"answer": "Flux control method", "correct": false},
+{"answer": "Armature control method", "correct": false},
+{"answer": "Rheostat control method", "correct": false}
+]
+},
+
+{
+"question": "A shunt motor is running at 1000 RPM. If the flux is halved, what is the new speed?",
+"options": [
+{"answer": "2000 RPM", "correct": true},
+{"answer": "1000 RPM", "correct": false},
+{"answer": "500 RPM", "correct": false},
+{"answer": "250 RPM", "correct": false}
+]
+},
+
+{
+"question": "For speed control of a DC motor, which technique provides speed above base speed?",
+"options": [
+{"answer": "Field control method", "correct": true},
+{"answer": "Supply current control method", "correct": false},
+{"answer": "Supply voltage control method", "correct": false},
+{"answer": "Armature resistance control method", "correct": false}
+]
+},
+
+{
+"question": "Which of the following is known as a constant flux motor?",
+"options": [
+{"answer": "DC series motor", "correct": false},
+{"answer": "DC differential compound motor", "correct": false},
+{"answer": "DC cumulative compound motor", "correct": false},
+{"answer": "DC shunt motor", "correct": true}
+]
+},
+
+{
+"question": "The Swinburne test for indirect testing of DC machine can not be performed on ___.",
+"options": [
+{"answer": "Constant compound motor", "correct": false},
+{"answer": "Series motor", "correct": true},
+{"answer": "Shunt motor", "correct": false},
+{"answer": "Shunt generator", "correct": false}
+]
+},
+{
+"question": "A three point starter is considered suitable for",
+"options": [
+{"answer": "Shunt motors", "correct": false},
+{"answer": "Shunt as well as compound motors", "correct": true},
+{"answer": "Shunt, compound and series motors", "correct": false},
+{"answer": "All D.C. motors", "correct": false}
+]
+},
+
+{
+"question": "The armature voltage control of D.C. motor provides",
+"options": [
+{"answer": "Constant torque drive", "correct": true},
+{"answer": "Constant voltage drive", "correct": false},
+{"answer": "Constant current drive", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "For constant torque drive which speed control method is preferred?",
+"options": [
+{"answer": "Field control", "correct": false},
+{"answer": "Armature resistance control", "correct": true},
+{"answer": "Shunt armature control", "correct": false},
+{"answer": "Mechanical loading system", "correct": false}
+]
+},
+
+{
+"question": "Which one of the following is not necessarily the advantage of D.C. motors over A.C. motors?",
+"options": [
+{"answer": "Low cost", "correct": true},
+{"answer": "Wide speed range", "correct": false},
+{"answer": "Stability", "correct": false},
+{"answer": "High starting torque", "correct": false}
+]
+},
+
+{
+"question": "For which types of D.C. motor, dynamic braking is generally used?",
+"options": [
+{"answer": "Shunt motors", "correct": false},
+{"answer": "Series motors", "correct": false},
+{"answer": "Compound motors", "correct": false},
+{"answer": "All of the above", "correct": true}
+]
+},
+
+{
+"question": "The direction of rotation of a D.C. series motor can be changed by",
+"options": [
+{"answer": "Interchanging supply terminals", "correct": false},
+{"answer": "Interchanging field terminals", "correct": true},
+{"answer": "Either of (A) and (B) above", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "A D.C. series motor is that which",
+"options": [
+{"answer": "Has its field winding consisting of thick wire and less turns", "correct": true},
+{"answer": "Has a poor torque", "correct": false},
+{"answer": "Can be started easily without load", "correct": false},
+{"answer": "Has almost constant speed", "correct": false}
+]
+},
+
+{
+"question": "What will happen if the back e.m.f. of a D.C. motor vanishes suddenly?",
+"options": [
+{"answer": "The motor will stop", "correct": false},
+{"answer": "The motor will continue to run", "correct": false},
+{"answer": "The armature may burn", "correct": true},
+{"answer": "The motor will run noisy", "correct": false}
+]
+},
+
+{
+"question": "Which of the following application requires high starting torque?",
+"options": [
+{"answer": "Lathe Machine", "correct": false},
+{"answer": "Locomotive", "correct": false},
+{"answer": "Air blower", "correct": false},
+{"answer": "Centrifugal pumps", "correct": true}
+]
+},
+
+{
+"question": "Which one of the following is not the function of pole shoes in a D.C. machine?",
+"options": [
+{"answer": "To reduce eddy current loss", "correct": true},
+{"answer": "To support the field coils", "correct": false},
+{"answer": "To spread out flux for better uniformity", "correct": false},
+{"answer": "To reduce the reluctance of the magnetic path", "correct": false}
+]
+},
+{
+"question": "Speed control by Ward Leonard method gives uniform speed variation",
+"options": [
+{"answer": "In one direction", "correct": false},
+{"answer": "In both directions", "correct": true},
+{"answer": "Below normal speed only", "correct": false},
+{"answer": "Above normal speed only", "correct": false}
+]
+},
+
+{
+"question": "If the speed of a D.C. shunt motor is increased, the back e.m.f. of the motor will",
+"options": [
+{"answer": "Increase", "correct": true},
+{"answer": "Decrease", "correct": false},
+{"answer": "Remain same", "correct": false},
+{"answer": "Become zero", "correct": false}
+]
+},
+
+{
+"question": "D.C. generators are installed near the load centers to reduce",
+"options": [
+{"answer": "Iron losses", "correct": false},
+{"answer": "Line losses", "correct": true},
+{"answer": "Sparking", "correct": false},
+{"answer": "Corona losses", "correct": false}
+]
+},
+
+{
+"question": "A 4 point starter is used to start and control the speed of a",
+"options": [
+{"answer": "DC shunt motor with armature resistance control", "correct": false},
+{"answer": "DC shunt motor with field weakening control", "correct": true},
+{"answer": "DC series motor", "correct": false},
+{"answer": "DC compound motor", "correct": false}
+]
+},
+
+{
+"question": "For starting a D.C. motor a starter is required because",
+"options": [
+{"answer": "It limits the speed of the motor", "correct": false},
+{"answer": "It limits the starting current to a safe value", "correct": true},
+{"answer": "It starts the motor", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "In a D.C. shunt motor, under the conditions of maximum power, the current in the armature will be",
+"options": [
+{"answer": "Almost negligible", "correct": false},
+{"answer": "Rated full-load current", "correct": false},
+{"answer": "Less than full-load current", "correct": false},
+{"answer": "More than full-load current", "correct": true}
+]
+},
+
+{
+"question": "What is usually the starting resistance of a DC motor?",
+"options": [
+{"answer": "about 100 ohms", "correct": false},
+{"answer": "very large", "correct": false},
+{"answer": "about 1000 ohms", "correct": false},
+{"answer": "less", "correct": true}
+]
+},
+
+{
+"question": "Which type of shape is used for carbon brushes in DC machine?",
+"options": [
+{"answer": "Triangular", "correct": false},
+{"answer": "Square", "correct": true},
+{"answer": "Cylindrical", "correct": false},
+{"answer": "Semi-circular", "correct": false}
+]
+},
+
+{
+"question": "Brushes of D.C. machines are made of",
+"options": [
+{"answer": "carbon soft", "correct": true},
+{"answer": "copper hard", "correct": false},
+{"answer": "copper", "correct": false},
+{"answer": "all of the above", "correct": false}
+]
+},
+
+{
+"question": "Total electrical degrees for a 4 pole AC machine is equal to",
+"options": [
+{"answer": "180°", "correct": false},
+{"answer": "540°", "correct": false},
+{"answer": "720°", "correct": true},
+{"answer": "900°", "correct": false}
+]
+}
+
+
+  ];
+
+   
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-23 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-23</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+{
+"question": "If a current transformer has ratio 100:5 and ammeter connected to its secondary reads 2.5 A, the actual line current is:",
+"options": [
+{"answer": "12.5 A", "correct": false},
+{"answer": "250 A", "correct": false},
+{"answer": "50 A", "correct": true},
+{"answer": "0.125 A", "correct": false}
+]
+},
+
+{
+"question": "Primary winding of a transformer",
+"options": [
+{"answer": "Is always a low voltage winding", "correct": false},
+{"answer": "Is always a high voltage winding", "correct": false},
+{"answer": "Could either be a low voltage or high voltage winding", "correct": true},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "Which one of the following transformers has only single winding?",
+"options": [
+{"answer": "Autotransformer", "correct": true},
+{"answer": "Pulse transformer", "correct": false},
+{"answer": "Current transformer", "correct": false},
+{"answer": "Potential transformer", "correct": false}
+]
+},
+
+{
+"question": "Leakage flux in a transformer ___",
+"options": [
+{"answer": "helps in the transfer of energy", "correct": false},
+{"answer": "produces mutually-induced emf", "correct": false},
+{"answer": "is minimised by interleaving the primary and secondary windings", "correct": true},
+{"answer": "is negligible at full load", "correct": false}
+]
+},
+
+{
+"question": "Greater the secondary leakage flux",
+"options": [
+{"answer": "Less will be the secondary induced e.m.f.", "correct": true},
+{"answer": "Less will be the primary induced e.m.f.", "correct": false},
+{"answer": "Less will be the primary terminal voltage", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "The main reason for generation of harmonics in a transformer could be",
+"options": [
+{"answer": "Fluctuating load", "correct": false},
+{"answer": "Poor insulation", "correct": false},
+{"answer": "Mechanical vibrations", "correct": false},
+{"answer": "Saturation of core", "correct": true}
+]
+},
+
+{
+"question": "A transformer can have zero voltage regulation at",
+"options": [
+{"answer": "Leading power factor", "correct": true},
+{"answer": "Lagging power factor", "correct": false},
+{"answer": "Unity power factor", "correct": false},
+{"answer": "Zero power factor", "correct": false}
+]
+},
+
+{
+"question": "During a short circuit test, the iron losses are negligible, because:",
+"options": [
+{"answer": "Mutual flux is small", "correct": true},
+{"answer": "Current is high", "correct": false},
+{"answer": "Power factor is low", "correct": false},
+{"answer": "None of these", "correct": false}
+]
+},
+
+{
+"question": "Iron loss of a transformer can be measured by",
+"options": [
+{"answer": "Low power factor wattmeter", "correct": true},
+{"answer": "Unity power factor wattmeter", "correct": false},
+{"answer": "Frequency meter", "correct": false},
+{"answer": "Any type of wattmeter", "correct": false}
+]
+},
+
+{
+"question": "For a transformer, operating at constant load current, maximum efficiency will occur at",
+"options": [
+{"answer": "0.8 leading power factor", "correct": false},
+{"answer": "0.8 lagging power factor", "correct": false},
+{"answer": "Zero power factor", "correct": false},
+{"answer": "Unity power factor", "correct": true}
+]
+},
+
+{
+"question": "For the parallel operation of single phase transformers it is necessary that they should have",
+"options": [
+{"answer": "Same efficiency", "correct": false},
+{"answer": "Same polarity", "correct": true},
+{"answer": "Same kVA rating", "correct": false},
+{"answer": "Same number of turns on the secondary side", "correct": false}
+]
+},
+{
+"question": "A 40 kVA transformer has core loss of 400 W & full load copper loss of 800 W. The proportion of full load at maximum efficiency is –",
+"options": [
+{"answer": "50%", "correct": false},
+{"answer": "62.3%", "correct": false},
+{"answer": "70.7%", "correct": true},
+{"answer": "100%", "correct": false}
+]
+},
+
+{
+"question": "A transformer has an efficiency of 80% and works at 100 V and 4 KW. If the secondary voltage is 240 V, find the primary current.",
+"options": [
+{"answer": "18.5 A", "correct": false},
+{"answer": "40 A", "correct": true},
+{"answer": "30 A", "correct": false},
+{"answer": "20 A", "correct": false}
+]
+},
+
+{
+"question": "A 4 kVA transformer has an iron loss of 200 W and a full load copper loss of 200 W. The maximum efficiency at the unity power factor will be?",
+"options": [
+{"answer": "68.7%", "correct": false},
+{"answer": "70.9%", "correct": false},
+{"answer": "80.9%", "correct": false},
+{"answer": "90.9%", "correct": true}
+]
+},
+
+{
+"question": "Negative voltage regulation is indicative that the load is",
+"options": [
+{"answer": "Capacitive only", "correct": true},
+{"answer": "Inductive only", "correct": false},
+{"answer": "Inductive or resistive", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "The purpose of providing an iron core in a transformer is to",
+"options": [
+{"answer": "Provide support to windings", "correct": false},
+{"answer": "Reduce hysteresis loss", "correct": false},
+{"answer": "Decrease the reluctance of the magnetic path", "correct": true},
+{"answer": "Reduce eddy current losses", "correct": false}
+]
+},
+
+{
+"question": "In the CRGO silicon sheet steels, the silicon content is up to ___",
+"options": [
+{"answer": "3 Percent", "correct": true},
+{"answer": "1 Percent", "correct": false},
+{"answer": "5 Percent", "correct": false},
+{"answer": "10 Percent", "correct": false}
+]
+},
+
+{
+"question": "The power transformer is a constant",
+"options": [
+{"answer": "Voltage device", "correct": false},
+{"answer": "Current device", "correct": false},
+{"answer": "Power device", "correct": false},
+{"answer": "Primary Main flux device", "correct": true}
+]
+},
+
+{
+"question": "The magnetic flux path in a transformer must have ___",
+"options": [
+{"answer": "high resistance", "correct": false},
+{"answer": "low resistance", "correct": false},
+{"answer": "high reluctance", "correct": false},
+{"answer": "low reluctance", "correct": true}
+]
+},
+
+{
+"question": "Which among the following is a type of three phase transformer connection?",
+"options": [
+{"answer": "Only 1", "correct": false},
+{"answer": "All 1, 2 & 3", "correct": true},
+{"answer": "Only 2 & 3", "correct": false},
+{"answer": "Only 1 & 2", "correct": false}
+]
+},
+
+{
+"question": "Which of the following is the correct use of 'delta/delta' connections?",
+"options": [
+{"answer": "This connection is economical for HV transformers.", "correct": false},
+{"answer": "This is used for smaller power systems.", "correct": false},
+{"answer": "This is the best match for ultra HV transformers.", "correct": false},
+{"answer": "This suits large LV transformers.", "correct": true}
+]
+},
+{
+"question": "There is a phase difference of___ between the corresponding phases of primary and secondary___ in a star/delta transformer.",
+"options": [
+{"answer": "30 degrees, Voltage", "correct": true},
+{"answer": "60 degrees, Voltage", "correct": false},
+{"answer": "Zero degree, Current", "correct": false},
+{"answer": "45 degrees, Current", "correct": false}
+]
+},
+
+{
+"question": "Star/star transformers work satisfactorily when",
+"options": [
+{"answer": "load is unbalanced only", "correct": false},
+{"answer": "load is balanced only", "correct": true},
+{"answer": "on balanced as well as unbalanced loads", "correct": false},
+{"answer": "none of the above", "correct": false}
+]
+},
+
+{
+"question": "Delta/star transformer works satisfactorily when",
+"options": [
+{"answer": "load is balanced only", "correct": false},
+{"answer": "load is unbalanced only", "correct": false},
+{"answer": "on balanced as well as unbalanced loads", "correct": true},
+{"answer": "none of the above", "correct": false}
+]
+},
+
+{
+"question": "When a V-V system is converted into a Δ-Δ system, the capacity of the system increases by __.",
+"options": [
+{"answer": "86.6%", "correct": false},
+{"answer": "66.7%", "correct": false},
+{"answer": "73.2%", "correct": true},
+{"answer": "50%", "correct": false}
+]
+},
+
+{
+"question": "Short circuit test is performed on a transformer with a certain impressed voltage at rated frequency. If the short circuit test is now performed with the same magnitude of impressed voltage, but at a frequency higher than the rated frequency then the magnitude of current:",
+"options": [
+{"answer": "And power-factor will both increase", "correct": false},
+{"answer": "Will decrease but the power factor will increase", "correct": false},
+{"answer": "Will increase, but power factor will decrease", "correct": false},
+{"answer": "And power factor will both decrease", "correct": true}
+]
+},
+
+{
+"question": "In case of a transformer",
+"options": [
+{"answer": "volts/turn of high and low voltage windings are different.", "correct": false},
+{"answer": "volts/turn of high voltage winding is greater than low voltage winding.", "correct": false},
+{"answer": "volts/turn of low voltage winding is greater than high voltage winding.", "correct": false},
+{"answer": "volts/turn of both low and high voltage windings are equal.", "correct": true}
+]
+},
+
+{
+"question": "Two transformers operating in parallel will share the load depending upon their ___.",
+"options": [
+{"answer": "Ratings", "correct": false},
+{"answer": "Leakage Reactance", "correct": false},
+{"answer": "Per unit Impedance", "correct": true},
+{"answer": "Efficiency", "correct": false}
+]
+},
+
+{
+"question": "Auto-transformer makes effective saving on copper and copper losses, when its transformation ratio is",
+"options": [
+{"answer": "approximately equal to one", "correct": true},
+{"answer": "less than one", "correct": false},
+{"answer": "greater than one", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "While performing short-circuit test on transformer the impressed voltage magnitude is kept constant but the frequency is increased. The short-circuit current will",
+"options": [
+{"answer": "increase", "correct": false},
+{"answer": "decrease", "correct": true},
+{"answer": "remains same", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "The colour of the fresh silica gel used in breather of the transformer is:",
+"options": [
+{"answer": "Blue", "correct": true},
+{"answer": "White", "correct": false},
+{"answer": "Green", "correct": false},
+{"answer": "Violet", "correct": false}
+]
+},
+{
+"question": "The colour of silica gel in dry condition is ___",
+"options": [
+{"answer": "Blue", "correct": true},
+{"answer": "White", "correct": false},
+{"answer": "Green", "correct": false},
+{"answer": "Violet", "correct": false}
+]
+},
+
+{
+"question": "Which of the following acts as a protection against high voltage surges due to lightning and switching?",
+"options": [
+{"answer": "Horn gaps", "correct": true},
+{"answer": "Thermal overload relays", "correct": false},
+{"answer": "Breather", "correct": false},
+{"answer": "Conservator", "correct": false}
+]
+},
+
+{
+"question": "Sumpner's test is conducted on transformers to determine",
+"options": [
+{"answer": "Temperature", "correct": false},
+{"answer": "Stray losses", "correct": true},
+{"answer": "All-day efficiency", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "A Buchholz relay can be installed on",
+"options": [
+{"answer": "Auto-transformers", "correct": false},
+{"answer": "Air-cooled transformers", "correct": false},
+{"answer": "Welding transformers", "correct": false},
+{"answer": "Oil cooled transformers", "correct": true}
+]
+},
+
+{
+"question": "An ideal transformer is one which has",
+"options": [
+{"answer": "No losses and magnetic leakage", "correct": true},
+{"answer": "Interleaved primary and secondary windings", "correct": false},
+{"answer": "A common core for its primary and secondary windings", "correct": false},
+{"answer": "Core of stainless steel and winding of pure copper metal", "correct": false}
+]
+},
+
+{
+"question": "High frequency transformer cores are generally made from",
+"options": [
+{"answer": "Ferrites", "correct": true},
+{"answer": "Mu-metal", "correct": false},
+{"answer": "Mone-metal", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "Two windings of transformer are designed as:",
+"options": [
+{"answer": "primary and h.v. windings", "correct": false},
+{"answer": "h.v. and l.v. windings or equal voltage windings", "correct": true},
+{"answer": "secondary and l.v. windings or primary and l.v. windings", "correct": false},
+{"answer": "primary and secondary windings", "correct": false}
+]
+},
+
+{
+"question": "No-load current in a transformer",
+"options": [
+{"answer": "Lags behind the voltage by about 75°", "correct": true},
+{"answer": "Leads the voltage by about 75°", "correct": false},
+{"answer": "Lags behind the voltage by about 15°", "correct": false},
+{"answer": "Leads the voltage by about 15°", "correct": false}
+]
+},
+{
+"question": "“No load” test on transformers is done to determine which of the following?",
+"options": [
+{"answer": "Magnetizing current", "correct": false},
+{"answer": "Iron losses", "correct": false},
+{"answer": "Both (A) and (B)", "correct": true},
+{"answer": "To check transformer capacity Copper losses", "correct": false}
+]
+},
+
+{
+"question": "The no-load current drawn by a transformer is usually _____ of the full-load current.",
+"options": [
+{"answer": "15 to 20 percent", "correct": false},
+{"answer": "2 to 5 percent", "correct": true},
+{"answer": "0.2 to 0.5 percent", "correct": false},
+{"answer": "10 to 15 percent", "correct": false}
+]
+},
+
+{
+"question": "In a given transformer for given applied voltage, losses which remain constant irrespective of load changes are",
+"options": [
+{"answer": "Friction and windage losses", "correct": false},
+{"answer": "Copper losses", "correct": false},
+{"answer": "Hysteresis and eddy current losses", "correct": true},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "The size of a transformer core will depend on",
+"options": [
+{"answer": "Frequency", "correct": false},
+{"answer": "Area of the core", "correct": false},
+{"answer": "Flux density of the core material", "correct": false},
+{"answer": "Both (A) and (B)", "correct": true}
+]
+},
+
+{
+"question": "As the load on the transformer is increased, the core losses:",
+"options": [
+{"answer": "may decrease or increase slightly depending upon the nature of the load", "correct": false},
+{"answer": "remain constant", "correct": true},
+{"answer": "increase slightly", "correct": false},
+{"answer": "decrease slightly", "correct": false}
+]
+},
+
+{
+"question": "The full-load copper loss of a transformer is 1600 W. At half-load, the copper loss will be",
+"options": [
+{"answer": "6400 W", "correct": false},
+{"answer": "1600 W", "correct": false},
+{"answer": "800 W", "correct": false},
+{"answer": "400 W", "correct": true}
+]
+},
+
+{
+"question": "The efficiency of two identical transformers under load conditions can be determined by",
+"options": [
+{"answer": "Short-circuit test", "correct": false},
+{"answer": "Back-to-back test", "correct": true},
+{"answer": "Open circuit test", "correct": false},
+{"answer": "Any of the above", "correct": false}
+]
+},
+
+{
+"question": "The permissible flux density in case of cold rolled grain oriented steel is around",
+"options": [
+{"answer": "1.7 Wb/m2", "correct": true},
+{"answer": "2.7 Wb/m2", "correct": false},
+{"answer": "3.7 Wb/m2", "correct": false},
+{"answer": "4.7 Wb/m2", "correct": false}
+]
+},
+
+{
+"question": "Natural air cooling is used for transformer of rating up to:",
+"options": [
+{"answer": "5 -10 Kva", "correct": true},
+{"answer": "2000 Kva", "correct": false},
+{"answer": "3000 kVA", "correct": false},
+{"answer": "50 MVA", "correct": false}
+]
+},
+
+{
+"question": "The use of higher flux density in the transformer design",
+"options": [
+{"answer": "Reduces weight per kVA", "correct": true},
+{"answer": "Reduces iron losses", "correct": false},
+{"answer": "Reduces copper losses", "correct": false},
+{"answer": "Increases part load efficiency", "correct": false}
+]
+},
+{
+"question": "In a transformer, sludging is principally due to-",
+"options": [
+{"answer": "Moisture present in oil", "correct": false},
+{"answer": "Dust particles present inside the tank", "correct": false},
+{"answer": "Decomposition of oil", "correct": true},
+{"answer": "Vaporization of oil", "correct": false}
+]
+}
+
+
+
+  ];
+
+ 
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

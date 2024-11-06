@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-17 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-17</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+
+
+    // Sample question data in JSON format
+    const questions = [
+      {
+        "question": "A power factor meter has",
+        "options": [
+          { "answer": "One current circuit and two pressure circuits", "correct": true },
+          { "answer": "One current circuit and one pressure circuit", "correct": false },
+          { "answer": "Two current circuits and one pressure circuit", "correct": false },
+          { "answer": "None of the above", "correct": false }
+        ]
+      },
+      {
+        "question": "A capacitor bank is connected across the stator terminals of the Induction generator and loaded into a Wind Energy conversion system to:",
+        "options": [
+          { "answer": "supply reactive power to both the machine and load", "correct": true },
+          { "answer": "provide starting torque", "correct": false },
+          { "answer": "supply reactive power to the load", "correct": false },
+          { "answer": "supply reactive power to the machine", "correct": false }
+        ]
+      },
+     {
+      "question": "Power plant cannot have single unit of 100 MW.",
+      "options": [
+        { "answer": "Hydroelectric", "correct": false },
+        { "answer": "Nuclear", "correct": false },
+        { "answer": "Steam", "correct": false },
+        { "answer": "Diesel", "correct": true }
+      ]
+    },
+
+    {
+      "question": "Static capacitors are rated in terms of",
+      "options": [
+        { "answer": "kW", "correct": false },
+        { "answer": "kWh", "correct": false },
+        { "answer": "kVAR", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Is the reserved generating capacity available for service under emergency conditions which is not kept in operation but in working order?",
+      "options": [
+        { "answer": "Hot reserve", "correct": false },
+        { "answer": "Cold reserve", "correct": true },
+        { "answer": "Spinning reserve", "correct": false },
+        { "answer": "Firm power", "correct": false }
+      ]
+    },
+    {
+      "question": "The power which must be available ever under emergency is known as:",
+      "options": [
+        { "answer": "Spinning Reserve", "correct": false },
+        { "answer": "Cold Reserve", "correct": false },
+        { "answer": "Firm Reserve", "correct": true },
+        { "answer": "Hot Reserve", "correct": false }
+      ]
+    },
+    {
+      "question": "Large capacity generators are invariably",
+      "options": [
+        { "answer": "Water cooled", "correct": false },
+        { "answer": "Natural air cooled", "correct": false },
+        { "answer": "Forced air cooled", "correct": false },
+        { "answer": "Hydrogen cooled", "correct": true }
+      ]
+    },
+    {
+      "question": "_______ will offer the least load.",
+      "options": [
+        { "answer": "Vacuum cleaner", "correct": false },
+        { "answer": "Television", "correct": false },
+        { "answer": "Hair dryer", "correct": false },
+        { "answer": "Electric shaver", "correct": true }
+      ]
+    },
+    {
+      "question": "The load factor of domestic load is usually",
+      "options": [
+        { "answer": "10 to 15 %", "correct": true },
+        { "answer": "30 to 40 %", "correct": false },
+        { "answer": "50 to 60 %", "correct": false },
+        { "answer": "60 to 70 %", "correct": false }
+      ]
+    },
+    {
+      "question": "A consumer has to pay lesser fixed charges in",
+      "options": [
+        { "answer": "Flat rate tariff", "correct": false },
+        { "answer": "Two part tariff", "correct": false },
+        { "answer": "Maximum demand tariff", "correct": true },
+        { "answer": "Any of the above", "correct": false }
+      ]
+    },
+
+
+    {
+      "question": "The DC output voltage of a lead-acid cell is",
+      "options": [
+        { "answer": "1.35 V", "correct": false },
+        { "answer": "1.5 V", "correct": false },
+        { "answer": "2.1 V", "correct": true },
+        { "answer": "about 12 V", "correct": false }
+      ]
+    },
+    {
+      "question": "Method of increasing the current rating of a battery",
+      "options": [
+        { "answer": "Increase the number of cells in series", "correct": false },
+        { "answer": "Increase the number of cells in parallel", "correct": true },
+        { "answer": "Increase the specific gravity of the electrolyte", "correct": false },
+        { "answer": "Increase the size of the plates", "correct": false }
+      ]
+    },
+    {
+      "question": "The nominal voltage for lead-acid cells is",
+      "options": [
+        { "answer": "24 V", "correct": false },
+        { "answer": "2 V", "correct": true },
+        { "answer": "1.4 V", "correct": false },
+        { "answer": "12 V", "correct": false }
+      ]
+    },
+    {
+      "question": "If the nominal voltage of a given battery is 1.2 V, what is the type of cell used?",
+      "options": [
+        { "answer": "Lithium ion", "correct": false },
+        { "answer": "Lead acid", "correct": false },
+        { "answer": "Nickel cadmium", "correct": true },
+        { "answer": "Zinc silver oxide", "correct": false }
+      ]
+    },
+    {
+      "question": "A type of electrical battery which can be charged, discharged into a load, and then recharged many times is called",
+      "options": [
+        { "answer": "Rechargeable battery", "correct": false },
+        { "answer": "Secondary battery", "correct": false },
+        { "answer": "Primary battery", "correct": false },
+        { "answer": "Both A and B", "correct": true }
+      ]
+    },
+    {
+      "question": "A battery charger acts like a",
+      "options": [
+        { "answer": "Converter", "correct": false },
+        { "answer": "Rectifier", "correct": true },
+        { "answer": "Cycloconverter", "correct": false },
+        { "answer": "Chopper", "correct": false }
+      ]
+    },
+    {
+      "question": "In order to increase the ampere-hour rating of a battery, cells are connected in",
+      "options": [
+        { "answer": "Series", "correct": false },
+        { "answer": "Parallel", "correct": true },
+        { "answer": "Series-parallel", "correct": false },
+        { "answer": "Star", "correct": false }
+      ]
+    },
+    {
+      "question": "To prevent local action in a battery, only _______ is used in electrolytes",
+      "options": [
+        { "answer": "Pump water", "correct": false },
+        { "answer": "Distilled water", "correct": true },
+        { "answer": "Tap water", "correct": false },
+        { "answer": "Both A and B", "correct": false }
+      ]
+    },
+    {
+      "question": "Current Control Mode is used for",
+      "options": [
+        { "answer": "Fluctuating Battery Charging", "correct": false },
+        { "answer": "Slow Charging", "correct": false },
+        { "answer": "Constant Battery Charging", "correct": true },
+        { "answer": "Fast Battery Charging", "correct": false }
+      ]
+    },
+    {
+      "question": "The ratio of ampere-hour efficiency to watt-hour efficiency of a lead-acid cell is",
+      "options": [
+        { "answer": "Just one", "correct": false },
+        { "answer": "Always greater than one", "correct": true },
+        { "answer": "Always less than one", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "The ampere-hour efficiency of lead-acid batteries is usually between",
+      "options": [
+        { "answer": "90 – 95%", "correct": true },
+        { "answer": "55 – 60%", "correct": false },
+        { "answer": "0 – 20%", "correct": false },
+        { "answer": "30 – 35%", "correct": false }
+      ]
+    },
+    {
+      "question": "The active material of a nickel-iron battery is",
+      "options": [
+        { "answer": "21% solution of H2SO4", "correct": false },
+        { "answer": "Powdered NaCl and its oxide", "correct": false },
+        { "answer": "98% solution of KCl", "correct": false },
+        { "answer": "Nickel hydroxide", "correct": true }
+      ]
+    },
+    {
+      "question": "A lead-acid battery should NOT be discharged beyond",
+      "options": [
+        { "answer": "3.75 V", "correct": false },
+        { "answer": "2.2 V", "correct": false },
+        { "answer": "1.8 V", "correct": true },
+        { "answer": "5 V", "correct": false }
+      ]
+    },
+    {
+      "question": "The cells are connected in series to",
+      "options": [
+        { "answer": "Increase the current output", "correct": false },
+        { "answer": "Increase the voltage output", "correct": true },
+        { "answer": "Decrease the internal resistance", "correct": false },
+        { "answer": "Decrease the amount of charging voltage required", "correct": false }
+      ]
+    },
+    {
+      "question": "A typical output of a solar cell is",
+      "options": [
+        { "answer": "0.1 V", "correct": false },
+        { "answer": "0.26 V", "correct": true },
+        { "answer": "1.1 V", "correct": false },
+        { "answer": "2 V", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following primary cells has the highest voltage?",
+      "options": [
+        { "answer": "Manganese-alkaline", "correct": false },
+        { "answer": "Carbon-zinc", "correct": false },
+        { "answer": "Lithium", "correct": true },
+        { "answer": "Mercury", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following primary cells has the lowest voltage?",
+      "options": [
+        { "answer": "Lithium", "correct": false },
+        { "answer": "Zinc-chloride", "correct": false },
+        { "answer": "Mercury", "correct": true },
+        { "answer": "Carbon-zinc", "correct": false }
+      ]
+    },
+    {
+      "question": "Five 2 V cells are connected in parallel. The output voltage is",
+      "options": [
+        { "answer": "1 V", "correct": false },
+        { "answer": "1.5 V", "correct": false },
+        { "answer": "1.75 V", "correct": false },
+        { "answer": "2 V", "correct": true }
+      ]
+    },
+    {
+      "question": "Overcharging",
+      "options": [
+        { "answer": "Produces excessive gassing", "correct": false },
+        { "answer": "Loosens the active material", "correct": false },
+        { "answer": "Increases the temperature resulting in buckling of plates", "correct": false },
+        { "answer": "All above", "correct": true }
+      ]
+    },
+    {
+      "question": "In constant-current charging method, the supply voltage from discharged to fully charged condition",
+      "options": [
+        { "answer": "Decreases", "correct": false },
+        { "answer": "Increases", "correct": true },
+        { "answer": "Remains constant", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+
+  {
+    "question": " Sulphated cells are indicated by",
+    "options": [
+      { "answer": "The loss of capacity of the cell", "correct": false },
+      { "answer": "The decrease of the specific gravity", "correct": false },
+      { "answer": "The low voltage of the cell on discharge", "correct": false },
+      { "answer": "All above conditions", "correct": true }
+    ]
+  },
+  {
+    "question": " Specific gravity of electrolyte in Edison cell is",
+    "options": [
+      { "answer": "0.8", "correct": false },
+      { "answer": "0.95", "correct": false },
+      { "answer": "1.1", "correct": false },
+      { "answer": "1.21", "correct": true }
+    ]
+  },
+  {
+    "question": " A constant-voltage generator has",
+    "options": [
+      { "answer": "Minimum efficiency", "correct": false },
+      { "answer": "Minimum current capacity", "correct": false },
+      { "answer": "Low internal resistance", "correct": true },
+      { "answer": "High internal resistance", "correct": false }
+    ]
+  },
+  {
+    "question": " An ideal constant voltage source has internal resistance (LMRC Assistant Manager (S&T) Official Paper (Held on 2016)",
+    "options": [
+      { "answer": "0", "correct": true },
+      { "answer": "∞", "correct": false },
+      { "answer": "1", "correct": false },
+      { "answer": "2", "correct": false }
+    ]
+  },
+  {
+    "question": " The watt-hour efficiency of a lead-acid cell varies between (ALP CBT 2 Electrician Previous Paper: Held on 23 Jan 2019)",
+    "options": [
+      { "answer": "25 to 35%", "correct": false },
+      { "answer": "40 to 60%", "correct": false },
+      { "answer": "70 to 80%", "correct": false },
+      { "answer": "90 to 95%", "correct": true }
+    ]
+  },
+  {
+    "question": " Life of the Edison cell is at least",
+    "options": [
+      { "answer": "Five years", "correct": true },
+      { "answer": "Seven years", "correct": false },
+      { "answer": "Eight years", "correct": false },
+      { "answer": "Ten years", "correct": false }
+    ]
+  },
+  {
+    "question": " Capacity of a battery is expressed in",
+    "options": [
+      { "answer": "Ah", "correct": true },
+      { "answer": "Vh", "correct": false },
+      { "answer": "Wh", "correct": false },
+      { "answer": "kWh", "correct": false }
+    ]
+  },
+  {
+    "question": " On the average the ampere-hour efficiency of an Edison cell is about",
+    "options": [
+      { "answer": "40%", "correct": false },
+      { "answer": "60%", "correct": false },
+      { "answer": "70%", "correct": false },
+      { "answer": "80%", "correct": true }
+    ]
+  },
+  {
+    "question": " Batteries are charged by",
+    "options": [
+      { "answer": "Rectifiers", "correct": false },
+      { "answer": "Engine generator sets", "correct": false },
+      { "answer": "Motor generator sets", "correct": false },
+      { "answer": "Any one of the above methods", "correct": true }
+    ]
+  },
+  {
+    "question": " The current flow through electrolyte is due to the movement of",
+    "options": [
+      { "answer": "Ions", "correct": true },
+      { "answer": "Holes", "correct": false },
+      { "answer": "Electrons", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": " The term trickle charge is associated with",
+    "options": [
+      { "answer": "Dry cell", "correct": false },
+      { "answer": "Silver zinc battery", "correct": false },
+      { "answer": "Lead acid battery", "correct": true },
+      { "answer": "Nickel iron battery", "correct": false }
+    ]
+  },
+  {
+    "question": " A 6 V lead acid battery has an internal resistance of 0.01 Ω. How much current will flow when the battery is short circuited?",
+    "options": [
+      { "answer": "1 A", "correct": false },
+      { "answer": "6 A", "correct": false },
+      { "answer": "100 A", "correct": false },
+      { "answer": "600 A", "correct": true }
+    ]
+  },
+  {
+    "question": " The internal resistance of lead acid cell is _______________ that of Edison cell.",
+    "options": [
+      { "answer": "Less than", "correct": true },
+      { "answer": "More than", "correct": false },
+      { "answer": "Equal to", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": " Electrics supply for electroplating should be",
+    "options": [
+      { "answer": "Low AC voltage", "correct": false },
+      { "answer": "Low frequency AC voltage", "correct": false },
+      { "answer": "DC voltage", "correct": true },
+      { "answer": "Any of the above", "correct": false }
+    ]
+  },
+  {
+    "question": " Current efficiency in electroplating is usually",
+    "options": [
+      { "answer": "99%", "correct": false },
+      { "answer": "90 to 98%", "correct": true },
+      { "answer": "70 to 80%", "correct": false },
+      { "answer": "50 to 60%", "correct": false }
+    ]
+  },
+  {
+    "question": " Galvanizing is the coating of",
+    "options": [
+      { "answer": "Lead", "correct": false },
+      { "answer": "Chromium", "correct": false },
+      { "answer": "Brass", "correct": false },
+      { "answer": "Zinc", "correct": true }
+    ]
+  },
+  {
+    "question": " Energy efficiency during electroplating is usually in the range",
+    "options": [
+      { "answer": "50 to 80%", "correct": true },
+      { "answer": "80 to 85%", "correct": false },
+      { "answer": "85 to 90%", "correct": false },
+      { "answer": "90 to 99%", "correct": false }
+    ]
+  },
+  {
+    "question": " The ratio of ampere-hour efficiency to watt-hour efficiency of a lead acid cell is",
+    "options": [
+      { "answer": "Just one", "correct": false },
+      { "answer": "Always greater than one", "correct": true },
+      { "answer": "Always less than one", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": " Open circuit voltage of a fully charged lead acid cell is",
+    "options": [
+      { "answer": "1.9 V", "correct": false },
+      { "answer": "2 V", "correct": false },
+      { "answer": "2.7 V", "correct": true },
+      { "answer": "2.5 V", "correct": false }
+    ]
+  },
+  {
+    "question": " A fuel cell converts………energy into electrical energy",
+    "options": [
+      { "answer": "Solar", "correct": false },
+      { "answer": "Magnetic", "correct": false },
+      { "answer": "Mechanical", "correct": false },
+      { "answer": "Chemical", "correct": true }
+    ]
+  }
+
+
+    ];
+
+   let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

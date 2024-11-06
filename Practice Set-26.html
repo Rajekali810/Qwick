@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-26 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-26</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+{
+"question": "If the voltage and current in a circuit are given by: ν = 10 sin (ωt – π/6) and i = 10 sin (ωt + π/6), The power consumed is given as:",
+"options": [
+{"answer": "25 watts", "correct": true},
+{"answer": "100 watts", "correct": false},
+{"answer": "50 watts", "correct": false},
+{"answer": "86.6 watts", "correct": false}
+]
+},
+{
+"question": "Two capacitors each having capacitance C and breakdown voltage V are joined in series. The capacitance and the breakdown voltage of the combination will be",
+"options": [
+{"answer": "2C and 2V", "correct": false},
+{"answer": "C/2 and V/2", "correct": false},
+{"answer": "2C and V/2", "correct": false},
+{"answer": "C/2 and 2V", "correct": true}
+]
+},
+
+{
+"question": "The resistance of a conductor of diameter 'd' and length 'l' is R Ω. If the diameter of the conductor is halved and its length is doubled, the resistance will be",
+"options": [
+{"answer": "R Ω", "correct": false},
+{"answer": "2R Ω", "correct": false},
+{"answer": "4R Ω", "correct": false},
+{"answer": "8R Ω", "correct": true}
+]
+},
+
+{
+"question": "Calculate the equivalent resistance if two resistors of 50Ω connected in parallel with a series resistor of 25Ω",
+"options": [
+{"answer": "50 Ω", "correct": true},
+{"answer": "12.5 Ω", "correct": false},
+{"answer": "75 Ω", "correct": false},
+{"answer": "125 Ω", "correct": false}
+]
+},
+
+{
+"question": "Norton Theorem states that an entire network connected to a pair of terminals can be replaced with",
+"options": [
+{"answer": "a single voltage source in parallel with single resistance", "correct": false},
+{"answer": "a single current source in parallel with a single resistance", "correct": true},
+{"answer": "a single voltage source in series with a single resistance", "correct": false},
+{"answer": "a single current source in series with a single resistance", "correct": false}
+]
+},
+
+{
+"question": "For calculating Norton's current in Norton's theorem, load terminals",
+"options": [
+{"answer": "remain connected with the load", "correct": false},
+{"answer": "are short circuited", "correct": true},
+{"answer": "are open circuited", "correct": false},
+{"answer": "are interchanged", "correct": false}
+]
+},
+
+{
+"question": "Dual of Norton's theorem is ___",
+"options": [
+{"answer": "Superposition theorem", "correct": false},
+{"answer": "Thevenin's theorem", "correct": true},
+{"answer": "Millman's theorem", "correct": false},
+{"answer": "Maximum power transfer theorem", "correct": false}
+]
+},
+{
+"question": "Which linear circuit can be used as an equivalent circuit for a single voltage source and a series resistance?",
+"options": [
+{"answer": "Superposition", "correct": false},
+{"answer": "Thevenin’s", "correct": true},
+{"answer": "Norton’s", "correct": false},
+{"answer": "Maximum power equivalent circuit", "correct": false}
+]
+},
+
+{
+"question": "A pure inductor is connected to an ac source. The current in it",
+"options": [
+{"answer": "lags the voltage by one-fourth of a cycle", "correct": true},
+{"answer": "leads the voltage by one-fourth of a cycle", "correct": false},
+{"answer": "lags the voltage by one-half of a cycle", "correct": false},
+{"answer": "leads the voltage by one-half of a cycle", "correct": false}
+]
+},
+
+{
+"question": "What will be self-inductance of a coil of 200 turns in which a current of 2A produces a magnetic flux of 4 mWb?",
+"options": [
+{"answer": "0.1 H", "correct": false},
+{"answer": "0.2 H", "correct": false},
+{"answer": "0.3 H", "correct": false},
+{"answer": "0.4 H", "correct": true}
+]
+},
+
+{
+"question": "Two heaters rated at 1000 W, 250 V each are connected in series across a 250 V, 50 Hz ac mains. The total power drawn from the supply would be ___ watt.",
+"options": [
+{"answer": "1000", "correct": false},
+{"answer": "500", "correct": true},
+{"answer": "250", "correct": false},
+{"answer": "2000", "correct": false}
+]
+},
+
+{
+"question": "There are 2000 turns of copper wire in a coil and its cross-sectional area is 0.8 mm2. The mean length per turn is 80 cm and the resistivity of copper is 0.02 μΩ-m. Find the resistance of the coil.",
+"options": [
+{"answer": "25 Ω", "correct": false},
+{"answer": "40 Ω", "correct": true},
+{"answer": "20 Ω", "correct": false},
+{"answer": "4 Ω", "correct": false}
+]
+},
+
+{
+"question": "The current in self-inductance L = 40 mH is to be increased uniformly from 1A to 11A in 4 ms. The e.m.f. induced in the inductor during the process is",
+"options": [
+{"answer": "100 volt", "correct": true},
+{"answer": "0.4 volt", "correct": false},
+{"answer": "4.0 volt", "correct": false},
+{"answer": "440 volt", "correct": false}
+]
+},
+
+{
+"question": "Which one of the following law is based on the principle of conservation of electric charge?",
+"options": [
+{"answer": "Kirchhoff’s Current Law", "correct": true},
+{"answer": "Kirchhoff’s Voltage Law", "correct": false},
+{"answer": "Ohm’s Law", "correct": false},
+{"answer": "Coulomb’s Law", "correct": false}
+]
+},
+
+{
+"question": "If a capacitance is charged by a square wave current source, then the voltage across the capacitor will be",
+"options": [
+{"answer": "Square wave", "correct": false},
+{"answer": "Step function", "correct": false},
+{"answer": "Triangular wave", "correct": true},
+{"answer": "Zero", "correct": false}
+]
+},
+{
+"question": "In which of the following circuits, The transient currents may not occur?",
+"options": [
+{"answer": "Pure resistive circuits", "correct": true},
+{"answer": "Pure capacitive circuits", "correct": false},
+{"answer": "Pure inductive circuits", "correct": false},
+{"answer": "RLC circuits", "correct": false}
+]
+},
+
+{
+"question": "The transient currents are associated with the",
+"options": [
+{"answer": "Changes in the stored energy in the inductors and capacitors", "correct": true},
+{"answer": "Impedance of the circuit", "correct": false},
+{"answer": "Applied voltage to the circuit", "correct": false},
+{"answer": "Resistance of the circuit", "correct": false}
+]
+},
+
+{
+"question": "To a highly inductive circuit, a small capacitance is added in series, the angle between voltage and current will:",
+"options": [
+{"answer": "Decrease", "correct": true},
+{"answer": "Become indeterminate", "correct": false},
+{"answer": "Increase", "correct": false},
+{"answer": "Remain same", "correct": false}
+]
+},
+
+{
+"question": "A 50 Hz alternating voltage of 150 V rms is independently supplied to a 10-ohm resistance. Determine the expression for the instantaneous current",
+"options": [
+{"answer": "i = 7.07 sin(100πt)", "correct": false},
+{"answer": "i = 21.213 sin(314πt)", "correct": false},
+{"answer": "i = 21.213 sin(100πt)", "correct": true},
+{"answer": "i = 7.07 sin(314πt)", "correct": false}
+]
+},
+
+{
+"question": "When a source is delivering maximum power to a load, the efficiency of the circuit is always",
+"options": [
+{"answer": "50%", "correct": true},
+{"answer": "75%", "correct": false},
+{"answer": "100%", "correct": false},
+{"answer": "Depends on the circuit parameters", "correct": false}
+]
+},
+
+{
+"question": "What does Millman’s theorem yield?",
+"options": [
+{"answer": "Equivalent voltage source", "correct": true},
+{"answer": "Equivalent resistance", "correct": false},
+{"answer": "Equivalent admittance", "correct": false},
+{"answer": "Equivalent impedance", "correct": false}
+]
+},
+
+{
+"question": "In order to get maximum power transfer from a capacitive source, the load must",
+"options": [
+{"answer": "have a capacitive reactance equal to circuit resistance", "correct": false},
+{"answer": "have an impedance that is the complex conjugate of the source impedance", "correct": true},
+{"answer": "be as capacitive as it is inductive", "correct": false},
+{"answer": "none of the above", "correct": false}
+]
+},
+
+{
+"question": "Specific resistance of a conductor depends upon",
+"options": [
+{"answer": "dimensions of the conductor", "correct": false},
+{"answer": "composition of conductor material", "correct": true},
+{"answer": "resistance of the conductor", "correct": false},
+{"answer": "both (a) and (b)", "correct": false}
+]
+},
+
+{
+"question": "For making a capacitor, it is better to select a dielectric having",
+"options": [
+{"answer": "low permittivity", "correct": false},
+{"answer": "high permittivity", "correct": true},
+{"answer": "permittivity same as that of air", "correct": false},
+{"answer": "permittivity slightly more than that of air", "correct": false}
+]
+},
+
+{
+"question": "The surface integral of the normal component of the electric displacement D over any closed surface equals the charge enclosed by the surface",
+"options": [
+{"answer": "Gauss's law", "correct": true},
+{"answer": "Kirchhoff s law", "correct": false},
+{"answer": "Faraday's law", "correct": false},
+{"answer": "Lenz's law", "correct": false}
+]
+}
+
+  ];
+
+   
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

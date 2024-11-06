@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-25 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-25</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+{
+"question": "A linear element satisfies the property (ies) of:",
+"options": [
+{"answer": "Multiplicity and Superposition", "correct": false},
+{"answer": "Superposition", "correct": false},
+{"answer": "Homogeneity", "correct": false},
+{"answer": "Superposition and Homogeneity", "correct": true}
+]
+},
+
+{
+"question": "If a capacitor stores 100 μC charge at 10 volts, the capacitance value is",
+"options": [
+{"answer": "1000 μF", "correct": false},
+{"answer": "10 μF", "correct": true},
+{"answer": "1 μF", "correct": false},
+{"answer": "100 μF", "correct": false}
+]
+},
+
+{
+"question": "A filament lamp of 40 W, 110 V is connected in series with resistance R. If the supply voltage is 230 V, the value of resistance R should be-",
+"options": [
+{"answer": "1340 ohm", "correct": false},
+{"answer": "130 ohm", "correct": false},
+{"answer": "240 ohm", "correct": false},
+{"answer": "330 ohm", "correct": true}
+]
+},
+
+{
+"question": "The value of temperature coefficient of resistance of a given conductor ____.",
+"options": [
+{"answer": "is different at different given temperatures", "correct": true},
+{"answer": "is same at different given temperatures", "correct": false},
+{"answer": "increases as temperature is increased", "correct": false},
+{"answer": "remains always constant", "correct": false}
+]
+},
+{
+"question": "Ohm’s law is applicable to",
+"options": [
+{"answer": "semi conductors", "correct": false},
+{"answer": "vacuum tubes", "correct": false},
+{"answer": "electrolytes", "correct": false},
+{"answer": "none of these", "correct": true}
+]
+},
+
+{
+"question": "If an ideal voltage source and ideal current source are connected in series, the combination",
+"options": [
+{"answer": "Has the same properties as a current source alone", "correct": true},
+{"answer": "Has the same properties as a voltage source alone", "correct": false},
+{"answer": "Has the some properties as the source which has a higher value", "correct": false},
+{"answer": "Results in the branch being redundant", "correct": false}
+]
+},
+
+{
+"question": "An ideal voltage source should have",
+"options": [
+{"answer": "Infinite source resistance", "correct": false},
+{"answer": "large value of e.m.f.", "correct": false},
+{"answer": "small value of e.m.f.", "correct": false},
+{"answer": "zero source resistance", "correct": true}
+]
+},
+
+{
+"question": "The ideal current source will have",
+"options": [
+{"answer": "high internal resistance", "correct": false},
+{"answer": "zero internal resistance", "correct": false},
+{"answer": "an infinite internal resistance", "correct": true},
+{"answer": "low internal resistance", "correct": false}
+]
+},
+
+{
+"question": "According to Ohm's law, the linear relationship between V and I does not apply to ____.",
+"options": [
+{"answer": "Copper conductors", "correct": false},
+{"answer": "Zener diode", "correct": true},
+{"answer": "Lead conductors", "correct": false},
+{"answer": "German Silver", "correct": false}
+]
+},
+
+{
+"question": "How are 500 ω resistors connected so as to give an effective resistance of 750 ω ?",
+"options": [
+{"answer": "Three resistors of 500 ω each, in parallel", "correct": false},
+{"answer": "Three resistors of 500 ω each, in series", "correct": false},
+{"answer": "Two resistors of 500 ω each, in parallel", "correct": false},
+{"answer": "Two resistors of 500 ω each, in parallel and the combination in series with another 500 ω resistor", "correct": true}
+]
+},
+{
+"question": "The capacitors, each of 0.30 μF capacitance are star connected to form a capacitor bank. The capacitance of each arm of an equivalent delta connected capacitor bank is",
+"options": [
+{"answer": "0.30 μF", "correct": false},
+{"answer": "0.90 μF", "correct": false},
+{"answer": "0.10 μF", "correct": true},
+{"answer": "0.33 μF", "correct": false}
+]
+},
+
+{
+"question": "Superposition theorem is applicable for",
+"options": [
+{"answer": "Linear and lateral networks", "correct": false},
+{"answer": "non-linear and lateral networks", "correct": false},
+{"answer": "linear and bilateral networks", "correct": true},
+{"answer": "non-linear and bilateral networks", "correct": false}
+]
+},
+
+{
+"question": "For high efficiency of power transfer in a circuit, which of the following is the CORRECT condition with an internal resistance of the source?",
+"options": [
+{"answer": "equal to the load resistance", "correct": true},
+{"answer": "very high than the load resistance", "correct": false},
+{"answer": "less than the load resistance", "correct": false},
+{"answer": "more than the load resistance", "correct": false}
+]
+},
+{
+"question": "Application of Norton’s theorem in a circuit results in",
+"options": [
+{"answer": "a current source and an impedance in parallel", "correct": true},
+{"answer": "a voltage source and an impedance in series", "correct": false},
+{"answer": "an ideal voltage source", "correct": false},
+{"answer": "an ideal current source", "correct": false}
+]
+},
+
+{
+"question": "Kirchhoff’s law is applicable to",
+"options": [
+{"answer": "Passive networks only", "correct": false},
+{"answer": "A.C. circuits only", "correct": false},
+{"answer": "D.C. circuits only", "correct": false},
+{"answer": "Both A.C. as well D.C. circuits", "correct": true}
+]
+},
+
+{
+"question": "If the energy is supplied from a source, whose resistance is 1 Ohm, to a load of 100 Ohms the source will be",
+"options": [
+{"answer": "A voltage source", "correct": true},
+{"answer": "A current source", "correct": false},
+{"answer": "Both a above", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "The number of independent equations to solve a network is equal to",
+"options": [
+{"answer": "The number of chords", "correct": true},
+{"answer": "The number of branches", "correct": false},
+{"answer": "Sum of the number of branches and chords", "correct": false},
+{"answer": "Sum of number of branches, chords and nodes", "correct": false}
+]
+},
+
+{
+"question": "What is wattless current in an AC circuit?",
+"options": [
+{"answer": "When resistances of R, L and C becomes equal", "correct": false},
+{"answer": "When power factor becomes 1", "correct": false},
+{"answer": "When the power dissipated is infinite", "correct": false},
+{"answer": "When the power dissipated is zero", "correct": true}
+]
+},
+
+{
+"question": "Kirchhoff's law are valid for___",
+"options": [
+{"answer": "Linear circuit Non", "correct": false},
+{"answer": "linear circuit", "correct": false},
+{"answer": "Both linear and nonlinear circuit", "correct": true},
+{"answer": "Only passive circuit", "correct": false}
+]
+},
+{
+"question": "In a delta connection, line current lags behind phase current by:",
+"options": [
+{"answer": "30°", "correct": true},
+{"answer": "60°", "correct": false},
+{"answer": "90°", "correct": false},
+{"answer": "120°", "correct": false}
+]
+},
+
+{
+"question": "If the RMS value of the voltage is 230 / √2 V, what will be the peak-to-peak value of the voltage in the AC circuit?",
+"options": [
+{"answer": "460 V", "correct": true},
+{"answer": "842 V", "correct": false},
+{"answer": "355 V", "correct": false},
+{"answer": "115 V", "correct": false}
+]
+},
+
+{
+"question": "Which of the following Factor gives the ratio of the maximum value of current and RMS value in an AC circuit?",
+"options": [
+{"answer": "Crest Factor", "correct": true},
+{"answer": "Effective Factor", "correct": false},
+{"answer": "Respective factor", "correct": false},
+{"answer": "Form factor", "correct": false}
+]
+},
+
+{
+"question": "If the current and voltage are in phase, and the phase angle is zero, then what will be its power coefficient?",
+"options": [
+{"answer": "Unity", "correct": true},
+{"answer": "Zero", "correct": false},
+{"answer": "Less than one", "correct": false},
+{"answer": "More than one", "correct": false}
+]
+},
+
+{
+"question": "If the maximum voltage is 23√2 V, what will be the value of the peak multiplier of a sine wave?",
+"options": [
+{"answer": "1.414", "correct": true},
+{"answer": "25", "correct": false},
+{"answer": "23√2", "correct": false},
+{"answer": "3.14", "correct": false}
+]
+},
+
+{
+"question": "If the potential difference across the ends of a conductor is halved, what happens to the current flowing through it?",
+"options": [
+{"answer": "It gets halved", "correct": true},
+{"answer": "It gets increased", "correct": false},
+{"answer": "It gets doubled", "correct": false},
+{"answer": "It gets decreased", "correct": false}
+]
+}
+
+
+
+
+
+  ];
+
+ 
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

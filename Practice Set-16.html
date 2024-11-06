@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-16 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href='next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-16</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    // Sample question data in JSON format
+    const questions = [
+       {
+      "question": "A power factor meter has",
+      "options": [
+        { "answer": "One current circuit and two pressure circuits", "correct": true },
+        { "answer": "One current circuit and one pressure circuit", "correct": false },
+        { "answer": "Two current circuits and one pressure circuit", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "A capacitor bank is connected across the stator terminals of the Induction generator and loaded into a Wind Energy conversion system to:",
+      "options": [
+        { "answer": "supply reactive power to both the machine and load", "correct": true },
+        { "answer": "provide starting torque", "correct": false },
+        { "answer": "supply reactive power to the load", "correct": false },
+        { "answer": "supply reactive power to the machine", "correct": false }
+      ]
+    },
+    {
+      "question": "Synchronous condenser used for power factor improvement is synchronous motor which operates at:",
+      "options": [
+        { "answer": "no load with leading current", "correct": true },
+        { "answer": "full load with lagging current", "correct": false },
+        { "answer": "no load with lagging current", "correct": false },
+        { "answer": "full load with leading current", "correct": false }
+      ]
+    },
+    {
+      "question": "Power factor can be improved by installing a device in parallel with load which has _______.",
+      "options": [
+        { "answer": "apparent power", "correct": false },
+        { "answer": "lagging reactive power", "correct": false },
+        { "answer": "resistive power", "correct": false },
+        { "answer": "leading reactive power", "correct": true }
+      ]
+    },
+    {
+      "question": "Disadvantage of low power factor is",
+      "options": [
+        { "answer": "Large kW rating", "correct": false },
+        { "answer": "High power factor", "correct": false },
+        { "answer": "Large kVA rating", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "The unit for Reactive power is",
+      "options": [
+        { "answer": "kVAR", "correct": true },
+        { "answer": "kVA", "correct": false },
+        { "answer": "kW", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following formula is correct?",
+      "options": [
+        { "answer": "KVA = √(KW)2 + (KVAR)2", "correct": false },
+        { "answer": "KW = KVA cos ϕ", "correct": false },
+        { "answer": "KVAR = KVA sin ϕ", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "Synchronous compensators are ________",
+      "options": [
+        { "answer": "over excited synchronous motor with no mechanical load", "correct": true },
+        { "answer": "over excited synchronous motor with mechanical load", "correct": false },
+        { "answer": "under excited synchronous motor with no mechanical load", "correct": false },
+        { "answer": "normally excited synchronous motor with no mechanical load", "correct": false }
+      ]
+    },
+
+    {
+      "question": "Which tariff is most ideal for the consumer?",
+      "options": [
+        { "answer": "Two part tariff", "correct": false },
+        { "answer": "Three part tariff", "correct": true },
+        { "answer": "Both (A) and (B)", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Which is correct, when the diversity factor of a plant increases?",
+      "options": [
+        { "answer": "Plant Cost increases", "correct": false },
+        { "answer": "Plant Cost decreases", "correct": true },
+        { "answer": "Higher maximum demand", "correct": false },
+        { "answer": "Higher capacity of plants", "correct": false }
+      ]
+    },
+    {
+      "question": "The diversity factor between transformers for residential lighting is:",
+      "options": [
+        { "answer": "1.8", "correct": false },
+        { "answer": "2.5", "correct": false },
+        { "answer": "1.3", "correct": true },
+        { "answer": "3", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following expressions depicts the Utilization Factor?",
+      "options": [
+        { "answer": "Ratio of maximum generator demand to the generator capacity", "correct": true },
+        { "answer": "Ratio of actual energy produced to the generator capacity", "correct": false },
+        { "answer": "Ratio of generator capacity to maximum generation demand", "correct": false },
+        { "answer": "Ratio of generator capacity to actual energy produced", "correct": false }
+      ]
+    },
+    {
+      "question": "Penalty factor in power system economical operation is a measure of:",
+      "options": [
+        { "answer": "Line loss", "correct": true },
+        { "answer": "Generation cost", "correct": false },
+        { "answer": "Fuel cost", "correct": false },
+        { "answer": "All are correct", "correct": false }
+      ]
+    },
+    {
+      "question": "The knowledge of diversity factor helps in computing:",
+      "options": [
+        { "answer": "Plant capacity", "correct": true },
+        { "answer": "Average load", "correct": false },
+        { "answer": "Units generated", "correct": false },
+        { "answer": "Peak demand", "correct": false }
+      ]
+    },
+    {
+      "question": "Load factor of a power station is defined as:",
+      "options": [
+        { "answer": "Maximum demand / Average load", "correct": false },
+        { "answer": "Average load × Maximum demand", "correct": false },
+        { "answer": "Average load / Maximum demand", "correct": true },
+        { "answer": "(Average load × Maximum demand)^1/2", "correct": false }
+      ]
+    },
+    {
+      "question": "A synchronous condenser is virtually which of the following?",
+      "options": [
+        { "answer": "Induction motor", "correct": false },
+        { "answer": "Under excited synchronous motor", "correct": false },
+        { "answer": "Over excited synchronous motor", "correct": true },
+        { "answer": "D.C. generator", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following is the essential requirement of a peak load plant?",
+      "options": [
+        { "answer": "It should run at high speed", "correct": false },
+        { "answer": "It should produce high voltage", "correct": false },
+        { "answer": "It should be small in size", "correct": false },
+        { "answer": "It should be capable of starting quickly", "correct": true }
+      ]
+    },
+    {
+      "question": "In a power plant if the maximum demand on the plant is equal to the plant capacity, then:",
+      "options": [
+        { "answer": "Plant reserve capacity will be zero", "correct": false },
+        { "answer": "Diversity factor will be unity", "correct": false },
+        { "answer": "Load factor will be unity", "correct": false },
+        { "answer": "Load factor will be nearly 60%", "correct": true }
+      ]
+    },
+    {
+      "question": "If a power plant has no reserve capacity, then the plant capacity factor is equal to the ________.",
+      "options": [
+        { "answer": "Demand factor", "correct": false },
+        { "answer": "Diversity factor", "correct": false },
+        { "answer": "Load factor", "correct": true },
+        { "answer": "Plant use factor", "correct": false }
+      ]
+    },
+    {
+      "question": "Which power plant is expected to have the longest life?",
+      "options": [
+        { "answer": "Steam", "correct": false },
+        { "answer": "Diesel", "correct": false },
+        { "answer": "Hydroelectric", "correct": true },
+        { "answer": "Any of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Which lightning stroke is most dangerous?",
+      "options": [
+        { "answer": "Direct stroke on line conductor", "correct": true },
+        { "answer": "Indirect stroke on conductor", "correct": false },
+        { "answer": "Direct stroke on tower top", "correct": false },
+        { "answer": "Direct stroke on ground wire", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following generating stations has the minimum running cost?",
+      "options": [
+        { "answer": "Nuclear", "correct": false },
+        { "answer": "Hydro", "correct": true },
+        { "answer": "Thermal", "correct": false },
+        { "answer": "Diesel", "correct": false }
+      ]
+    },
+    {
+      "question": "What happens to the diversity factor in the case of an interconnected Grid System?",
+      "options": [
+        { "answer": "Diversity factor tends to infinity", "correct": false },
+        { "answer": "No effect on diversity factor", "correct": false },
+        { "answer": "Diversity factor increases", "correct": true },
+        { "answer": "Diversity factor decreases", "correct": false }
+      ]
+    },
+    {
+      "question": "For a diesel generating station the useful life is expected to be around:",
+      "options": [
+        { "answer": "15 to 20 years", "correct": true },
+        { "answer": "20 to 50 years", "correct": false },
+        { "answer": "50 to 75 years", "correct": false },
+        { "answer": "75 to 100 years", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following devices may be used to provide protection against lightning over-voltages?",
+      "options": [
+        { "answer": "Horn gaps", "correct": false },
+        { "answer": "Rod gaps", "correct": false },
+        { "answer": "Surge absorbers", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "Annual depreciation cost is calculated by:",
+      "options": [
+        { "answer": "Sinking fund method", "correct": false },
+        { "answer": "Straight line method", "correct": false },
+        { "answer": "Both (A) and (B)", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Annual installment towards depreciation reduces as the rate of interest increases with:",
+      "options": [
+        { "answer": "Sinking fund depreciation", "correct": true },
+        { "answer": "Straight line depreciation", "correct": false },
+        { "answer": "Reducing balance depreciation", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "_______ industry has the least power consumption per tonne of product.",
+      "options": [
+        { "answer": "Soap", "correct": false },
+        { "answer": "Sugar", "correct": false },
+        { "answer": "Vegetable oil", "correct": false },
+        { "answer": "Caustic soda", "correct": true }
+      ]
+    },
+    {
+      "question": "Which of the following industries will consume maximum power per tonne of product?",
+      "options": [
+        { "answer": "Zinc", "correct": false },
+        { "answer": "Aluminium", "correct": true },
+        { "answer": "Alloy steel", "correct": false },
+        { "answer": "Cement", "correct": false }
+      ]
+    },
+    {
+      "question": "In a distribution system, in order to improve power factor, the synchronous capacitors are installed:",
+      "options": [
+        { "answer": "At the receiving end", "correct": true },
+        { "answer": "At the sending end", "correct": false },
+        { "answer": "Either (A) or (B)", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+
+    {
+      "question": "Tariff on electrical energy where the consumer is charged according to his maximum demand and energy consumption is expressed as z = a + by is known as _____________",
+      "options": [
+        { "answer": "Doherty rate", "correct": false },
+        { "answer": "Flat demand rate", "correct": false },
+        { "answer": "Straight meter rate", "correct": false },
+        { "answer": "Hopkinson demand rate", "correct": true }
+      ]
+    },
+    {
+      "question": "Load curve helps in deciding",
+      "options": [
+        { "answer": "Total installed capacity of the plant", "correct": false },
+        { "answer": "Sizes of the generating units", "correct": false },
+        { "answer": "Operating schedule of generating units", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "Load duration curve indicates what?",
+      "options": [
+        { "answer": "The number of hours for which the particular load lasts during a day", "correct": true },
+        { "answer": "Total energy consumed by the load", "correct": false },
+        { "answer": "The variation of load during different hours of the day", "correct": false },
+        { "answer": "Total number of units generated for the given demand", "correct": false }
+      ]
+    },
+    {
+      "question": "For any type of consumer the ideal tariff is",
+      "options": [
+        { "answer": "Two part tariff", "correct": false },
+        { "answer": "Three part tariff", "correct": true },
+        { "answer": "Block rate tariff", "correct": false },
+        { "answer": "Any of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "When the demand of consumers is not met by a power plant, it will resort to which of the following?",
+      "options": [
+        { "answer": "Load shedding", "correct": true },
+        { "answer": "Power factor improvement at the generators", "correct": false },
+        { "answer": "Penalizing high load consumers by increasing the charges for electricity", "correct": false },
+        { "answer": "Efficient plant operation", "correct": false }
+      ]
+    },
+    {
+      "question": "The area under a load curve gives",
+      "options": [
+        { "answer": "Average demand", "correct": false },
+        { "answer": "Energy consumed", "correct": true },
+        { "answer": "Maximum demand", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Direct conversion of heat into electrical energy is possible through",
+      "options": [
+        { "answer": "Fuel cells", "correct": false },
+        { "answer": "Solar cells", "correct": false },
+        { "answer": "MHD generators", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "_______ is invariably used as base load plant.",
+      "options": [
+        { "answer": "Diesel engine plant", "correct": false },
+        { "answer": "Nuclear power plant", "correct": true },
+        { "answer": "Gas turbine plant", "correct": false },
+        { "answer": "Pumped storage plant", "correct": false }
+      ]
+    },
+    {
+      "question": "_______ is invariably used for peak load.",
+      "options": [
+        { "answer": "Nuclear power plant", "correct": false },
+        { "answer": "Steam turbine plant", "correct": false },
+        { "answer": "Pumped storage plant", "correct": true },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following is the disadvantage of a synchronous condenser?",
+      "options": [
+        { "answer": "High maintenance cost", "correct": false },
+        { "answer": "Continuous losses in motor", "correct": false },
+        { "answer": "Noise", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "A power transformer is usually rated in",
+      "options": [
+        { "answer": "kW", "correct": false },
+        { "answer": "kVAR", "correct": false },
+        { "answer": "kWh", "correct": false },
+        { "answer": "kVA", "correct": true }
+      ]
+    },
+    {
+      "question": "A pilot exciter is provided on generators for which of the following reasons?",
+      "options": [
+        { "answer": "To excite the poles of main exciter", "correct": true },
+        { "answer": "To provide requisite starting torque to main exciter", "correct": false },
+        { "answer": "To provide requisite starting torque to generator", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following is the disadvantage of static capacitor for power factor improvement?",
+      "options": [
+        { "answer": "Easily damaged by high voltage", "correct": false },
+        { "answer": "Cannot be repaired", "correct": false },
+        { "answer": "Short service life", "correct": false },
+        { "answer": "All of the above", "correct": true }
+      ]
+    },
+    {
+      "question": "High load factor indicates",
+      "options": [
+        { "answer": "Cost of generation per unit power is increased", "correct": false },
+        { "answer": "Total plant capacity is utilized for most of the time", "correct": true },
+        { "answer": "Total plant capacity is not properly utilized for most of the time", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "Which plant can never have 100 percent load factor?",
+      "options": [
+        { "answer": "Peak load plant", "correct": true },
+        { "answer": "Base load plant", "correct": false },
+        { "answer": "Nuclear power plant", "correct": false },
+        { "answer": "Hydro electric plant", "correct": false }
+      ]
+    },
+    {
+      "question": "Which of the following is not a source of power?",
+      "options": [
+        { "answer": "Thermocouple", "correct": true },
+        { "answer": "Photovoltaic cell", "correct": false },
+        { "answer": "Solar cell", "correct": false },
+        { "answer": "Photoelectric cell", "correct": false }
+      ]
+    },
+    {
+      "question": "In which of the following power plants the maintenance cost is usually high?",
+      "options": [
+        { "answer": "Nuclear power plant", "correct": true },
+        { "answer": "Hydroelectric power plants", "correct": false },
+        { "answer": "Thermal power plants", "correct": false },
+        { "answer": "Diesel engine power plants", "correct": false }
+      ]
+    },
+    {
+      "question": "In a load curve the highest point represents",
+      "options": [
+        { "answer": "Peak demand", "correct": true },
+        { "answer": "Average demand", "correct": false },
+        { "answer": "Diversified demand", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "A load curve indicates",
+      "options": [
+        { "answer": "Average power used during the period", "correct": false },
+        { "answer": "Average kWh (kW) energy consumption during the period", "correct": true },
+        { "answer": "Either of the above", "correct": false },
+        { "answer": "None of the above", "correct": false }
+      ]
+    },
+    {
+      "question": "A low utilization factor for a plant indicates that",
+      "options": [
+        { "answer": "Plant is used for stand by purpose only", "correct": true },
+        { "answer": "Plant is under maintenance", "correct": false },
+        { "answer": "Plant is used for base load only", "correct": false },
+        { "answer": "Plant is used for peak load as well as base load", "correct": false }
+      ]
+    }
+   
+
+    ];
+
+   let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

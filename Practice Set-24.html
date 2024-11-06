@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-24 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-24</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+    // Sample question data in JSON format
+    const questions = [
+
+{
+"question": "What is the unit of VAR?",
+"options": [
+{"answer": "reactive power", "correct": true},
+{"answer": "active power", "correct": false},
+{"answer": "complex power", "correct": false},
+{"answer": "apparent power", "correct": false}
+]
+},
+
+{
+"question": "In a circuit, the applied voltage is 100 V and a current of 10 A is found to be 30° lag. What is the value of p.f.?",
+"options": [
+{"answer": "0.5 lag", "correct": false},
+{"answer": "0.5 lead", "correct": false},
+{"answer": "0.866 lag", "correct": true},
+{"answer": "0.866 lead", "correct": false}
+]
+},
+
+{
+"question": "The power factor at resonance in a series R-L-C circuit is-",
+"options": [
+{"answer": "0.7", "correct": false},
+{"answer": "Unity", "correct": true},
+{"answer": "Zero", "correct": false},
+{"answer": "0.5", "correct": false}
+]
+},
+
+{
+"question": "Power factor of an AC circuit is:",
+"options": [
+{"answer": "Sine of the phase angle", "correct": false},
+{"answer": "Cosine of the phase angle", "correct": true},
+{"answer": "Tangent of the phase angle", "correct": false},
+{"answer": "Q-factor of the circuit", "correct": false}
+]
+},
+
+{
+"question": "The most suitable location for the power factor improvement device is",
+"options": [
+{"answer": "near the electrical appliance which is responsible for the poor power factor", "correct": false},
+{"answer": "at the receiving end in case of transmission lines", "correct": false},
+{"answer": "at the sending end of the transmission lines", "correct": false},
+{"answer": "Both (A) and (B)", "correct": true}
+]
+},
+
+{
+"question": "A capacitor bank is connected across the stator terminals of the Induction generator and loaded into a Wind Energy conversion system to:",
+"options": [
+{"answer": "supply reactive power to both the machine and load", "correct": true},
+{"answer": "provide starting torque", "correct": false},
+{"answer": "supply reactive power to the load", "correct": false},
+{"answer": "supply reactive power to the machine", "correct": false}
+]
+},
+
+{
+"question": "Synchronous condenser used for power factor improvement is synchronous motor which operates at:",
+"options": [
+{"answer": "no load with leading current", "correct": true},
+{"answer": "full load with lagging current", "correct": false},
+{"answer": "no load with lagging current", "correct": false},
+{"answer": "full load with leading current", "correct": false}
+]
+},
+
+{
+"question": "A shunt reactor of 100 MVAR is operated at 98% of its rated voltage and at 96% of its rated frequency. The reactive power absorbed by the reactor is-",
+"options": [
+{"answer": "98 MVAR", "correct": false},
+{"answer": "10.402 MVAR", "correct": false},
+{"answer": "96.04 MVAR", "correct": false},
+{"answer": "100.04 MVAR", "correct": true}
+]
+},
+
+{
+"question": "Power factor can be improved by installing a device in parallel with load which has ___.",
+"options": [
+{"answer": "apparent power", "correct": false},
+{"answer": "lagging reactive power", "correct": false},
+{"answer": "resistive power", "correct": false},
+{"answer": "leading reactive power", "correct": true}
+]
+},
+
+{
+"question": "Which of the following leads to a low voltage and a low power factor?",
+"options": [
+{"answer": "Active power", "correct": false},
+{"answer": "Resistor", "correct": false},
+{"answer": "Harmonics", "correct": true},
+{"answer": "Balanced load", "correct": false}
+]
+},
+{
+"question": "Disadvantage of low power factor is",
+"options": [
+{"answer": "Large kW rating", "correct": false},
+{"answer": "High power factor", "correct": false},
+{"answer": "Large kVA rating", "correct": true},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "Where are the shunt capacitors installed for improvement of power factor?",
+"options": [
+{"answer": "Near supply points", "correct": false},
+{"answer": "Near load points", "correct": true},
+{"answer": "Parallel to transmission line", "correct": false},
+{"answer": "Parallel to the distribution transformer", "correct": false}
+]
+},
+
+{
+"question": "Phase modifiers in AC transmission line are:",
+"options": [
+{"answer": "synchronous machines", "correct": true},
+{"answer": "Induction machines", "correct": false},
+{"answer": "DC machines", "correct": false},
+{"answer": "Transformers", "correct": false}
+]
+},
+
+{
+"question": "An automatic power factor controller cannot achieve",
+"options": [
+{"answer": "Voltage control", "correct": false},
+{"answer": "kVAR control", "correct": false},
+{"answer": "kW control", "correct": true},
+{"answer": "pf control", "correct": false}
+]
+},
+
+{
+"question": "In order to improve the power factor, which device should be connected to the power system?",
+"options": [
+{"answer": "Series Capacitor", "correct": false},
+{"answer": "Shunt Capacitor", "correct": true},
+{"answer": "Series Inductor", "correct": false},
+{"answer": "Shunt Inductor", "correct": false}
+]
+},
+
+{
+"question": "With the decreasing speed of the motor, what happens to the required capacitive kVAr?",
+"options": [
+{"answer": "Increases", "correct": true},
+{"answer": "Increases then decreases", "correct": false},
+{"answer": "Remains constant", "correct": false},
+{"answer": "None of these", "correct": false}
+]
+},
+
+{
+"question": "Lower power factor is usually not due to-",
+"options": [
+{"answer": "Discharge lamp", "correct": false},
+{"answer": "Arc lamps", "correct": false},
+{"answer": "Incandescent lamps", "correct": true},
+{"answer": "Induction furnace", "correct": false}
+]
+},
+
+{
+"question": "The power factor of an induction motor under no-load conditions will be closer to",
+"options": [
+{"answer": "0.2 lagging", "correct": false},
+{"answer": "0.2 leading", "correct": false},
+{"answer": "0.5 leading", "correct": false},
+{"answer": "unity", "correct": true}
+]
+},
+
+{
+"question": "What is the main disadvantage of phase advancers?",
+"options": [
+{"answer": "Cannot be used for motors below 200 H.P", "correct": true},
+{"answer": "Produces noise", "correct": false},
+{"answer": "Can be used where synchronous motor is unadmissible", "correct": false},
+{"answer": "None of these", "correct": false}
+]
+},
+
+{
+"question": "A power factor meter has",
+"options": [
+{"answer": "One current circuit and two pressure circuits", "correct": true},
+{"answer": "One current circuit and one pressure circuit", "correct": false},
+{"answer": "Two current circuits and one pressure circuit", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+{
+"question": "Power factor of saw mill is about",
+"options": [
+{"answer": "0.5", "correct": true},
+{"answer": "0.8", "correct": false},
+{"answer": "0.1", "correct": false},
+{"answer": "0.9", "correct": false}
+]
+},
+
+{
+"question": "The two pressure coils of a single phase power factor meter have-",
+"options": [
+{"answer": "The same dimensions and the same number of turns", "correct": true},
+{"answer": "The same dimensions and the but different number of turns", "correct": false},
+{"answer": "The same number of dimension of turns but different dimension", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+},
+
+{
+"question": "Which of the following bridges is used to measure power factor?",
+"options": [
+{"answer": "Wien's bridge", "correct": false},
+{"answer": "Maxwell bridge", "correct": false},
+{"answer": "Schering bridge", "correct": true},
+{"answer": "Kelvin bridge", "correct": false}
+]
+},
+
+{
+"question": "Power factor can be numerically measured as:",
+"options": [
+{"answer": "A number", "correct": false},
+{"answer": "Percentage", "correct": false},
+{"answer": "Both of these", "correct": true},
+{"answer": "None of these", "correct": false}
+]
+},
+
+{
+"question": "When an alternating current passes through an ohmic resistance the electrical power converted into heat is",
+"options": [
+{"answer": "Apparent power", "correct": false},
+{"answer": "True power", "correct": true},
+{"answer": "Reactive power", "correct": false},
+{"answer": "None of the above", "correct": false}
+]
+}
+
+
+
+  ];
+
+  
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

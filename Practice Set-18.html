@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set-18 QwickLumen Institute for Engineers</title>
+  <style>
+    /* Styles kept as provided */
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; user-select: none; }
+    .header { background-color: #003366; color: white; padding: 10px; display: flex; justify-content: center; align-items: center; position: relative; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .home-button { position: absolute; left: 10px; background-color: #2e5984; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); }
+    .home-button:hover { background-color: #345b82; }
+    .time-section { position: absolute; right: 10px; font-size: 14px; }
+    .quiz-container { display: flex; justify-content: space-between; padding: 20px; }
+    .left-section { width: 70%; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    .right-section { width: 25%; background-color: #f4f6f9; padding: 10px; }
+    .score-section { text-align: center; margin-bottom: 20px; }
+    .question-palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 10px; }
+    .question-palette button { padding: 15px; font-size: 14px; background-color: #ccc; border: 1px solid #bbb; border-radius: 5px; cursor: pointer; }
+    .question-palette button.correct { background-color: #4CAF50; color: white; }
+    .question-palette button.incorrect { background-color: #f44336; color: white; }
+    .question-container { margin-bottom: 20px; }
+    .question-container h2 { font-size: 18px; }
+    .options-container button { display: block; width: 100%; padding: 10px; margin-bottom: 10px; background-color: #f8f8f8; border: 1px solid #ccc; border-radius: 5px; text-align: left; cursor: pointer; }
+    .options-container button:hover { background-color: #ddd; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <button class="home-button" onclick="location.href=' next-page.html';">Go to Home Page</button>
+    <h1>QwickLumen Institute for Engineers: Practice Set-18</h1>
+    <div class="time-section">
+      <p>Time Left: <span id="time-left">15:00</span></p>
+    </div>
+  </div>
+
+  <!-- Main Quiz Section -->
+  <div class="quiz-container">
+    <!-- Left Section for Questions -->
+    <div class="left-section">
+      <div class="question-container">
+        <h2 id="question-text">Question 1</h2>
+      </div>
+      <div class="options-container" id="options-container"></div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button id="prev-question">Previous Question</button>
+        <button id="skip-question">Skip Question</button>
+        <button id="save-next">Save & Next</button>
+        <button id="submit-quiz">Final Submit</button>
+      </div>
+    </div>
+
+    <!-- Right Section for Question Palette and Score -->
+    <div class="right-section">
+      <div class="score-section">
+        <p>Score: <span id="positive-score">0</span> | Negative Mark: <span id="negative-score">0</span></p>
+      </div>
+      <h3>Question Palette</h3>
+      <div class="question-palette" id="question-palette"></div>
+    </div>
+  </div>
+
+  <script>
+
+
+    // Sample question data in JSON format
+    const questions = [
+
+  {
+    "question": "Which of the following is a non-renewable source of energy?",
+    "options": [
+      { "answer": "Wood", "correct": false },
+      { "answer": "Sun", "correct": false },
+      { "answer": "Fossil", "correct": true },
+      { "answer": "Wind", "correct": false }
+    ]
+  },
+  {
+    "question": "The output of a solar cell is of the order of",
+    "options": [
+      { "answer": "1 W", "correct": true },
+      { "answer": "5 W", "correct": false },
+      { "answer": "10 W", "correct": false },
+      { "answer": "20 W", "correct": false }
+    ]
+  },
+  {
+    "question": "In a nuclear power station, a moderator is used to",
+    "options": [
+      { "answer": "absorb neutrons", "correct": false },
+      { "answer": "reduce the speed of neutrons", "correct": true },
+      { "answer": "accelerate the speed of neutrons", "correct": false },
+      { "answer": "stop chain reactions", "correct": false }
+    ]
+  },
+  {
+    "question": "In thermal power plants, the function of the economizer is to",
+    "options": [
+      { "answer": "heat steam from boiler", "correct": false },
+      { "answer": "heat feed water using flue gas", "correct": true },
+      { "answer": "heat air-fuel mixture", "correct": false },
+      { "answer": "heat steam taken from turbine outlets", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following power plants employs the Rankine cycle?",
+    "options": [
+      { "answer": "Nuclear power plant", "correct": false },
+      { "answer": "Hydro-electric power plant", "correct": false },
+      { "answer": "Solar power plant", "correct": false },
+      { "answer": "Thermal power plant", "correct": true }
+    ]
+  },
+  {
+    "question": "A chimney is required in only a _______ power plant.",
+    "options": [
+      { "answer": "Solar", "correct": false },
+      { "answer": "Hydroelectric", "correct": false },
+      { "answer": "Coal-fired", "correct": true },
+      { "answer": "Thermal wind", "correct": false }
+    ]
+  },
+  {
+    "question": "The most commonly used coolant in a nuclear power plant is",
+    "options": [
+      { "answer": "Water", "correct": true },
+      { "answer": "Oil", "correct": false },
+      { "answer": "Helium", "correct": false },
+      { "answer": "Carbon dioxide", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the purpose of shielding in a nuclear power plant?",
+    "options": [
+      { "answer": "It absorbs neutrons and stops the chain reaction to proceed further", "correct": false },
+      { "answer": "It reduces the speed of the neutron by absorbing its energy", "correct": false },
+      { "answer": "It converts the steam coming out of the turbine into water", "correct": false },
+      { "answer": "It prevents radiation from reaching outside the reactor", "correct": true }
+    ]
+  },
+  {
+    "question": "The type of turbine used in a hydro-electric plant for a water head range of 70 meter – 500 meter is",
+    "options": [
+      { "answer": "Pelton", "correct": false },
+      { "answer": "Kaplan", "correct": false },
+      { "answer": "Francis", "correct": true },
+      { "answer": "Propeller", "correct": false }
+    ]
+  },
+  {
+    "question": "The efficiency of a nuclear plant is",
+    "options": [
+      { "answer": "48%", "correct": false },
+      { "answer": "35%", "correct": true },
+      { "answer": "Greater than 50%", "correct": false },
+      { "answer": "Less than 30%", "correct": false }
+    ]
+  },
+
+  {
+    "question": "In hydroelectric power plants, ________ are open or closed conduits which carry water to the turbines.",
+    "options": [
+      { "answer": "Surge tanks", "correct": false },
+      { "answer": "Spillways", "correct": false },
+      { "answer": "Penstocks", "correct": true },
+      { "answer": "Dams", "correct": false }
+    ]
+  },
+  {
+    "question": "In a hydro power station, which component is used to step up the generating voltage to a suitable transmission voltage?",
+    "options": [
+      { "answer": "Transformer", "correct": true },
+      { "answer": "Generator", "correct": false },
+      { "answer": "Transmission line", "correct": false },
+      { "answer": "Turbine", "correct": false }
+    ]
+  },
+  {
+    "question": "In hydroelectric power plants, in order to discharge the surplus water from the storage reservoir into the river on the downstream side of the dam, ___________ are used.",
+    "options": [
+      { "answer": "Surge tanks", "correct": false },
+      { "answer": "Headworks", "correct": false },
+      { "answer": "Penstocks", "correct": false },
+      { "answer": "Spillways", "correct": true }
+    ]
+  },
+  {
+    "question": "The material used for the construction of control rods in a nuclear reactor is:",
+    "options": [
+      { "answer": "Copper", "correct": false },
+      { "answer": "Cadmium", "correct": true },
+      { "answer": "Graphite", "correct": false },
+      { "answer": "Silicon", "correct": false }
+    ]
+  },
+  {
+    "question": "The control rods in the control system of nuclear reactors are used to",
+    "options": [
+      { "answer": "Absorb excess neutrons", "correct": true },
+      { "answer": "Control fuel consumption", "correct": false },
+      { "answer": "Control temperature", "correct": false },
+      { "answer": "All of these", "correct": false }
+    ]
+  },
+  {
+    "question": "Electron volt is the unit of",
+    "options": [
+      { "answer": "Atomic power", "correct": false },
+      { "answer": "Energy", "correct": true },
+      { "answer": "Voltage", "correct": false },
+      { "answer": "Radioactivity", "correct": false }
+    ]
+  },
+  {
+    "question": "A breeder reactor employs liquid-metal coolant because it",
+    "options": [
+      { "answer": "Acts as a good moderator", "correct": false },
+      { "answer": "Produces maximum steam", "correct": false },
+      { "answer": "Transfers heat from core at a fast rate", "correct": true },
+      { "answer": "Increases rate of reaction in core", "correct": false }
+    ]
+  },
+  {
+    "question": "The nuclear energy is measured as",
+    "options": [
+      { "answer": "MeV", "correct": true },
+      { "answer": "Curie", "correct": false },
+      { "answer": "Farads", "correct": false },
+      { "answer": "MW", "correct": false }
+    ]
+  },
+  {
+    "question": "Each fission of U₂₃₅ produces on average _________ fast neutrons as a product of reaction.",
+    "options": [
+      { "answer": "2.46", "correct": true },
+      { "answer": "24.6", "correct": false },
+      { "answer": "246", "correct": false },
+      { "answer": "2460", "correct": false }
+    ]
+  },
+  {
+    "question": "The process by which a heavy nucleus is split into two light nuclei is known as",
+    "options": [
+      { "answer": "Splitting", "correct": false },
+      { "answer": "Fission", "correct": true },
+      { "answer": "Fusion", "correct": false },
+      { "answer": "Disintegration", "correct": false }
+    ]
+  },
+
+  {
+    "question": "Reflector in nuclear power plants _________ neutron leakage.",
+    "options": [
+      { "answer": "Increases", "correct": false },
+      { "answer": "Decreases", "correct": true },
+      { "answer": "Has no effect on", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "The primary fuel used in nuclear power plants is",
+    "options": [
+      { "answer": "U₂₃₅", "correct": true },
+      { "answer": "U₂₃₈", "correct": false },
+      { "answer": "Pu₂₃₉", "correct": false },
+      { "answer": "Pu₂₃₃", "correct": false }
+    ]
+  },
+  {
+    "question": "Reflector in nuclear plants is used to",
+    "options": [
+      { "answer": "Return the neutrons back into the core", "correct": true },
+      { "answer": "Shield the radioactivity completely", "correct": false },
+      { "answer": "Check pollution", "correct": false },
+      { "answer": "Conserve energy", "correct": false }
+    ]
+  },
+  {
+    "question": "U₂₃₃ is produced",
+    "options": [
+      { "answer": "Artificially", "correct": false },
+      { "answer": "As basic raw material", "correct": false },
+      { "answer": "When thorium is irradiated by neutrons", "correct": true },
+      { "answer": "By fission of U₂₃₈", "correct": false }
+    ]
+  },
+  {
+    "question": "A moderator generally used in nuclear power plants is",
+    "options": [
+      { "answer": "Graphite", "correct": false },
+      { "answer": "Heavy water", "correct": false },
+      { "answer": "Concrete", "correct": false },
+      { "answer": "Graphite and concrete", "correct": true }
+    ]
+  },
+  {
+    "question": "A fast breeder reactor",
+    "options": [
+      { "answer": "Uses graphite rods as moderator", "correct": false },
+      { "answer": "Has powerful moderator", "correct": false },
+      { "answer": "Has no moderator", "correct": true },
+      { "answer": "Uses ferrite material as moderator", "correct": false }
+    ]
+  },
+  {
+    "question": "The size of the reactor is said to be critical when",
+    "options": [
+      { "answer": "Chain reaction can be initiated", "correct": true },
+      { "answer": "It becomes uncontrollable", "correct": false },
+      { "answer": "It explodes", "correct": false },
+      { "answer": "It produces no power", "correct": false }
+    ]
+  },
+  {
+    "question": "A nuclear reactor is said to be critical when the neutron reproduction factor k is",
+    "options": [
+      { "answer": "One", "correct": true },
+      { "answer": "Less than one", "correct": false },
+      { "answer": "Greater than one", "correct": false },
+      { "answer": "None of these", "correct": false }
+    ]
+  },
+  {
+    "question": "The boiler generates steam at ________.",
+    "options": [
+      { "answer": "Low pressure and low temperature", "correct": false },
+      { "answer": "Low pressure and high temperature", "correct": false },
+      { "answer": "High pressure and high temperature", "correct": true },
+      { "answer": "High pressure and low temperature", "correct": false }
+    ]
+  },
+  {
+    "question": "The function of electrostatic precipitator in a coal-based thermal power plant is to:",
+    "options": [
+      { "answer": "Collect dust from flue gas", "correct": true },
+      { "answer": "Clean the turbine blades", "correct": false },
+      { "answer": "Collect dust at the air inlet", "correct": false },
+      { "answer": "Collect dust from the coal", "correct": false }
+    ]
+  },
+  {
+    "question": "A hydrograph represents",
+    "options": [
+      { "answer": "Variations of snowfall over time", "correct": false },
+      { "answer": "Variations of river discharge over time", "correct": true },
+      { "answer": "Variations of sediment concentration against river discharge", "correct": false },
+      { "answer": "Variations of water temperature against discharge", "correct": false }
+    ]
+  },
+  {
+    "question": "A unit Hydrograph has",
+    "options": [
+      { "answer": "One unit of peak discharge", "correct": false },
+      { "answer": "One unit of rainfall duration", "correct": false },
+      { "answer": "One unit of direct run off", "correct": true },
+      { "answer": "One unit of time base of direct run off", "correct": false }
+    ]
+  },
+  {
+    "question": "The purpose of the surge tank in a pipeline is to",
+    "options": [
+      { "answer": "Smoothen the flow of water", "correct": false },
+      { "answer": "Minimize friction losses in pipe", "correct": false },
+      { "answer": "Prevent occurrence of hydraulic jump", "correct": false },
+      { "answer": "Relieve pressure due to water hammer", "correct": true }
+    ]
+  },
+  {
+    "question": "Low head turbines are",
+    "options": [
+      { "answer": "Axial flow", "correct": true },
+      { "answer": "Radial flow", "correct": false },
+      { "answer": "Tangential flow", "correct": false },
+      { "answer": "Mixed flow", "correct": false }
+    ]
+  },
+  {
+    "question": "A Pelton wheel is",
+    "options": [
+      { "answer": "Tangential flow impulse turbine", "correct": true },
+      { "answer": "Inward radial flow reaction turbine", "correct": false },
+      { "answer": "Axial flow turbine", "correct": false },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "The overall efficiency of a thermal power plant is equal to:",
+    "options": [
+      { "answer": "Rankine cycle efficiency", "correct": false },
+      { "answer": "Carnot cycle efficiency", "correct": false },
+      { "answer": "Regenerative cycle efficiency", "correct": false },
+      { "answer": "Boiler efficiency x turbine efficiency x generator efficiency", "correct": true }
+    ]
+  },
+  {
+    "question": "An impulse turbine",
+    "options": [
+      { "answer": "Requires a draft tube", "correct": false },
+      { "answer": "Is most suited for low head application", "correct": false },
+      { "answer": "Operates by initial complete conversion to kinetic energy", "correct": true },
+      { "answer": "Is not exposed to atmosphere", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following pump is suitable for small discharge and high heads?",
+    "options": [
+      { "answer": "Centrifugal pump", "correct": false },
+      { "answer": "Axial flow pump", "correct": false },
+      { "answer": "Mixed flow pump", "correct": false },
+      { "answer": "Reciprocating pump", "correct": true }
+    ]
+  },
+  {
+    "question": "Rankine cycle efficiency of a good steam power plant is in the range of",
+    "options": [
+      { "answer": "20 to 25%", "correct": false },
+      { "answer": "35 to 45%", "correct": true },
+      { "answer": "10 to 20%", "correct": false },
+      { "answer": "> 50%", "correct": false }
+    ]
+  },
+  {
+    "question": "The reheat cycle in the steam power plant is mainly adopted to",
+    "options": [
+      { "answer": "Increase moisture content in low-pressure stages to a safe value", "correct": false },
+      { "answer": "Decrease the capacity of the condenser", "correct": false },
+      { "answer": "Decrease moisture content in low-pressure stages to a safe value", "correct": true },
+      { "answer": "Recover the waste heat of the boiler", "correct": false }
+    ]
+  },
+  {
+    "question": "Where was India’s first nuclear power plant installed?",
+    "options": [
+      { "answer": "Obninsk", "correct": false },
+      { "answer": "Tarapur, Maharashtra", "correct": true },
+      { "answer": "Boisar, Maharashtra", "correct": false },
+      { "answer": "None of the mentioned", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of the following is also known as coal used in power plants?",
+    "options": [
+      { "answer": "Coke", "correct": false },
+      { "answer": "Soft coal", "correct": false },
+      { "answer": "Charcoal", "correct": false },
+      { "answer": "Steam coal", "correct": true }
+    ]
+  },
+  {
+    "question": "What is the maximum content of moisture allowed at the turbine exhaust in a steam power plant?",
+    "options": [
+      { "answer": "15%", "correct": true },
+      { "answer": "30%", "correct": false },
+      { "answer": "40%", "correct": false },
+      { "answer": "50%", "correct": false }
+    ]
+  },
+  {
+    "question": "Rankine cycle efficiency of a good steam power plant may be in the range of",
+    "options": [
+      { "answer": "35 to 45%", "correct": true },
+      { "answer": "70 to 80%", "correct": false },
+      { "answer": "90 to 95%", "correct": false },
+      { "answer": "15 to 20%", "correct": false }
+    ]
+  },
+  {
+    "question": "The common size unit of a steam power plant is",
+    "options": [
+      { "answer": "500 MW(e)", "correct": true },
+      { "answer": "150 MW(e)", "correct": false },
+      { "answer": "300 MW(e)", "correct": false },
+      { "answer": "30 MW(e)", "correct": false }
+    ]
+  },
+  {
+    "question": "Reversed Carnot cycle comprises",
+    "options": [
+      { "answer": "Two isentropic processes and two adiabatic processes", "correct": false },
+      { "answer": "Two isentropic and two isothermal processes", "correct": true },
+      { "answer": "Two isentropic and two constant pressure processes", "correct": false },
+      { "answer": "Two isentropic and two constant volume processes", "correct": false }
+    ]
+  },
+  {
+    "question": "Binary vapor cycles are used to increase the",
+    "options": [
+      { "answer": "Performance of the condenser", "correct": false },
+      { "answer": "Efficiency of the plant", "correct": true },
+      { "answer": "Output of the turbine", "correct": false },
+      { "answer": "Temperature of working fluid", "correct": false }
+    ]
+  },
+  {
+    "question": "The modern steam turbines are",
+    "options": [
+      { "answer": "Impulse turbines", "correct": false },
+      { "answer": "Reaction turbines", "correct": false },
+      { "answer": "Impulse-reaction turbines", "correct": true },
+      { "answer": "None of the above", "correct": false }
+    ]
+  },
+  {
+    "question": "For induced draught, the fan is located",
+    "options": [
+      { "answer": "Near bottom of chimney", "correct": true },
+      { "answer": "Near bottom of furnace", "correct": false },
+      { "answer": "At the top of the chimney", "correct": false },
+      { "answer": "Anywhere permissible", "correct": false }
+    ]
+  },
+  {
+    "question": "The efficiency of a chimney is approximately",
+    "options": [
+      { "answer": "80%", "correct": false },
+      { "answer": "40%", "correct": false },
+      { "answer": "20%", "correct": false },
+      { "answer": "0.25%", "correct": true }
+    ]
+  }
+
+
+
+
+
+
+    ];
+
+  let currentQuestionIndex = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let timer = 15 * 60;
+    let answeredQuestions = Array(questions.length).fill(false);
+    let userAnswers = Array(questions.length).fill(null);
+
+    function loadQuestion(index) {
+      const question = questions[index];
+      document.getElementById("question-text").innerHTML = `Q${index + 1}: ${question.question}`;
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      question.options.forEach((option, i) => {
+        const optionButton = document.createElement("button");
+        optionButton.innerHTML = option.answer;
+        optionButton.onclick = () => checkAnswer(i);
+        optionsContainer.appendChild(optionButton);
+      });
+    }
+
+    function checkAnswer(selectedOptionIndex) {
+      if (answeredQuestions[currentQuestionIndex]) return;
+
+      const question = questions[currentQuestionIndex];
+      const isCorrect = question.options[selectedOptionIndex].correct;
+      answeredQuestions[currentQuestionIndex] = true;
+      userAnswers[currentQuestionIndex] = { answer: selectedOptionIndex, correct: isCorrect };
+
+      if (isCorrect) {
+        positiveScore++;
+        updatePaletteButton(currentQuestionIndex, true);
+      } else {
+        negativeScore++;
+        updatePaletteButton(currentQuestionIndex, false);
+      }
+
+      document.getElementById("positive-score").textContent = positiveScore;
+      document.getElementById("negative-score").textContent = negativeScore;
+    }
+
+    function updatePaletteButton(index, isCorrect) {
+      const paletteButton = document.getElementById(`palette-button-${index}`);
+      paletteButton.classList.remove("correct", "incorrect");
+      paletteButton.classList.add(isCorrect ? "correct" : "incorrect");
+    }
+
+    function setupPalette() {
+      const paletteContainer = document.getElementById("question-palette");
+      questions.forEach((_, index) => {
+        const button = document.createElement("button");
+        button.id = `palette-button-${index}`;
+        button.textContent = index + 1;
+        button.onclick = () => {
+          currentQuestionIndex = index;
+          loadQuestion(index);
+        };
+        paletteContainer.appendChild(button);
+      });
+    }
+
+    document.getElementById("save-next").onclick = () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("prev-question").onclick = () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion(currentQuestionIndex);
+      }
+    };
+
+    document.getElementById("skip-question").onclick = () => {
+      answeredQuestions[currentQuestionIndex] = true;
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) loadQuestion(currentQuestionIndex);
+    };
+
+    document.getElementById("submit-quiz").onclick = () => {
+      sessionStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+      sessionStorage.setItem("questions", JSON.stringify(questions));
+      window.location.href = "results.html";
+    };
+
+    setInterval(() => {
+      timer--;
+      document.getElementById("time-left").textContent = formatTime(timer);
+      if (timer === 0) document.getElementById("submit-quiz").click();
+    }, 1000);
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+    }
+
+    setupPalette();
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
